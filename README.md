@@ -29,5 +29,5 @@
 - IDE：Cloud9
 ​
 ## 使用素材
-フリー音源素材として以下を使用</br>
+フリー素材として以下を使用</br>
     ・pixabay (https://pixabay.com)
