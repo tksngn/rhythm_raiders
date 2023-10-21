@@ -30,4 +30,4 @@
 ​
 ## 使用素材
 フリー音源素材として以下を使用
-    ・pixabay (https://pixabay.com/)
+    ・pixabay (https://pixabay.com)
