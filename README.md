@@ -1,4 +1,4 @@
-!Rhythm Raiders Logo
+![Rhythm Raiders Logo]
 # Rhythm Raiders
 ​
 ## サイト概要
