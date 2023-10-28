@@ -1,4 +1,4 @@
-![Rhythm Raiders Logo]
+![Rhythm Raiders Logo](https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg)
 # Rhythm Raiders
 ​
 ## サイト概要
