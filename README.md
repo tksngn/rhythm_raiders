@@ -1,3 +1,4 @@
+!Rhythm Raiders Logo
 # Rhythm Raiders
 ​
 ## サイト概要
@@ -47,6 +48,6 @@
 ​
 ## 使用素材
 フリー素材として以下を使用
-- pixabay (https://pixabay.com)
+- pixabay (https://pixabay.com) :サイトのデザインやレイアウトに使用する画像、音楽プレーヤー機能のテスト用（サンプルBGM）を提供しています。
+- <div>ロゴは <a href="https://www.designevo.com/jp/" title="無料オンラインロゴメーカー">DesignEvo</a> ロゴメーカーさんで作成しました。</div>
 
-サイトのデザインやレイアウトに使用する画像、音楽プレーヤー機能のテスト用（サンプルBGM）を提供しています。
