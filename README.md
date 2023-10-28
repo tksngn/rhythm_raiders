@@ -1,6 +1,6 @@
 
-# <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> Rhythm Raiders
-​
+# Rhythm Raiders
+# <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="100" height="60">​
 ## サイト概要
 ### サイトテーマ
 「Rhythm Raiders」は、ゲーム音楽制作者とファンをつなぐゲーム音楽投稿コミュニティサイトです。
