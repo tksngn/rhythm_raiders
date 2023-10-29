@@ -1,5 +1,5 @@
 
-# <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="80" height="80"> Rhythm RAIDERS <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="80" height="80">
+# <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="80" height="80"> Rhythm RAIDERS
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="40" height="40"> サイト概要
 ### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> サイトテーマ
 「Rhythm RAIDERS」は、ゲーム音楽制作者とファンをつなぐゲーム音楽投稿コミュニティサイトです。
