@@ -19,7 +19,7 @@
 
 
 ​
-### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> ターゲットユーザ
+### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> ターゲットユーザー
 - ゲーム音楽制作者：自分の作品を共有し、フィードバックを得たい
 - ゲーム開発者：新しいプロジェクトのために音楽を探している方
 - ゲーム音楽のファン：新しい音楽を発見したり、お気に入りの制作者とつながりたい方
@@ -34,7 +34,16 @@
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 設計書
--
+- 画面遷移図
+##### https://drive.google.com/file/d/1Ah0Nm-HqbXoYh8VZK9kVM8FyivlLGtuI/view?usp=sharing
+- ER図
+##### https://drive.google.com/file/d/1xHw-g5SBi0dNqX4d8oVPj2yhF8YA3HZB/view?usp=sharing
+- ワイヤーフレーム図
+##### https://drive.google.com/file/d/1a5GWXAUqIevZ56M5F2TF0aSOk21PW59r/view?usp=sharing
+- テーブル定義書
+##### https://docs.google.com/spreadsheets/d/1hMMgmZ8a9fvue7ydGlEEW4lhz4Z9j7EFLVSV_nYmVMs/edit?usp=sharing
+- gem一覧
+##### https://docs.google.com/spreadsheets/d/1YnEL5yBrQPjdVwB4F7Jxdow9QN3s_nQRUX82R2pZIfo/edit?usp=sharing
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 開発環境
