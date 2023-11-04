@@ -70,6 +70,21 @@ end
 group :production do
   gem 'aws-sdk-s3'
 end
+
+# 環境変数を管理するためのgem
+group :development do
+  gem 'dotenv-rails'
+end
+
+# 定期的なタスクをスケジューリングするためのgem
+group :production do
+  gem 'whenever', require: false
+end
+
+# N+1問題を検出するためのgem
+group :development do
+  gem 'bullet'
+end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 

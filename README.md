@@ -42,8 +42,8 @@
 ##### https://drive.google.com/file/d/1a5GWXAUqIevZ56M5F2TF0aSOk21PW59r/view?usp=sharing
 - テーブル定義書
 ##### https://docs.google.com/spreadsheets/d/1hMMgmZ8a9fvue7ydGlEEW4lhz4Z9j7EFLVSV_nYmVMs/edit?usp=sharing
-- gem一覧
-##### https://docs.google.com/spreadsheets/d/1YnEL5yBrQPjdVwB4F7Jxdow9QN3s_nQRUX82R2pZIfo/edit?usp=sharing
+- アプリケーション詳細設計（gemfile）
+##### https://docs.google.com/spreadsheets/d/1hTJSaqJCpAVSAREuHN446XnK0CJ6JNgCnOwe2N5ltdI/edit?usp=sharing
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 開発環境
