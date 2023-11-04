@@ -1,0 +1,2 @@
+class MemberPost < ApplicationRecord
+end

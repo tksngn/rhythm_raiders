@@ -1,0 +1,2 @@
+class CreatedTrack < ApplicationRecord
+end

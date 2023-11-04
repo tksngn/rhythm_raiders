@@ -87,9 +87,8 @@ group :development do
 end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
-gem 'devise', '~> 4.9.3'
-gem "enum_help"
+gem 'devise'
+gem 'enum_help'
 gem 'active_storage_validations', '~> 1.0.4'
 gem 'ransack', '~> 4.1.1'
 gem 'activeadmin', '~> 3.0.0'

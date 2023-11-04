@@ -429,7 +429,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   commontator (~> 7.0.1)
-  devise (~> 4.9.3)
+  devise
   dotenv-rails
   enum_help
   factory_bot_rails
