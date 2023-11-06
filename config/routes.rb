@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
@@ -6,8 +7,10 @@ Rails.application.routes.draw do
     registrations: "member/registrations",
     sessions: 'member/sessions'
   }
-  
-  resources :guests, only: [:new, :create]
+  devise_for :guests, controllers: {
+    sessions: 'guests/sessions',
+    registrations: 'guests/registrations'
+  }
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
