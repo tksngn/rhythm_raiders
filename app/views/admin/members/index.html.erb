@@ -1,0 +1,19 @@
+<h1>メンバー管理</h1>
+
+<table>
+  <tr>
+    <th>ユーザー名</th>
+    <th>ステータス</th>
+    <th>楽曲タイトル</th>
+    <th>コメント</th>
+  </tr>
+
+  <% @members.each do |member| %>
+    <tr>
+      <td><%= member.user_name %></td>
+      <td><%= member.status %></td>
+      <td><%= member.music_title %></td>
+      <td><%= member.comment %></td>
+    </tr>
+  <% end %>
+</table>

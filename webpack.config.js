@@ -1,10 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './path/to/your/entry/file.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+  entry: {
+    main: './src/index.js' // エントリーポイントとなるJavaScriptファイルのパス
   },
-  mode: 'development' // 'production' for production build
+  output: {
+    path: path.resolve(__dirname, 'dist'), // バンドルされたファイルの出力先ディレクトリ
+    filename: 'bundle.js', // バンドルされたファイルの名前
+  },
+  mode: 'development' // ビルドモード（'development'または'production'）
 };
