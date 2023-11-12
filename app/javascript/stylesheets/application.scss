@@ -1,1 +1,42 @@
 @use '~bootstrap/scss/bootstrap';
+
+
+.content {
+    width: 45%;
+    margin: 20px;
+}
+.content p {
+    font-style: italic;
+    font-weight: bold;
+}
+.logo {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+}
+.copyright {
+    position: fixed;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+}
+
+body {
+  font-family: Georgia, serif;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.about {
+  color: white;
+  text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px #323232;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100vh;
+  flex-direction: row;
+  text-align: justify;
+  background-image: url('/images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

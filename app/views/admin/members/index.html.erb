@@ -1,19 +1,46 @@
-<h1>メンバー管理</h1>
-
-<table>
-  <tr>
-    <th>ユーザー名</th>
-    <th>ステータス</th>
-    <th>楽曲タイトル</th>
-    <th>コメント</th>
-  </tr>
-
-  <% @members.each do |member| %>
-    <tr>
-      <td><%= member.user_name %></td>
-      <td><%= member.status %></td>
-      <td><%= member.music_title %></td>
-      <td><%= member.comment %></td>
-    </tr>
-  <% end %>
-</table>
+<body>
+  <div class="container-fluid">
+    <div class="row align-items-start">
+      <div class="col-4">
+        <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
+        <h4 class="display-5" style="color: red; -webkit-text-stroke: 1px black;">ユーザー管理</h4>
+        <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "btn btn-primary" %>
+      </div>
+      <div class="col-8 text-center">
+        <%= image_tag("neom-rVC6O_gDE0Q-unsplash.jpg", alt: "フリー画像", class: "img-fluid", height: '200px') %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>UserName</th>
+              <th>Status</th>
+              <th>MusicTitle</th>
+              <th>Comment</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+              <tr>
+                <td><%= member.user_name %></td>
+                <td><%= member.status %></td>
+                <td><%= member.music_title %></td>
+                <td><%= member.comment %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <!-- ここにページネーションの要素を追加 -->
+      </div>
+    </div>
+  </div>
+  <footer class="text-center">
+    ©20231225 RhythmRAIDERS
+  </footer>
+</body>
