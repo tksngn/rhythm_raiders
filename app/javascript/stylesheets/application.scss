@@ -21,15 +21,17 @@
     width: 100%;
 }
 
-body {
+body, .card {
   font-family: Georgia, serif;
   font-weight: bold;
   font-style: italic;
+  background-color: #000000; /* ダークカラー */
+  color: #ffffff; /* テキストカラー */
 }
 
 .about {
   color: white;
-  text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px #323232;
+  text-shadow: -1px 0 gray, 0 1px grey, 1px 0 grey, 0 -1px #323232;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -40,3 +42,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.white-text {
+    color: #ffffff;
+  }

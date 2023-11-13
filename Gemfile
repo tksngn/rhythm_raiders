@@ -96,4 +96,4 @@ gem 'acts_as_votable', '~> 0.14.0'
 gem 'acts_as_follower', '~> 0.2.1'
 gem 'commontator', '~> 7.0.1'
 gem 'public_activity', '~> 2.0.2'
-
+gem 'kaminari','~> 1.2.1'

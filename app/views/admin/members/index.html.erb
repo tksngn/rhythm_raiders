@@ -1,43 +1,52 @@
 <body>
-  <div class="container-fluid">
-    <div class="row align-items-start">
-      <div class="col-4">
-        <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
-        <h4 class="display-5" style="color: red; -webkit-text-stroke: 1px black;">ユーザー管理</h4>
-        <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "btn btn-primary" %>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
+        <div class="row">
+          <div class="col-12">
+            <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
+            <h2 class="display-5" style="color: red; -webkit-text-stroke: 1px grey;">ユーザー管理</h2>
+          </div>
+          <div class="col-12 d-flex align-items-center justify-content-end">
+            <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "btn btn-primary" %>
+          </div>
+        </div>
       </div>
-      <div class="col-8 text-center">
-        <%= image_tag("neom-rVC6O_gDE0Q-unsplash.jpg", alt: "フリー画像", class: "img-fluid", height: '200px') %>
+      <div class="col-sm-12 col-md-6 text-center">
+        <%= image_tag("neom-rVC6O_gDE0Q-unsplash2.jpg", alt: "フリー画像", class: "img-fluid") %>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
         <table class="table">
           <thead>
             <tr>
-              <th>UserName</th>
-              <th>Status</th>
-              <th>MusicTitle</th>
-              <th>Comment</th>
+              <th class="col-2 white-text">UserName</th>
+              <th class="col-1 white-text">Status</th>
+              <th class="col-3 white-text">MusicTitle</th>
+              <th class="col-6 white-text">Comment</th>
             </tr>
           </thead>
           <tbody>
             <% @members.each do |member| %>
               <tr>
-                <td><%= member.user_name %></td>
-                <td><%= member.status %></td>
-                <td><%= member.music_title %></td>
-                <td><%= member.comment %></td>
+                <td class="col-2 white-text"><%= member.user_name %></td>
+                <td class="col-1 white-text"><%= member.status %></td>
+                <td class="col-3 white-text"><%= member.music_title %></td>
+                <td class="col-6 white-text"><%= member.comment %></td>
               </tr>
             <% end %>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <!-- ここにページネーションの要素を追加 -->
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <%= paginate @members %><!-- ここにページネーションの要素を追加 -->
     </div>
   </div>
   <footer class="text-center">
