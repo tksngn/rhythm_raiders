@@ -1,0 +1,38 @@
+<div class="content">
+    <div id="logo" class="logo" style="position: absolute; top: 10px; right: 10px;">
+        <%= image_tag("rhythm_raiders_logo1.jpg", alt: "Rhythm Raiders Logo") %>
+    </div>
+    <div class="detail-box">
+      <h2>メンバー詳細</h2>
+      <p><strong>Name:</strong> <%= @member.name %></p>
+      <p><strong>CreaterName:</strong> <%= @member.creater_name %></p>
+      <p><strong>ProfileImage:</strong> <%= @member.profile_image.present? ? (image_tag @member.profile_image) : (image_tag "no_image.jpg") %></p>
+      <p><strong>Email:</strong> <%= @member.email %></p>
+      <p><strong>PhoneNumber:</strong> <%= @member.phone_number %></p>
+      <p><strong>Gender:</strong> <%= @member.gender %></p>
+    </div>
+    <div class="detail-box">
+      <h2>投稿コメント詳細</h2>
+      <p><strong>PostComment:</strong></p>
+      <% @member.member_comments.each do |comment| %>
+          <p><%= comment.content %></p>
+      <% end %>
+    </div>
+    <div class="detail-box">
+      <h2>投稿楽曲詳細</h2>
+      <% if @track.present? %>
+        <p><strong>Music Title:</strong> <%= @track.music_title %></p>
+        <p><strong>Music Genre:</strong> <%= @track.music_genre %></p>
+        <p><strong>A word from the creater:</strong> <%= @track.creater_word %></p>
+      <% else %>
+        <p>トラックが存在しません。</p>
+      <% end %>
+    </div>
+
+    <a href="/admin/members/:id/edit">
+    <button id="editButton" class="btn btn-primary" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); padding: 15px 300px;">To Edit</button>
+    <p class="copyright white-text" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">©20231225 Rhythm RAIDERS</p>
+</div>
+
+<%= javascript_pack_tag 'application' %>
+
