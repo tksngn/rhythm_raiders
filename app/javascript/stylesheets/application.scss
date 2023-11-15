@@ -1,9 +1,14 @@
 @use '~bootstrap/scss/bootstrap';
 
+.content img {
+  /* その他のスタイル */
+  margin-bottom: 100px; /* 下側のマージンを追加 */
+}
 
 .content {
     width: 45%;
     margin: 20px;
+    margin-bottom: 100px; /* 下側のマージンを追加 */
 }
 .content p {
     font-style: italic;
@@ -43,14 +48,71 @@ body, .card {
   background-size: cover;
 }
 
+.unsubscribe, .withdraw {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-image: url("/images/jymy-duhomme-MVTtSqHibDs-unsplash.jpg");
+  background-size: cover;
+}
+
 .white-text {
     color: #ffffff;
   }
-  
+
 .detail-box {
     border: 1px solid #fff;
     border-radius: 15px;
     padding: 15px;
     margin-bottom: 15px;
 }
-  
+
+.suspend {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.bottomlogo {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.bottomtext {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+.button, .button2 {
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px; /* 右側のマージンを追加 */
+  text-align: center; /* テキストを中央揃えに */
+}
+
+.button {
+  background-color: #008000; /* 緑色 */
+}
+
+.button2 {
+  background-color: #FF0000; /* 赤色 */
+}
+

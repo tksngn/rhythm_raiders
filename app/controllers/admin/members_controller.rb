@@ -1,5 +1,5 @@
 class Admin::MembersController < ApplicationController
-  before_action :set_member, only: [:show]
+  before_action :set_member, only: [:show, :edit, :update]
 
   def index
     @members = Member.page(params[:page])
@@ -21,11 +21,27 @@ class Admin::MembersController < ApplicationController
     end
   end
 
+  def edit
+
+  end
+
+  def update
+    if @member.update(member_params)
+      redirect_to admin_member_path(@member), notice: 'メンバー情報を更新しました。'
+    else
+      render :edit
+    end
+  end
 
   private
 
   def set_member
-    @member = Member.find_by(id: params[:id]) || Member.new
+    @member = Member.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to admin_members_path, alert: "指定されたメンバーは存在しません。"
+  end
 
+  def member_params
+    params.require(:member).permit(:name, :email, :password, :password_confirmation)
   end
 end

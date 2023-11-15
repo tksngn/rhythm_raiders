@@ -3,8 +3,19 @@ Rails.application.routes.draw do
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
   }
+
   namespace :admin do
-    resources :members, only: [:index, :show, :edit]
+    resources :members, only: [:index, :show, :edit] do
+      member do
+        get :suspend
+      end
+    end
+    resources :posts, only: [:index, :show, :destroy] do
+      member do
+        get :suspend
+        patch :suspend
+      end
+    end
   end
 
   get 'homes/admin_top', to: 'homes#admin_top', as: 'admin_top'
@@ -14,6 +25,17 @@ Rails.application.routes.draw do
     registrations: "member/registrations",
     sessions: 'member/sessions'
   }
+  namespace :member do
+    resources :customers do
+      collection do
+        get :mypage
+        get :edit
+        patch :update
+        get :unsubscribe
+        patch :withdraw
+      end
+    end
+  end
 
   get 'homes/member_top', to: 'homes#member_top', as: 'member_top'
 

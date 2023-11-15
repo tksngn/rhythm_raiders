@@ -1,0 +1,20 @@
+<div class="unsubscribe">
+  <div class="content">
+    <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders Logo") %>
+
+    <p>Rhythm RAIDERSの退会手続きを行います。</p>
+    <p>本当によろしいですか？</p>
+    <p>あなたのアカウント情報やデータは全て削除され、復元することはできません。</p>
+    <p>しかし、あなたが再びRhythm RAIDERSを利用したいと思った時は、新たにアカウントを作成していただけます。ご理解とご協力をお願いします。</p>
+
+    <p>You’re cancelling your Rhythm RAIDERS account. All data will be deleted and can’t be restored. You can create a new account if you return. Thank you for your understanding.</p>
+
+    <%= link_to '退会しない<br>Stay Subscribe'.html_safe, mypage_member_customers_path, method: :get, class: "button" %>
+    <%= link_to '退会する<br>Unsubscribe'.html_safe, withdraw_member_customers_path, method: :patch, class: "button2" %>
+  </div>
+
+  <div class="bottomtext">
+    <p>©20231225 Rhythm RAIDERS</p>
+  </div>
+</div>
+

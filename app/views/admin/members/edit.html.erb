@@ -1,1 +1,5 @@
-<h1>メンバー・楽曲情報編集画面</h1>
+<h1>メンバー情報編集</h1>
+<%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
+  <!-- メンバー情報の編集フォームをここに配置 -->
+  <%= form.submit "変更保存" %>
+<% end %>
