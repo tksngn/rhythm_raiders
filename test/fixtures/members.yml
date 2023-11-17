@@ -1,0 +1,17 @@
+member1:
+  name: "Test Member 1"
+  email: "test1@example.com"
+  password: "password"
+  password_confirmation: "password"
+
+member2:
+  name: "Test Member 2"
+  email: "test2@example.com"
+  password: "password"
+  password_confirmation: "password"
+
+member3:
+  name: "Test Member 3"
+  email: "test3@example.com"
+  password: "password"
+  password_confirmation: "password"

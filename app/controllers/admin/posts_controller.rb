@@ -5,7 +5,11 @@ class Admin::PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.find_by(id: params[:id]) || Post.new
+    unless @post
+    flash[:alert] = "Post not found"
+    redirect_to admin_posts_path
+    end
   end
 
   def destroy

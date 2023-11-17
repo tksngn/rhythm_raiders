@@ -1,26 +1,71 @@
-<h2>Log in</h2>
+<%= form_with model: @member, url: members_path do |form| %>
+  <% if @member.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h2>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
-
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+      <ul>
+      <% @member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
     </div>
   <% end %>
 
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :creator_name %>
+    <%= form.text_field :creator_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :profile_image %>
+    <%= form.file_field :profile_image %>
+  </div>
+
+  <div class="field">
+    <%= form.label :email %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation %>
+  </div>
+
+  <div class="field">
+    <%= form.label :phone_number %>
+    <%= form.telephone_field :phone_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :gender %>
+    <%= form.radio_button :gender, "Male" %> Male
+    <%= form.radio_button :gender, "Non-binary" %> Non-binary
+    <%= form.radio_button :gender, "Female" %> Female
+  </div>
+
+  <div class="field">
+    <%= form.label :terms_and_conditions %>
+    <%= form.radio_button :terms_and_conditions, "Agree" %> Agree
+    <%= form.radio_button :terms_and_conditions, "Disagree" %> Disagree
+  </div>
+
+  <div class="field">
+    <%= form.label :privacy_policy %>
+    <%= form.radio_button :privacy_policy, "Agree" %> Agree
+    <%= form.radio_button :privacy_policy, "Disagree" %> Disagree
+  </div>
+
   <div class="actions">
-    <%= f.submit "Log in" %>
+    <%= form.submit "新規登録" %>
   </div>
 <% end %>
-
-<%= render "member/shared/links" %>

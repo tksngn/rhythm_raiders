@@ -18,6 +18,7 @@
     </div>
   </div>
 
+  <body>
   <div class="row">
     <div class="col-12">
       <div class="table-responsive">
@@ -33,10 +34,18 @@
           <tbody>
             <% @members.each do |member| %>
               <tr>
-                <td class="col-2 white-text"><%= member.user_name %></td>
-                <td class="col-1 white-text"><%= member.status %></td>
-                <td class="col-3 white-text"><%= member.music_title %></td>
-                <td class="col-6 white-text"><%= member.comment %></td>
+                <td class="col-2 white-text"><%= link_to member.name, admin_member_path(member) %></td>
+                <td class="col-1 white-text">
+                  <% if member.active %>
+                    <%= link_to '有効', '#', class: 'btn btn-primary' %>
+                  <% elsif !member.active %>
+                    <%= link_to '利用停止中', edit_admin_member_path(member), class: 'btn btn-dark' %>
+                  <% else %>
+                    <%= link_to '退会', '#', class: 'btn btn-danger' %>
+                  <% end %>
+                </td>
+                <td class="col-3 white-text"><%= link_to (member.created_tracks.first&.title || 'No tracks created'), admin_member_path(member) %></td>
+                <td class="col-6 white-text"><%= link_to (member.post_comments.first&.id || 'No comment'), admin_member_path(member) %></td>
               </tr>
             <% end %>
           </tbody>

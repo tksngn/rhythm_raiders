@@ -10,7 +10,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_15_064913) do
+ActiveRecord::Schema.define(version: 2023_11_17_103853) do
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "active_storage_variant_records", force: :cascade do |t|
+    t.bigint "blob_id", null: false
+    t.string "variation_digest", null: false
+    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
 
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,9 +56,11 @@ ActiveRecord::Schema.define(version: 2023_11_15_064913) do
     t.string "comment_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "posted_member_name"
   end
 
   create_table "created_tracks", force: :cascade do |t|
+    t.integer "member_id"
     t.string "music_title", null: false
     t.string "creater_name", null: false
     t.string "music_genre", null: false
@@ -39,6 +69,7 @@ ActiveRecord::Schema.define(version: 2023_11_15_064913) do
     t.datetime "release_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 
   create_table "follows", force: :cascade do |t|
@@ -66,10 +97,12 @@ ActiveRecord::Schema.define(version: 2023_11_15_064913) do
   end
 
   create_table "member_comments", force: :cascade do |t|
+    t.integer "member_id"
     t.string "comment_content", null: false
     t.integer "like_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_member_comments_on_member_id"
   end
 
   create_table "member_likes", force: :cascade do |t|
@@ -104,15 +137,18 @@ ActiveRecord::Schema.define(version: 2023_11_15_064913) do
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "active"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
 
   create_table "post_comments", force: :cascade do |t|
+    t.integer "member_id"
     t.string "comment_content", null: false
     t.integer "like_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_post_comments_on_member_id"
   end
 
   create_table "post_likes", force: :cascade do |t|
@@ -122,9 +158,17 @@ ActiveRecord::Schema.define(version: 2023_11_15_064913) do
   end
 
   create_table "posts", force: :cascade do |t|
+    t.integer "member_id"
     t.string "post_comment", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_posts_on_member_id"
   end
 
+  add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "created_tracks", "members"
+  add_foreign_key "member_comments", "members"
+  add_foreign_key "post_comments", "members"
+  add_foreign_key "posts", "members"
 end

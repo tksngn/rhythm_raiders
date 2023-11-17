@@ -12,7 +12,7 @@ import "jquery";
 import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
-import "../stylesheets/homes/unsubscribe";
+//import "../stylesheets/homes/unsubscribe";
 
 
 Rails.start()

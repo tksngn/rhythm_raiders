@@ -5,9 +5,10 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    resources :members, only: [:index, :show, :edit] do
+    resources :members, only: [:index, :show, :edit, :update] do
       member do
         get :suspend
+        post :unban
       end
     end
     resources :posts, only: [:index, :show, :destroy] do

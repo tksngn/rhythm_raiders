@@ -1,10 +1,22 @@
 class Member::CustomersController < ApplicationController
 
+  def maypage
+
+  end
+
+  def edit
+
+  end
+
+  def update
+
+  end
+
   def unsubscribe
 
   end
 
-  def show
+  def withdraw
 
   end
 end

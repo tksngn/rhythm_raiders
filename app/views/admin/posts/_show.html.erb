@@ -1,0 +1,14 @@
+<div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; margin-top: 20px; margin: 0 auto; width: 50%;">
+  <h2 style="text-align: center;">投稿楽曲編集</h2>
+
+  <% if @post.present? %>
+    <%= form_with(model: @post, url: admin_post_path(@post), local: true) do |form| %>
+      <!-- 投稿楽曲編集フォーム -->
+      <p><strong>Music Title:</strong> <%= @post.music_title %></p>
+      <p><strong>Music Genre:</strong> <%= @post.music_genre %></p>
+      <p><strong>A word from the creater:</strong> <%= @post.creater_word %></p>
+    <% end %>
+  <% else %>
+    <p>投稿楽曲が存在しません。</p>
+  <% end %>
+</div>

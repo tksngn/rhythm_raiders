@@ -1,7 +1,7 @@
-<div class="content">
-    <div id="logo" class="logo" style="position: absolute; top: 10px; right: 10px;">
-        <%= image_tag("rhythm_raiders_logo1.jpg", alt: "Rhythm Raiders Logo") %>
-    </div>
+  <div id="logo" class="logo" style="position: absolute; top: 10px; right: 10px;">
+      <%= image_tag("rhythm_raiders_logo1.jpg", alt: "Rhythm Raiders Logo") %>
+  </div>
+  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 50%;">
     <div class="detail-box">
       <h2>メンバー詳細</h2>
       <p><strong>Name:</strong> <%= @member.name %></p>
@@ -28,11 +28,12 @@
         <p>トラックが存在しません。</p>
       <% end %>
     </div>
-
-    <a href="/admin/members/:id/edit">
-    <button id="editButton" class="btn btn-primary" style="position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); padding: 15px 300px;">To Edit</button>
-    <p class="copyright white-text" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">©20231225 Rhythm RAIDERS</p>
-</div>
+  </div>
+<%= link_to edit_admin_member_path(@member), class: 'btn btn-primary', style: 'position: absolute; bottom: 50px; left: 50%; transform: translateX(-50%); padding: 15px 300px;' do %>
+ To Edit
+<% end %>
+<p class="copyright white-text" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">©20231225 Rhythm RAIDERS</p>
 
 <%= javascript_pack_tag 'application' %>
+
 

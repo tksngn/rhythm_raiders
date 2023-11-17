@@ -2,7 +2,7 @@ class Admin::MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update]
 
   def index
-    @members = Member.page(params[:page])
+    @members = Member.order(updated_at: :desc).page(params[:page])
   end
 
   def show
@@ -22,15 +22,27 @@ class Admin::MembersController < ApplicationController
   end
 
   def edit
-
+    @member = Member.find(params[:id])
+    @posts = @member.posts
+    @post = @posts.first # これは一例で、実際のコードは要件によります
+    @comments = Comment.where(post_id: @posts.pluck(:id))
   end
+
 
   def update
     if @member.update(member_params)
-      redirect_to admin_member_path(@member), notice: 'メンバー情報を更新しました。'
+      redirect_to admin_members_path, notice: 'メンバー情報を更新しました。'
     else
+      flash[:alert] = @member.errors.full_messages.join(", ")
       render :edit
     end
+  end
+
+
+  def unban
+    @member = Member.find(params[:id])
+    @member.update(active: true)
+    redirect_to admin_member_path(@member)
   end
 
   private
@@ -42,6 +54,6 @@ class Admin::MembersController < ApplicationController
   end
 
   def member_params
-    params.require(:member).permit(:name, :email, :password, :password_confirmation)
+    params.require(:member).permit(:name, :email, :password, :password_confirmation, :active)
   end
 end
