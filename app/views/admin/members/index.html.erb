@@ -39,7 +39,7 @@
                   <% if member.active %>
                     <%= link_to '有効', '#', class: 'btn btn-primary' %>
                   <% elsif !member.active %>
-                    <%= link_to '利用停止中', edit_admin_member_path(member), class: 'btn btn-dark' %>
+                    <%= link_to '停止中', edit_admin_member_path(member), class: 'btn btn-dark' %>
                   <% else %>
                     <%= link_to '退会', '#', class: 'btn btn-danger' %>
                   <% end %>

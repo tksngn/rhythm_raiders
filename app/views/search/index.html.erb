@@ -1,0 +1,25 @@
+<div class="search_top">
+  <div style="text-align: center;">
+    <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders Logo", width: "800", height: "200") %>
+  </div>
+  <div style="border: 1px solid #030303; border-radius: 10px; padding: 10px; position: relative; margin: 100px auto; width: 50%;">
+    <h1>検索結果</h1>
+    <% if @results.blank? %>
+      <p>検索結果はありません。</p>
+    <% else %>
+      <% @results.each do |result| %>
+        <div class="result-item">
+          <%= link_to result.music_title, created_track_path(result) %>
+          <p><%= result.music_genre %></p>
+          <p><%= result.creater_name %></p>
+        </div>
+      <% end %>
+    <% end %>
+
+    <div style="position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%);">
+      <%= link_to 'Back to Home', root_path, method: :get, class: "button", style: "width: 100%;" %>
+      <p>©20231225 Rhythm RAIDERS</p>
+    </div>
+  </div>
+</div>
+

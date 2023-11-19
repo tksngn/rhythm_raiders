@@ -1,0 +1,21 @@
+<div class="member_top">
+  <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders Logo", width: "1000", height: "200") %>
+
+  <%= form_with(url: search_index_path, method: "get", local: true) do |form| %>
+    <%= form.text_field :keyword, placeholder: "Enter keyword" %>
+    <%= form.submit "検索" %>
+  <% end %>
+
+  <%= link_to "Guest SignUp", "/guest/registrations/sign_up" %>
+  <%= link_to "Sign Up", "/member/registrations/sign_up" %>
+  <%= link_to "Log In", "/member/sessions/sign_in" %>
+  <%= link_to "Music Index", "/posts" %>
+  <%= link_to "About", "/homes/about" %>
+
+  <p>「Rhythm RAIDERS」はゲーム音楽制作者とファンをつなぐゲーム音楽投稿コミュニティサイトです。</p>
+  <p>“Rhythm RAIDERS” is a platform that bridges game music composers and enthusiasts, serving as a hub for game music submissions and discussions.</p>
+
+  <footer>
+    ©20231225 Rhythm RAIDERS
+  </footer>
+</div>

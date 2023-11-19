@@ -36,7 +36,7 @@ body, .card {
 
 .about {
   color: white;
-  text-shadow: -1px 0 gray, 0 1px grey, 1px 0 grey, 0 -1px #323232;
+  text-shadow: -2px 0 gray, 0 2px grey, 2px 0 grey, 0 -2px #323232;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -46,6 +46,44 @@ body, .card {
   background-image: url('/images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.member_top {
+  color: white;
+  text-shadow: -2px 0 gray, 0 2px grey, 2px 0 grey, 0 -2px #323232;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+  background-image: url('/images/281958-Sepik.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.search_top {
+  color: white;
+  text-shadow: -2px 0 gray, 0 2px grey, 2px 0 grey, 0 -2px #323232;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  text-align: center;
+  background-image: url('/images/cai-fang-WoG139ylZJs-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.member_top > * {
+  margin-bottom: 50px;
+  font-size: 25px;
+}
+
+input[type="submit"] {
+  background-color: green;
+  color: white;
 }
 
 .unsubscribe, .withdraw {
@@ -114,5 +152,10 @@ body, .card {
 
 .button2 {
   background-color: #FF0000; /* 赤色 */
+}
+
+.result-item, .back-button, h1, p {
+  color: #ffffff; /* 黒色の文字 */
+  text-shadow: 2px 2px #000000; /* グレーの縁取り */
 }
 

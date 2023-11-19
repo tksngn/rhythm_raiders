@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root to: 'homes#member_top'
 
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -21,11 +22,11 @@ Rails.application.routes.draw do
 
   get 'homes/admin_top', to: 'homes#admin_top', as: 'admin_top'
 
-
   devise_for :members, skip: [:passwords], controllers: {
     registrations: "member/registrations",
     sessions: 'member/sessions'
   }
+
   namespace :member do
     resources :customers do
       collection do
@@ -38,18 +39,12 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'homes/member_top', to: 'homes#member_top', as: 'member_top'
-
-
   devise_for :guests, controllers: {
     sessions: 'guests/sessions',
     registrations: 'guests/registrations'
   }
-
-  get 'homes/guest_top', to: 'homes#guest_top', as: 'guest_top'
-
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  resources :created_tracks
   get 'homes/about', to: 'homes#about', as: 'about'
-
+  get 'search', to: 'search#index', as: 'search_index'
+  
 end

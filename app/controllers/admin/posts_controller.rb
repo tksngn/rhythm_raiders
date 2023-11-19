@@ -25,5 +25,9 @@ class Admin::PostsController < ApplicationController
       render :suspend
     end
   end
+  
+  def search
+    @results = Post.where('music_title LIKE ? OR music_genre LIKE ? OR creater_name LIKE ?', "%#{params[:keyword]}%", "%#{params[:keyword]}%", "%#{params[:keyword]}%")
+  end
 end
 
