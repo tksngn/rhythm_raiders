@@ -43,8 +43,9 @@ Rails.application.routes.draw do
     sessions: 'guests/sessions',
     registrations: 'guests/registrations'
   }
+
   resources :created_tracks
   get 'homes/about', to: 'homes#about', as: 'about'
   get 'search', to: 'search#index', as: 'search_index'
-  
+
 end

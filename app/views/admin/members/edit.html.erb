@@ -1,61 +1,61 @@
-<div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 50%;">
-  <h2 style="text-align: center;">メンバー情報編集</h2>
+<div class="table-responsive">
+  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 95%;">
+    <h2 style="text-align: center; color: orange;">メンバー情報編集</h2>
 
-  <%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
-    <!-- メンバー情報の編集フォーム -->
-    <p><strong>Name:</strong> <%= @member.name %></p>
-    <p><strong>Creater Name:</strong> <%= @member.creater_name %></p>
-    <p><strong>Profile image:</strong> <%= image_tag @member.profile_image.url if @member.profile_image.present? %></p>
-    <p><strong>Email:</strong> <%= @member.email %></p>
-    <p><strong>Password:</strong> <%= @member.encrypted_password %></p>
-    <p><strong>Phone Number:</strong> <%= @member.phone_number %></p>
-    <p><strong>Gender:</strong> <%= @member.gender %></p>
-
-   <div style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%);">
-  <!-- 利用停止のラジオボタン -->
-  <%= form.radio_button :active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
-  <!-- 利用停止解除のラジオボタン -->
-  <%= form.radio_button :active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
-</div>
-<div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">
-  <%= form.submit "変更保存", class: "btn btn-success", style: "width: 300px; font-size: 20px; padding: 10px 24px;" %>
-</div>
-<% end %>
-</div>
-
-
-
-<!-- 投稿楽曲情報表示 -->
-<%= render 'admin/posts/show' %>
+    <%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
+      <div style="margin-left: auto; margin-right: auto; width: 50%;">
+        <!-- メンバー情報の編集フォーム -->
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Name:</strong> <%= @member.name %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Creater Name:</strong> <%= @member.creater_name %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Profile image:</strong> <%= image_tag @member.profile_image.url if @member.profile_image.present? %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= @member.email %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Password:</strong> <%= @member.encrypted_password %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= @member.phone_number %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Gender:</strong> <%= @member.gender %></p>
+        <div style="margin-left: auto; margin-right: auto; width: 50%;">
+          <!-- 利用停止のラジオボタン -->
+          <%= form.radio_button :active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
+          <!-- 利用停止解除のラジオボタン -->
+          <%= form.radio_button :active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
+        </div>
+      </div>
+      <div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">
+        <%= form.submit "変更保存", class: "btn btn-success", style: "width: 300px; font-size: 20px; padding: 10px 24px;" %>
+      </div>
+    <% end %>
+  </div>
+  <!-- 投稿楽曲情報表示 -->
+  <%= render 'admin/posts/show' %>
 
 <!-- 投稿コメント情報表示 -->
-<%= render 'admin/comments/show' %>
+  <%= render 'admin/comments/show' %>
 
 <!-- 追加した投稿コメント情報表示 -->
-<div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 50%;">
-  <h2 style="text-align: center;">投稿されたコメント詳細</h2>
-  <% @member.member_comments.each do |comment| %>
-    <p><strong>Comment:</strong> <%= comment.content %></p>
-    <p><strong>Commented by:</strong> <%= comment.user.name %></p>
-  <% end %>
-</div>
-<!-- 投稿コメント情報表示 -->
-<% @member.member_comments.each do |comment| %>
-  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 50%;">
-    <h2 style="text-align: center;">コメント投稿者: <%= comment.user.name %></h2>
-    <p><strong>Comment:</strong> <%= comment.content %></p>
-    <p><strong>Commented by:</strong> <%= comment.user.name %></p>
-    <p><strong>Email:</strong> <%= comment.user.email %></p>
-    <p><strong>Phone Number:</strong> <%= comment.user.phone_number %></p>
-    <!-- 利用停止ボタン -->
-    <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
+  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
+    <h2 style="text-align: center; color: orange;">投稿されたコメント詳細</h2>
+    <div style="margin-left: auto; margin-right: auto; width: 50%;">
+      <% @member.member_comments.each do |comment| %>
+        <p><strong>Comment:</strong> <%= comment.content %></p>
+        <p><strong>Commented by:</strong> <%= comment.user.name %></p>
+      <% end %>
+      <!-- 投稿コメント情報表示 -->
+      <% @member.member_comments.each do |comment| %>
+        <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
+          <h2 style="text-align: center; color: orange;">コメント投稿者: <%= comment.user.name %></h2>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Comment:</strong> <%= comment.content %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Commented by:</strong> <%= comment.user.name %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= comment.user.email %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= comment.user.phone_number %></p>
+      <!-- 利用停止ボタン -->
+          <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
+        </div>
+      <% end %>
+    </div>
+  <div style="position: fixed; bottom: 5px; right: 5px;">
+    <%= image_tag("rhythm_raiders_logo1.jpg") %>
   </div>
-<% end %>
 
-<div style="position: fixed; bottom: 5px; right: 5px;">
-  <%= image_tag("rhythm_raiders_logo1.jpg") %>
-</div>
-
-<div style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);">
-  ©20231225 Rhythm RAIDERS
+  <div style="position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);">
+    ©20231225 Rhythm RAIDERS
+  </div>
 </div>

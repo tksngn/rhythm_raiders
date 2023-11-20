@@ -1,35 +1,42 @@
-  <div id="logo" class="logo" style="position: absolute; top: 10px; right: 10px;">
-      <%= image_tag("rhythm_raiders_logo1.jpg", alt: "Rhythm Raiders Logo") %>
+<div class="table-responsive">
+  <div style="position: fixed; top: 5px; right: 5px;">
+    <%= image_tag("rhythm_raiders_logo1.jpg") %>
   </div>
-  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 50%;">
-    <div class="detail-box">
-      <h2>メンバー詳細</h2>
-      <p><strong>Name:</strong> <%= @member.name %></p>
-      <p><strong>CreaterName:</strong> <%= @member.creater_name %></p>
-      <p><strong>ProfileImage:</strong> <%= @member.profile_image.present? ? (image_tag @member.profile_image) : (image_tag "no_image.jpg") %></p>
-      <p><strong>Email:</strong> <%= @member.email %></p>
-      <p><strong>PhoneNumber:</strong> <%= @member.phone_number %></p>
-      <p><strong>Gender:</strong> <%= @member.gender %></p>
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
+      <div style="margin-left: auto; margin-right: auto; width: 50%;">
+        <h2 style="text-align: center; color: orange;">メンバー詳細</h2>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Name:</strong> <%= @member.name %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">CreaterName:</strong> <%= @member.creater_name %></p>
+        <p><strong style="color: orange;">ProfileImage:</strong> <%= @member.profile_image.present? ? (image_tag @member.profile_image) : (image_tag "no_image.jpg") %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= @member.email %></p>
+        <p><strong style="color: orange;">PhoneNumber:</strong> <%= @member.phone_number %></p>
+        <p><strong style="color: orange;">Gender:</strong> <%= @member.gender %></p>
+      </div>
     </div>
-    <div class="detail-box">
-      <h2>投稿コメント詳細</h2>
-      <p><strong>PostComment:</strong></p>
-      <% @member.member_comments.each do |comment| %>
-          <p><%= comment.content %></p>
-      <% end %>
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 98%;">
+      <div style="margin-left: auto; margin-right: auto; width: 50%;">
+        <h2 style="text-align: center; color: orange;">投稿コメント詳細</h2>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">PostComment:</strong></p>
+        <% @member.member_comments.each do |comment| %>
+        <p style="word-wrap: break-word;"><%= comment.content %></p>
+        <% end %>
+      </div>
     </div>
-    <div class="detail-box">
-      <h2>投稿楽曲詳細</h2>
-      <% if @track.present? %>
-        <p><strong>Music Title:</strong> <%= @track.music_title %></p>
-        <p><strong>Music Genre:</strong> <%= @track.music_genre %></p>
-        <p><strong>A word from the creater:</strong> <%= @track.creater_word %></p>
-      <% else %>
-        <p>トラックが存在しません。</p>
-      <% end %>
+    <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 98%;">
+      <div style="margin-left: auto; margin-right: auto; width: 50%;">
+        <h2 style="text-align: center; color: orange;">投稿楽曲詳細</h2>
+        <% if @track.present? %>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Music Title:</strong> <%= @track.music_title %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Music Genre:</strong> <%= @track.music_genre %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">A word from the creater:</strong> <%= @track.creater_word %></p>
+        <% else %>
+          <p>トラックが存在しません。</p>
+        <% end %>
+      </div>
     </div>
   </div>
-<%= link_to edit_admin_member_path(@member), class: 'btn btn-primary', style: 'position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); padding: 15px 300px;' do %>
- To Edit
-<% end %>
-<p class="copyright white-text" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">©20231225 Rhythm RAIDERS</p>
+  <%= link_to edit_admin_member_path(@member), class: 'btn btn-primary', style: 'position: absolute; bottom: 100px; left: 50%; transform: translateX(-50%); padding: 15px 300px;' do %>
+    To Edit
+  <% end %>
+  <p class="copyright white-text" style="position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);">©20231225 Rhythm RAIDERS</p>
+</div>

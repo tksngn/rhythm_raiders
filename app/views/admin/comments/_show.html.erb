@@ -1,17 +1,19 @@
-<div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; margin-top: 20px; margin: 0 auto; width: 50%;">
-  <h2 style="text-align: center;">投稿コメント情報編集</h2>
-
-  <% if @member.member_comments.present? %>
-    <% @member.member_comments.each do |comment| %>
-      <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
-        <!-- 投稿コメント編集フォーム -->
-        <p>
-          <strong>コメント:</strong>
-          <%= form.text_area :content, value: comment.content %>
-        </p>
+<div class="table-responsive">
+  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; margin-top: 20px; margin: 0 auto; width: 95%;">
+    <h2 style="text-align: center; color: orange;">投稿コメント情報編集</h2>
+    <div style="margin-left: auto; margin-right: auto; width: 50%;">
+      <% if @member.member_comments.present? %>
+        <% @member.member_comments.each do |comment| %>
+          <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
+            <!-- 投稿コメント編集フォーム -->
+            <p style="word-wrap: break-word;"><strong style="color: orange;">コメント:</strong>
+              <%= form.text_area :content, value: comment.content %>
+            </p>
+          <% end %>
+        <% end %>
+      <% else %>
+        <p>コメントが存在しません。</p>
       <% end %>
-    <% end %>
-  <% else %>
-    <p>コメントが存在しません。</p>
-  <% end %>
+    </div>
+  </div>
 </div>
