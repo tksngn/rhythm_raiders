@@ -16,6 +16,7 @@ class Member < ApplicationRecord
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |member|
     member.password = SecureRandom.urlsafe_base64
+    member.confirmed_at = Time.now
     # 必要に応じて他の属性を設定
     end
   end

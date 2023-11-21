@@ -1,0 +1,45 @@
+<div class="flex-container">
+  <div class="container centered-content" style="width: 50%;">
+    <h1>Rhythm RAIDERS</h1>
+    <h3>ゲストログイン完了</h3>
+    <h3>Guest LogIn  Completed</h3>
+    <p>
+      ようこそゲストさん<br>
+      ゲストの皆様、試聴ボタンで30秒だけの楽曲をお楽しみいただけますが、新規登録をしていただくと全曲をご堪能いただけます。
+      ぜひこの機会にご登録ください。<br>
+      Welcome, Guest!
+      As a guest, you can enjoy a 30-second preview of each song with the preview button. However, by registering as a new user, you can enjoy all songs in full. Please take this opportunity to register.
+    </p>
+    <!-- 楽曲の一覧を表示するエリア -->
+    <div class="track-list">
+      <% @created_tracks.each do |track| %>
+        <!-- 楽曲の情報と音楽プレイヤーを一つの塊として表示するエリア -->
+        <div class="track-item">
+          <!-- 楽曲のタイトルを表示するエリア -->
+          <h4><%= track.music_title %></h4>
+          <!-- 楽曲のジャンルを表示するエリア -->
+          <p>Music Genre: <%= track.music_genre %></p>
+          <!-- 楽曲の作成者を表示するエリア -->
+          <p>Creater Name: <%= track.member.username %></p>
+          <!-- 音楽プレイヤーを表示するエリア -->
+          <div class="music-player">
+            <audio id="audio-player" controls>
+              <source src="<%= track.music_file %>" type="audio/mpeg">
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+          <!-- 試聴ボタンを表示するエリア -->
+          <div class="preview-button">
+            <button onclick="playPreview(<%= track.id %>)">Preview</button>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- ページネーションを表示するエリア -->
+    <div class="pagination">
+      <%= paginate @created_tracks unless @created_tracks.empty? %>
+    </div>
+  </div>
+</div>
+
+

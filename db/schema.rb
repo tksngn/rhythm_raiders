@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_17_103853) do
+ActiveRecord::Schema.define(version: 2023_11_21_130021) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(version: 2023_11_17_103853) do
     t.datetime "release_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "is_guest"
+    t.string "music_file"
     t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 

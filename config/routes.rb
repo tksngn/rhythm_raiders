@@ -37,12 +37,14 @@ Rails.application.routes.draw do
         patch :withdraw
       end
     end
+    resources :created_tracks do
+      collection do
+        get :guest_index
+      end
+    end
   end
 
-  devise_for :guests, controllers: {
-    sessions: 'guests/sessions',
-    registrations: 'guests/registrations'
-  }
+  post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'
 
   resources :created_tracks
   get 'homes/about', to: 'homes#about', as: 'about'

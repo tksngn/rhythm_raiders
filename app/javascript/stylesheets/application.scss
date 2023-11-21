@@ -154,3 +154,15 @@ input[type="submit"] {
   text-shadow: 2px 2px #000000; /* グレーの縁取り */
 }
 
+.music-player {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  color: #000;
+  padding: 20px;
+}
+
+.audio-player {
+  width: 100%;
+}
