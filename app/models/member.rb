@@ -6,8 +6,9 @@ class Member < ApplicationRecord
   validates :active, inclusion: { in: [true, false] }
 
   has_one_attached :profile_image
-  has_many :created_tracks
-  has_many :post_comments
+  has_many :created_tracks, dependent: :destroy
+  has_many :likes, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
   has_many :member_comments
   has_many :posts
 

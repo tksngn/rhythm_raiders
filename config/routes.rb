@@ -28,7 +28,7 @@ Rails.application.routes.draw do
   }
 
   namespace :member do
-    resources :customers do
+    resources :customers, only: [:index, :show, :edit, :update] do
       collection do
         get :mypage
         get :edit
@@ -37,7 +37,9 @@ Rails.application.routes.draw do
         patch :withdraw
       end
     end
-    resources :created_tracks do
+    resources :created_tracks, only: [:new, :create, :index, :show, :destroy] do
+      resources :post_comments, only: [:create, :destroy]
+      resource :like, only: [:create, :destroy]
       collection do
         get :guest_index
       end
@@ -46,7 +48,6 @@ Rails.application.routes.draw do
 
   post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'
 
-  resources :created_tracks
   get 'homes/about', to: 'homes#about', as: 'about'
   get 'search', to: 'search#index', as: 'search_index'
 

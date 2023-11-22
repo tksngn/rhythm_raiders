@@ -1,0 +1,4 @@
+<h1>楽曲一覧画面</h1>
+<% @created_tracks.each do |created_track| %>
+<p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+<% end %>

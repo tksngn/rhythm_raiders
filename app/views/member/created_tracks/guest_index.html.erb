@@ -11,33 +11,44 @@
       As a guest, you can enjoy a 30-second preview of each song with the preview button. However, by registering as a new user, you can enjoy all songs in full. Please take this opportunity to register.
     </p>
     <!-- 楽曲の一覧を表示するエリア -->
-    <div class="track-list">
-      <% @created_tracks.each do |track| %>
-        <!-- 楽曲の情報と音楽プレイヤーを一つの塊として表示するエリア -->
-        <div class="track-item">
-          <!-- 楽曲のタイトルを表示するエリア -->
-          <h4><%= track.music_title %></h4>
-          <!-- 楽曲のジャンルを表示するエリア -->
-          <p>Music Genre: <%= track.music_genre %></p>
-          <!-- 楽曲の作成者を表示するエリア -->
-          <p>Creater Name: <%= track.member.username %></p>
-          <!-- 音楽プレイヤーを表示するエリア -->
-          <div class="music-player">
-            <audio id="audio-player" controls>
-              <source src="<%= track.music_file %>" type="audio/mpeg">
+    <div class="container">
+  <% @created_tracks.each do |created_track| %>
+    <div class="row mb-2">
+      <div class="col-md-12">
+        <div class="card flex-md-row mb-4 shadow-sm h-md-250 rounded track-card">
+          <div class="card-body d-flex flex-column align-items-start">
+            <h3 class="mb-0">
+              <%= created_track.music_title %>
+            </h3>
+            <p class="card-text mb-auto">Music Genre: <%= created_track.music_genre %></p>
+            <p class="card-text mb-auto">A word from the creater: <%= created_track.creater_word %></p>
+            <p class="card-text mb-auto">Creater Name: <%= created_track.creater_name %></p>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="playPreview(<%= created_track.id %>)">Preview</button>
+          </div>
+          <div class="col-auto d-none d-lg-block">
+            <audio id="audio-player-<%= created_track.id %>" controls>
+              <source src="<%= created_track.music_file %>" type="audio/mpeg">
               Your browser does not support the audio element.
             </audio>
           </div>
-          <!-- 試聴ボタンを表示するエリア -->
-          <div class="preview-button">
-            <button onclick="playPreview(<%= track.id %>)">Preview</button>
-          </div>
         </div>
-      <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script>
+function playPreview(id) {
+  var audio = document.getElementById('audio-player-' + id);
+  audio.currentTime = 0;
+  audio.play();
+}
+</script>
+
     </div>
     <!-- ページネーションを表示するエリア -->
     <div class="pagination">
-      <%= paginate @created_tracks unless @created_tracks.empty? %>
+      <!--%= paginate @created_tracks unless @created_tracks.empty? % -->
     </div>
   </div>
 </div>

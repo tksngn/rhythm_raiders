@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_11_21_130021) do
+ActiveRecord::Schema.define(version: 2023_11_22_054203) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -69,8 +69,9 @@ ActiveRecord::Schema.define(version: 2023_11_21_130021) do
     t.datetime "release_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_guest"
     t.string "music_file"
+    t.boolean "is_guest", default: false
+    t.boolean "is_public", default: false
     t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 
@@ -146,10 +147,12 @@ ActiveRecord::Schema.define(version: 2023_11_21_130021) do
 
   create_table "post_comments", force: :cascade do |t|
     t.integer "member_id"
+    t.integer "created_track_id"
     t.string "comment_content", null: false
     t.integer "like_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["created_track_id"], name: "index_post_comments_on_created_track_id"
     t.index ["member_id"], name: "index_post_comments_on_member_id"
   end
 
@@ -171,6 +174,7 @@ ActiveRecord::Schema.define(version: 2023_11_21_130021) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "created_tracks", "members"
   add_foreign_key "member_comments", "members"
+  add_foreign_key "post_comments", "created_tracks"
   add_foreign_key "post_comments", "members"
   add_foreign_key "posts", "members"
 end

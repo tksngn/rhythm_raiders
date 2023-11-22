@@ -1,2 +1,3 @@
 class MemberTrack < ApplicationRecord
+
 end
