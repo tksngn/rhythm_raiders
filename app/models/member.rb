@@ -22,6 +22,10 @@ class Member < ApplicationRecord
     end
   end
 
+  def is_guest
+    email == 'guest@example.com'
+  end
+
   def withdrawn?
     !active
   end

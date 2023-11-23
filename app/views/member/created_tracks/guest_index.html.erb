@@ -1,8 +1,20 @@
 <div class="flex-container">
-  <div class="container centered-content" style="width: 50%;">
-    <h1>Rhythm RAIDERS</h1>
-    <h3>ゲストログイン完了</h3>
-    <h3>Guest LogIn  Completed</h3>
+  <div class="container centered-content" style="width: 50%; text-align: center;">
+    <svg width="100%" height="200px">
+      <defs>
+        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#ff0000; stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#000000; stop-opacity:1" />
+        </linearGradient>
+        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#ffa500; stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#000000; stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <text x="50%" y="30%" dy=".3em" text-anchor="middle" style="font: bold 74px Georgia; fill: url(#gradient1); stroke: grey; stroke-width: 2px;">Rhythm RAIDERS</text>
+      <text x="50%" y="60%" dy=".3em" text-anchor="middle" style="font: 48px Georgia; fill: url(#gradient2); stroke: grey; stroke-width: 2px;">ゲストログイン完了</text>
+      <text x="50%" y="90%" dy=".3em" text-anchor="middle" style="font: 48px Georgia; fill: url(#gradient2); stroke: grey; stroke-width: 2px;">Guest LogIn  Completed</text>
+    </svg>
     <p>
       ようこそゲストさん<br>
       ゲストの皆様、試聴ボタンで30秒だけの楽曲をお楽しみいただけますが、新規登録をしていただくと全曲をご堪能いただけます。
@@ -11,46 +23,149 @@
       As a guest, you can enjoy a 30-second preview of each song with the preview button. However, by registering as a new user, you can enjoy all songs in full. Please take this opportunity to register.
     </p>
     <!-- 楽曲の一覧を表示するエリア -->
-    <div class="container">
-  <% @created_tracks.each do |created_track| %>
-    <div class="row mb-2">
-      <div class="col-md-12">
-        <div class="card flex-md-row mb-4 shadow-sm h-md-250 rounded track-card">
-          <div class="card-body d-flex flex-column align-items-start">
-            <h3 class="mb-0">
-              <%= created_track.music_title %>
-            </h3>
-            <p class="card-text mb-auto">Music Genre: <%= created_track.music_genre %></p>
-            <p class="card-text mb-auto">A word from the creater: <%= created_track.creater_word %></p>
-            <p class="card-text mb-auto">Creater Name: <%= created_track.creater_name %></p>
-            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="playPreview(<%= created_track.id %>)">Preview</button>
-          </div>
-          <div class="col-auto d-none d-lg-block">
-            <audio id="audio-player-<%= created_track.id %>" controls>
-              <source src="<%= created_track.music_file %>" type="audio/mpeg">
-              Your browser does not support the audio element.
-            </audio>
+    <% @created_tracks.each do |created_track| %>
+      <div class="container">
+        <div class="row mb-2">
+          <div class="col-md-12">
+            <div class="card flex-md-row mb-4 shadow-sm h-md-250 rounded track-card">
+              <div class="card-body d-flex flex-column align-items-start track-info">
+                <h3 class="mb-0" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
+                  <%= created_track.music_title %>
+                </h3>
+                <p class="card-text mb-auto">Music Genre: <%= created_track.music_genre %></p>
+                <p class="card-text mb-auto">A word from the creater: <%= created_track.creater_word %></p>
+              </div>
+              <div class="card-body d-flex flex-column align-items-start audio-section">
+                <p class="card-text mb-auto">Creater Name: <%= created_track.creater_name %></p>
+                <div class="audio-player">
+                  <audio id="audio-player-<%= created_track.id %>" preload="auto">
+                      <source src="<%= created_track.music_file %>" type="audio/mpeg">
+                      Your browser does not support the audio element.
+                  </audio>
+                  <div class="controls">
+                    <div class="play-pause">
+                        <p class="play"></p>
+                        <p class="pause"></p>
+                        <p class="loading"></p>
+                        <p class="error"></p>
+                    </div>
+                    <div class="time">
+                        <div class="current-time">00:00</div>
+                        <div class="total-time">00:00</div>
+                    </div>
+                    <div class="progress">
+                        <div class="slider">
+                            <div class="loaded"></div>
+                            <div class="pace"></div>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex;">
+                  <button type="button" class="btn btn-sm btn-outline-secondary1" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
+                  <button type="button" class="btn btn-sm btn-outline-secondary stop-button" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
+</div>
+<div class="pagination">
+    <!--%= paginate @created_tracks unless @created_tracks.empty? % -->
 </div>
 
 <script>
-function playPreview(id) {
-  var audio = document.getElementById('audio-player-' + id);
-  audio.currentTime = 0;
-  audio.play();
-}
+  function playPreview(id, isMember) {
+    var audio = document.getElementById('audio-player-' + id);
+    var playpause = document.querySelector('.play-pause');
+    var currentTime = document.querySelector('.current-time');
+    var totalTime = document.querySelector('.total-time');
+    var slider = document.querySelector('.slider');
+    var loaded = document.querySelector('.loaded');
+    var pace = document.querySelector('.pace');
+    var stopButton = document.getElementById("stop-button");
+
+    stopButton.addEventListener("click", function() {
+      audio.pause(); // 音楽を一時停止
+      audio.currentTime = 0; // 再生位置を初めに戻す
+    });
+
+
+    playpause.addEventListener('click', function() {
+      if (audio.paused) {
+          audio.play();
+          playpause.classList.remove('play');
+          playpause.classList.add('pause');
+      } else {
+          audio.pause();
+          playpause.classList.remove('pause');
+          playpause.classList.add('play');
+      }
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      var curtime = parseInt(audio.currentTime, 10);
+      currentTime.textContent = formatTime(curtime);
+    });
+
+    audio.addEventListener('durationchange', function() {
+      var duration = parseInt(audio.duration, 10);
+      totalTime.textContent = formatTime(duration);
+    });
+
+    slider.addEventListener('click', function(e) {
+      var pos = (e.pageX  - this.offsetLeft) / this.offsetWidth;
+      audio.currentTime = pos * audio.duration;
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      var pos = audio.currentTime / audio.duration;
+      pace.style.width = pos * 100 + '%';
+    });
+
+    audio.addEventListener('progress', function() {
+      if (audio.buffered.length > 0) {
+          var loaded = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
+          loaded.style.width = loaded * 100 + '%';
+      }
+    });
+
+    function formatTime(time) {
+      var minutes = Math.floor(time / 60);
+      var seconds = time - minutes * 60;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+      return minutes + ':' + seconds;
+    }
+
+    audio.currentTime = 0;
+    audio.volume = 1; // ボリュームを最大に設定
+    audio.play();
+
+    if (!isMember) {
+       // ゲストの場合、再生ボタンを非表示にする
+      playpause.style.display = 'none';
+      let fadePoint = 30; // フェードアウトを開始する時間（秒）
+      let fadeDuration = 5; // フェードアウトの期間（秒）
+      let fadeAudio = setInterval(function () {
+        // フェードアウトを開始
+        if (audio.currentTime >= fadePoint) {
+          let fadeAmount = 1 / (fadeDuration * 10); // 10はsetIntervalの頻度に基づく
+          audio.volume -= fadeAmount;
+
+          // ボリュームが0になったらオーディオを停止
+          if (audio.volume <= 0) {
+            audio.pause();
+            clearInterval(fadeAudio);
+          }
+        }
+      }, 100); // 0.1秒ごとにボリュームを更新
+    }
+  }
 </script>
 
-    </div>
-    <!-- ページネーションを表示するエリア -->
-    <div class="pagination">
-      <!--%= paginate @created_tracks unless @created_tracks.empty? % -->
-    </div>
-  </div>
-</div>
+
 
 

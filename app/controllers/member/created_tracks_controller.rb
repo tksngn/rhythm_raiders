@@ -1,22 +1,24 @@
-# app/controllers/member/created_tracks_controller.rb
 class Member::CreatedTracksController < ApplicationController
-
   def show
     @created_track = CreatedTrack.find(params[:id])
     @post_comment = PostComment.new
   end
 
   def index
+    @created_tracks = CreatedTrack.all
+  end
+
+  def new
     @created_track = CreatedTrack.new
-    @created_track.music_title = "Fantasy Background Music"
-    @created_track.creater_name = "Guest"
-    @created_track.music_genre = "Genre"
-    @created_track.creater_word = "ゲストさんようこそ！！"
-    @created_track.playback_duration = 30
-    @created_track.music_file = "/bgm_sounds/fantasy-background-music-110593.mp3"
-    @created_track.is_guest = true
-    @created_track.is_public = true
-    @created_track.save
+  end
+
+  def create
+    @created_track = CreatedTrack.new(created_track_params)
+    if @created_track.save
+      redirect_to @created_track, notice: 'Track was successfully created.'
+    else
+      render :new
+    end
   end
 
   def guest_index
@@ -25,5 +27,11 @@ class Member::CreatedTracksController < ApplicationController
     @created_tracks = CreatedTrack.where(is_public: true)
     # ページネーションを適用する
     #@created_tracks = @created_tracks.page(params[:page]).per(10) if @created_tracks.present?
+  end
+
+  private
+
+  def created_track_params
+    params.require(:created_track).permit(:music_title, :creater_name, :music_genre, :creater_word, :playback_duration, :music_file, :sample_music_file, :is_guest, :is_public)
   end
 end
