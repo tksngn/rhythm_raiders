@@ -26,7 +26,7 @@ class Member::CreatedTracksController < ApplicationController
     # is_guestカラムは楽曲がゲストメンバーによって試聴されたかどうかを表す
     @created_tracks = CreatedTrack.where(is_public: true)
     # ページネーションを適用する
-    #@created_tracks = @created_tracks.page(params[:page]).per(10) if @created_tracks.present?
+    @created_tracks = CreatedTrack.page(params[:page]).per(10)
   end
 
   private

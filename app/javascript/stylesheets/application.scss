@@ -45,7 +45,7 @@ body, .card {
   text-align: justify;
   background-image: url('/images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
 }
 
 .member_top {
@@ -59,7 +59,17 @@ body, .card {
   text-align: center;
   background-image: url('/images/281958-Sepik.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
+}
+
+.guest-index {
+  align-items: center;
+  height: 100vh;
+
+  text-align: justify;
+  background-image: url('/images/dragoon.jpg');
+  background-repeat: no-repeat;
+  background-size: 100%;
 }
 
 .search_top {
@@ -73,7 +83,7 @@ body, .card {
   text-align: center;
   background-image: url('/images/cai-fang-WoG139ylZJs-unsplash.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100%;
 }
 
 .member_top > * {
@@ -153,14 +163,14 @@ input[type="submit"] {
 }
 
 /* ゲスト用楽曲一覧 */
-.track-item {
+/*.track-item {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #323232;
   color: #ffffff;
   padding: 20px;
-}
+}*/
 
 .audio-player {
   width: 100%;
@@ -168,17 +178,17 @@ input[type="submit"] {
 
 .track-card {
   border: 1px solid white;
-  background: linear-gradient(to left, #000000, #434343, #808080, #C0C0C0, #FFFFFF);
+  background: linear-gradient(to left, #000000, #434343, #808080, #C0C0C0);
   flex-direction: row;
   justify-content: space-between;
-  padding: 10px 100px 10px 10px; /* 上、右、下。左 */
+  padding: 5px 100px 5px 5px; /* 上、右、下。左 */
 }
 
 .track-info {
   border-radius: 15px;
   padding: 20px;
   background: linear-gradient(to right, #00FFFF, #E0FFFF);
-  width: 70%;
+  width: 100%;
 }
 
 .audio-section {
