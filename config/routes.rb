@@ -20,8 +20,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'homes/admin_top', to: 'homes#admin_top', as: 'admin_top'
-
   devise_for :members, skip: [:passwords], controllers: {
     registrations: "member/registrations",
     sessions: 'member/sessions'

@@ -7,8 +7,9 @@
   <% end %>
 
   <%= link_to "Guest SignIn", member_customers_guest_sign_in_path, method: :post %>
-  <%= link_to "Sign Up", "/member/registrations/sign_up" %>
-  <%= link_to "Log In", "/member/sessions/sign_in" %>
+  <%= link_to "Sign Up", new_member_registration_path %>
+  <%= link_to "Log In", mypage_member_customers_path %>
+  <%= link_to "Log Out", destroy_member_session_path, method: :delete %>
   <%= link_to "Music Index", member_created_tracks_path %>
   <%= link_to "About", "/homes/about" %>
 

@@ -1,29 +1,80 @@
-<h2>Sign up</h2>
+<div style="display: flex;">
+  <div style="width: 29%; text-align: center; margin-left: auto;">
+    <h2 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">New Member新規登録</h2>
+    <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+    新規登録いただき、誠にありがとうございます！<br>
+    あなたが私たちのコミュニティに参加してくれたこと、<br>
+    私たちは大変うれしく思っております。<br>
+    このコミュニティでは、情報共有とネットワーキングの機会が豊富にあ<br>
+    ります。同じ興味や目標を持つ人々と繋がり、新たな知識や視点を得ることができます。<br>
+    Thank you for your new registration!
+    You have joined our community,
+    We are very pleased that you have joined our community.<br>
+    This community offers a wealth of information sharing and networking opportunities.<br>
+    Connect with others who share your interests and goals and gain new knowledge and perspectives.</p>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "members/shared/error_messages", resource: resource %>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= form_with(model: @member, url: member_registration_path) do |f| %>
+      <p style="word-wrap: break-word;"><strong style="color: orange;">Name:</strong> <%= f.text_field :name %></p>
+      <p style="word-wrap: break-word;"><strong style="color: orange;">CreaterName:</strong> <%= f.text_field :creater_name %></p>
+      <p><strong style="color: orange;">ProfileImage:</strong> <%= f.file_field :profile_image %></p>
+      <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= f.email_field :email %></p>
+      <p><strong style="color: orange;">Password:</strong> <%= f.password_field :password %></p>
+      <p><strong style="color: orange;">Confirmation Password:</strong> <%= f.password_field :password_confirmation %></p>
+      <p><strong style="color: orange;">PhoneNumber:</strong> <%= f.telephone_field :phone_number %></p>
+      <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, options_for_select(['Male', 'Female', 'Other']) %></p>
+      <p>利用規約とプライバシーポリシーの同意</p>
+      <p>Agreement to the Terms of Use and Privacy Policy</p>
+      <p>
+        <%= f.radio_button :agreement, true %> 同意する（Agree)<br>
+        <%= f.radio_button :agreement, false %> 同意しない（Disagree)
+      </p>
+      <%= f.submit "新規登録 SignUp", class: "btn btn-pink" %>
+    <% end %>
   </div>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+  <div style="display: flex;">
+    <div style="width: 29%; text-align: center;">
+      <!-- 左側のコンテンツ -->
+    </div>
+    <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+      <h2 style="text-align: center; color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">利用規約とプライバシーポリシー</h2>
+      <!-- 利用規約とプライバシーポリシーを記入する欄 -->
+      <div style="text-align: center;">
+        <h3 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">利用規約</h3>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           1. はじめに: 本サービスは、RhythmRAIDERS（以下、「当社」という）が提供するゲーム音楽投稿コミュニティサイトです。<br>
+           本利用規約は、本サービスの利用条件を定めるものです。登録メンバーの皆さま（以下、「メンバー」という）には、本利用規約に従って本サービスをご利用いただきます。</p>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           2. 禁止事項: 本サービス内で、メンバーは以下の行為を禁じます。<br>
+            - 法令または公序良俗に違反する行為<br>
+            - 犯罪行為に関連する行為<br>
+            - 当社のサーバーまたはネットワークの機能を破壊したり、妨害したりする行為<br>
+            - 本サービスを商用目的で利用する行為<br>
+            - 他のメンバーに対する威嚇または誹謗中傷を含む不適切な行為<br>
+            - 他のメンバーの情報を偽造する行為</p>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           3. 本規約の改定: 当社は、必要に応じて本規約の内容を改定することがあります。その場合、当社はメンバーに通知します。改定後の規約は、当社が定める日から効力を生じます。</p>
+        <h3 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">プライバシーポリシー</h3>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           1. 個人情報の収集: 当社は、メンバーが利用登録をする際に、メンバーの氏名、電話番号、メールアドレス、ジェンダーなどの個人情報を収集します。</p>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           2. 個人情報の利用目的: 当社が個人情報を収集・利用する目的は、以下のとおりです。<br>
+            - 当社サービスの提供・運営のため<br>
+            - メンバーからのお問い合わせに対応するため<br>
+            - 内容の改善や新規サービスの開発等に役立てるため</p>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           3. 個人情報の第三者への開示: 当社は、個人情報を適切に管理し、以下の場合を除いて第三者に開示しません。<br>
+            - メンバーの同意がある場合<br>
+            - 法令に基づき開示することが必要である場合</p>
+        <p style="color: white; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
+           4. クッキーの使用: 当社は、本サービスの利便性を向上させるためにクッキーを使用しています。クッキーの使用については、メンバーがブラウザの設定で管理することができます。</p>
+      </div>
+      <div style="text-align: center;">
+        <%= image_tag("rhythm_raiders_logo2.jpg") %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+  <div style="position: fixed; bottom: 0; width: 100%; text-align: center;">
+    ©20231225 Rhythm RAIDERS
   </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "member/shared/links" %>
+</div>
