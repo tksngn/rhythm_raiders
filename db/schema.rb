@@ -94,10 +94,13 @@ ActiveRecord::Schema.define(version: 2023_11_27_095905) do
   end
 
   create_table "likes", force: :cascade do |t|
+    t.integer "member_id", null: false
+    t.integer "created_track_id", null: false
     t.datetime "like_timestamp", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "created_track_id"
+    t.index ["created_track_id"], name: "index_likes_on_created_track_id"
+    t.index ["member_id"], name: "index_likes_on_member_id"
   end
 
   create_table "member_comments", force: :cascade do |t|
@@ -175,6 +178,8 @@ ActiveRecord::Schema.define(version: 2023_11_27_095905) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "created_tracks", "members"
+  add_foreign_key "likes", "created_tracks"
+  add_foreign_key "likes", "members"
   add_foreign_key "member_comments", "members"
   add_foreign_key "post_comments", "created_tracks"
   add_foreign_key "post_comments", "members"

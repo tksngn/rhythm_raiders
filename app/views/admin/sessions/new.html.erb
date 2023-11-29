@@ -1,49 +1,48 @@
-
-    <div style="height: 120px; display: flex; justify-content: center; align-items: center;">
-      <h1 class="display-4" style="color: red; -webkit-text-stroke: 1px grey; margin-right: 200px;">管理者TOP</h1>
-      <%= link_to root_path do %>
-        <%= image_tag('rhythm_raiders_logo2.jpg', style: 'height: 120px;') %>
-      <% end %>
-    </div>
-    <div class="mt-4 text-center">
-      <%= image_tag "cai-fang-WoG139ylZJs-unsplash.jpg", alt: "Background Image", style: "width:100%; height: 32vh;" %>
-    </div>
-     <div class="container-fluid">
-        <div class="row justify-content-center">
-          <div class="col-md-8">
-            <div class="card">
-              <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
-              <h2 style="color: red; -webkit-text-stroke: 1px grey;">管理者LOG IN</div>
-                <div class="card-body">
-                  <%= form_for(resource, as: resource_name, url: admin_session_path) do |form| %>
-                  <div class="form-group row">
-                      <%= form.label :email, class: "col-md-4 col-form-label text-md-right" %>
-                    <div class="col-md-4">
-                      <%= form.email_field :email, id: "email", class: "form-control", required: true, autofocus: true %>
-                    </div>
-                  </div>
-                  <div class="form-group row">
-                    <%= form.label :password, class: "col-md-4 col-form-label text-md-right" %>
-                      <div class="col-md-4">
-                        <%= form.password_field :password, id: "password", class: "form-control", required: true %>
-                      </div>
-                  </div>
-                  <div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
-                    <div style="border: 1px solid white; padding: 11px;">
-                      <h1 class="text-center">Hello, world of Music!</h1>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                      <%= form.submit "LOG IN", class: "btn btn-primary", style: "width: 225px; height: 80px;" %>
-                    </div>
-                  </div>
-                  <% end %>
+<div style="height: 120px; display: flex; justify-content: center; align-items: center;">
+  <h1 class="display-4" style="color: red; -webkit-text-stroke: 1px grey; margin-right: 200px;">管理者TOP</h1>
+  <%= link_to root_path do %>
+    <%= image_tag('rhythm_raiders_logo2.jpg', style: 'height: 120px;') %>
+  <% end %>
+</div>
+<div class="mt-4 text-center">
+  <%= image_tag "cai-fang-WoG139ylZJs-unsplash.jpg", alt: "Background Image", style: "width:100%; height: 32vh;" %>
+</div>
+ <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
+          <h2 style="color: red; -webkit-text-stroke: 1px grey;">管理者LOG IN</div>
+            <div class="card-body">
+              <%= form_for(resource, as: resource_name, url: admin_session_path) do |form| %>
+              <div class="form-group row">
+                  <%= form.label :email, class: "col-md-4 col-form-label text-md-right" %>
+                <div class="col-md-4">
+                  <%= form.email_field :email, id: "email", class: "form-control", required: true, autofocus: true %>
                 </div>
+              </div>
+              <div class="form-group row">
+                <%= form.label :password, class: "col-md-4 col-form-label text-md-right" %>
+                  <div class="col-md-4">
+                    <%= form.password_field :password, id: "password", class: "form-control", required: true %>
+                  </div>
+              </div>
+              <div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
+                <div style="border: 1px solid white; padding: 11px;">
+                  <h1 class="text-center">Hello, world of Music!</h1>
+                </div>
+                <div class="d-flex justify-content-center">
+                  <%= form.submit "LOG IN", class: "btn btn-primary", style: "width: 225px; height: 80px;" %>
+                </div>
+              </div>
+              <% end %>
             </div>
-          </div>
         </div>
       </div>
-    <footer class="text-center">
-      <div class="container">
-        <p>©20231225 Rhythm RAIDERS</p>
-      </div>
-    </footer>
+    </div>
+  </div>
+<footer class="text-center">
+  <div class="container">
+    <p>©20231225 Rhythm RAIDERS</p>
+  </div>
+</footer>

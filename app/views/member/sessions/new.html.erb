@@ -1,71 +1,48 @@
-<%= form_with model: @member, url: members_path do |form| %>
-  <% if @member.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@member.errors.count, "error") %> prohibited this member from being saved:</h2>
-
-      <ul>
-      <% @member.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+<div class="member_login">
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders Logo") %>
+    <% if flash[:notice] %>
+      <div class="alert alert-success" style="margin-top: 10px;">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+  </div>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card-body">
+          <div style="display: flex; justify-content: center; align-items: center; height: 10vh;">
+          <h2 style="color: red; -webkit-text-stroke: 1px grey;">Memnber LOG IN</div>
+            <div class="card-body">
+              <%= form_for(resource, as: resource_name, url: new_member_session_path) do |form| %>
+                <div class="form-group row">
+                    <%= form.label :email, class: "col-md-4 col-form-label text-md-right" %>
+                  <div class="col-md-4">
+                    <%= form.email_field :email, id: "email", class: "form-control", required: true, autofocus: true %>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <%= form.label :password, class: "col-md-4 col-form-label text-md-right" %>
+                    <div class="col-md-4">
+                      <%= form.password_field :password, id: "password", class: "form-control", required: true %>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center" style="height: 20vh;">
+                  <div style="border: 1px solid white; padding: 11px;">
+                    <h1 class="text-center">Hello, world of Music!</h1>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <%= form.submit "LOG IN", class: "btn btn-primary", style: "width: 225px; height: 80px;" %>
+                  </div>
+                </div>
+              <% end %>
+              <p>Now,let's go on a Musical Adventure!</p>
+              <p>©20231225 Rhythm RAIDERS</p>
+            </div>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
   </div>
+</div>
 
-  <div class="field">
-    <%= form.label :creator_name %>
-    <%= form.text_field :creator_name %>
-  </div>
 
-  <div class="field">
-    <%= form.label :profile_image %>
-    <%= form.file_field :profile_image %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password %>
-    <%= form.password_field :password %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password_confirmation %>
-    <%= form.password_field :password_confirmation %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone_number %>
-    <%= form.telephone_field :phone_number %>
-  </div>
-
-  <div class="field">
-    <%= form.label :gender %>
-    <%= form.radio_button :gender, "Male" %> Male
-    <%= form.radio_button :gender, "Non-binary" %> Non-binary
-    <%= form.radio_button :gender, "Female" %> Female
-  </div>
-
-  <div class="field">
-    <%= form.label :terms_and_conditions %>
-    <%= form.radio_button :terms_and_conditions, "Agree" %> Agree
-    <%= form.radio_button :terms_and_conditions, "Disagree" %> Disagree
-  </div>
-
-  <div class="field">
-    <%= form.label :privacy_policy %>
-    <%= form.radio_button :privacy_policy, "Agree" %> Agree
-    <%= form.radio_button :privacy_policy, "Disagree" %> Disagree
-  </div>
-
-  <div class="actions">
-    <%= form.submit "新規登録" %>
-  </div>
-<% end %>

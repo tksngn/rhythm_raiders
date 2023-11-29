@@ -1,2 +1,14 @@
 ja:
   enums:
+    some_attribute:
+      value1: "値0"
+      value1: "値1"
+      value2: "値2"
+  devise:
+    registrations:
+      new_member_registration_completed: "新規メンバー登録が完了しました"
+    sessions:
+      member:
+        signed_out: "ログアウトしました。"
+
+

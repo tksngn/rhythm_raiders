@@ -1,5 +1,15 @@
 @use '~bootstrap/scss/bootstrap';
 
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+
+/* ラジオボタン */
+input[type='radio'] {
+    transform: scale(1.8);
+}
+
 .content img {
   /* その他のスタイル */
   margin-bottom: 100px; /* 下側のマージンを追加 */
@@ -40,7 +50,8 @@ body, .card {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 100px;
   flex-direction: row;
   text-align: justify;
   background-image: url('/images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
@@ -48,7 +59,7 @@ body, .card {
   background-size: cover;
 }
 
-.member_top {
+.member_top, .member_login {
   color: white;
   text-shadow: -2px 0 gray, 0 2px grey, 2px 0 grey, 0 -2px #323232;
   display: flex;
@@ -203,9 +214,21 @@ input[type="submit"] {
   background: linear-gradient(to bottom, #008000, #000000);
   color: white;
   border: none;
-  margin-left: 130px;
+  margin-left: 10px;
   margin-top: 30px;
+  padding: 5px 10px; /* ボタンの大きさを横長にする */
 }
+
+.btn-outline-secondary0 {
+  background: linear-gradient(to bottom, #FFA500, #FF4500);
+  color: white;
+  border: none;
+  margin-left: 20px;
+  margin-top: 30px;
+  padding: 5px 10px; /* ボタンの大きさを横長にする */
+  white-space: nowrap; /* テキストを1行で表示する */
+}
+
 
 .stop-button {
   background: linear-gradient(to bottom, #ff0000, #000000);

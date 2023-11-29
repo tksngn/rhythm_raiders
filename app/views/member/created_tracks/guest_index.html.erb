@@ -64,6 +64,8 @@
                     </div>
                   </div>
                   <div style="display: flex;">
+                    <!-- いいね機能の追加 -->
+                    <button type="button" class="btn btn-sm btn-outline-secondary0" onclick="likeTrack(<%= created_track.id %>, <%= !current_member.is_guest %>)">いいね！</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary1" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary stop-button" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
                   </div>
@@ -84,6 +86,7 @@
     <% end %>
   </div>
   <footer style="text-align: center; position: fixed; bottom: 0; width: 100%;">
+    <%= link_to 'Back to Home', member_top_path, method: :get, class: "button" %>
     <p>©20231225 Rhythm RAIDERS</p>
   </footer>
 

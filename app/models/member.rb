@@ -3,7 +3,7 @@ class Member < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  validates :active, inclusion: { in: [true, false] }
+  # validates :active, inclusion: { in: [true, false] }
 
   has_one_attached :profile_image
   has_many :created_tracks, dependent: :destroy

@@ -2,7 +2,7 @@ class Admin::MembersController < ApplicationController
   before_action :set_member, only: [:show, :edit, :update]
 
   def index
-    @members = Member.order(updated_at: :desc).page(params[:page])
+    @members = Member.where.not(email: 'guest@example.com').order(updated_at: :desc).page(params[:page])
   end
 
   def show

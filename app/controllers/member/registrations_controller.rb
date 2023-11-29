@@ -23,9 +23,10 @@ class Member::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message! :notice, :signed_up
+        flash[:notice] = I18n.t('devise.registrations.new_member_registration_completed')
         sign_up(resource_name, resource)
-        respond_with resource, location: after_sign_up_path_for(resource)
+        sign_out(resource_name) # ユーザーをログアウト
+        redirect_to new_member_session_path # ログイン画面にリダイレクト
       else
         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!
@@ -34,6 +35,7 @@ class Member::RegistrationsController < Devise::RegistrationsController
     else
       clean_up_passwords resource
       set_minimum_password_length
+      puts resource.errors.full_messages # バリデーションエラーのメッセージを表示
       respond_with resource
     end
   end
@@ -42,7 +44,7 @@ class Member::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :creater_name, :profile_image, :email, :password, :password_confirmation, :phone_number, :gender, :agreement])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name, :creater_name, :profile_image, :email, :password, :password_confirmation, :phone_number, :gender, :agreement, :is_privacy_policy_accepted])
   end
 
   # The path used after sign up.

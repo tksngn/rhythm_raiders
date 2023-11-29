@@ -45,7 +45,7 @@ Rails.application.routes.draw do
   end
 
   post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'
-
+  get 'member_top', to: 'homes#member_top'
   get 'homes/about', to: 'homes#about', as: 'about'
   get 'search', to: 'search#index', as: 'search_index'
 
