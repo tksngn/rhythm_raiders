@@ -23,7 +23,7 @@ class Member::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        flash[:notice] = I18n.t('devise.registrations.new_member_registration_completed')
+        flash[:notice] = I18n.t('member.devise.registrations.new_member_registration_completed')
         sign_up(resource_name, resource)
         sign_out(resource_name) # ユーザーをログアウト
         redirect_to new_member_session_path # ログイン画面にリダイレクト

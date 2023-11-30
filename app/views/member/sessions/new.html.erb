@@ -4,6 +4,7 @@
     <% if flash[:notice] %>
       <div class="alert alert-success" style="margin-top: 10px;">
         <%= flash[:notice] %>
+        <% flash.discard(:notice) %>
       </div>
     <% end %>
   </div>

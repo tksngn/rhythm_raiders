@@ -29,15 +29,15 @@ Rails.application.routes.draw do
     resources :customers, only: [:index, :show, :edit, :update] do
       collection do
         get :mypage
-        get :edit
-        patch :update
         get :unsubscribe
         patch :withdraw
       end
     end
+
     resources :created_tracks, only: [:new, :create, :index, :show, :destroy] do
       resources :post_comments, only: [:create, :destroy]
-      resource :like, only: [:create, :destroy]
+      resources :likes, only: [:create, :destroy]
+
       collection do
         get :guest_index
       end

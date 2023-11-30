@@ -7,7 +7,7 @@
         <!-- メンバー情報の編集フォーム -->
         <p style="word-wrap: break-word;"><strong style="color: orange;">Name:</strong> <%= @member.name %></p>
         <p style="word-wrap: break-word;"><strong style="color: orange;">Creater Name:</strong> <%= @member.creater_name %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Profile image:</strong> <%= image_tag @member.profile_image.url if @member.profile_image.present? %></p>
+        <p style="word-wrap: break-word;"><strong style="color: orange;">Profile image:</strong> <%= @member.profile_image.present? ? (image_tag @member.profile_image, style: "height: 115px; width: 115px;") : (image_tag "no_image.jpg", style: "height: 151px; width: 113px;") %></p>
         <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= @member.email %></p>
         <p style="word-wrap: break-word;"><strong style="color: orange;">Password:</strong> <%= @member.encrypted_password %></p>
         <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= @member.phone_number %></p>

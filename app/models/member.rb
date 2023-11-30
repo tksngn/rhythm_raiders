@@ -4,6 +4,9 @@ class Member < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   # validates :active, inclusion: { in: [true, false] }
+  enum status: { active: 0, inactive: 1 }
+
+  after_initialize :set_default_status, if: :new_record?
 
   has_one_attached :profile_image
   has_many :created_tracks, dependent: :destroy
@@ -28,6 +31,12 @@ class Member < ApplicationRecord
 
   def withdrawn?
     !active
+  end
+
+  private
+
+  def set_default_status
+    self.status ||= :active
   end
 end
 

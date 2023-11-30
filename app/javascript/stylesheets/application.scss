@@ -1,5 +1,42 @@
 @use '~bootstrap/scss/bootstrap';
 
+.like-button {
+  background: linear-gradient(to bottom, #4267B2, #89CFF0); /* ボタンの背景色を濃い青から薄い青のグラデーションに */
+  color: white; /* テキストの色 */
+  border: none; /* ボーダーを非表示に */
+  margin-left: 10px; /* 左マージンを設定 */
+  margin-top: 30px; /* 上マージンを設定 */
+  padding: 5px 10px; /* ボタンの大きさを横長にする */
+  white-space: nowrap; /* テキストを1行で表示する */
+  cursor: pointer; /* マウスカーソルをポインターに */
+  border-radius: 12px; /* 角を丸く */
+}
+
+.like-button:hover {
+  background: linear-gradient(to bottom, #FF4500, #FFA500); /* マウスオーバー時の背景色を逆のグラデーションに */
+}
+
+.flash-message {
+  position: fixed;
+  top: 5%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  width: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.flash-message.flash-notice {
+  background: linear-gradient(to top, black, grey);
+  color: green;
+}
+
+.flash-message.flash-alert {
+  background: linear-gradient(to top, black, grey);
+  color: red;
+}
+
 .text-center {
   display: flex;
   justify-content: center;
@@ -218,17 +255,6 @@ input[type="submit"] {
   margin-top: 30px;
   padding: 5px 10px; /* ボタンの大きさを横長にする */
 }
-
-.btn-outline-secondary0 {
-  background: linear-gradient(to bottom, #FFA500, #FF4500);
-  color: white;
-  border: none;
-  margin-left: 20px;
-  margin-top: 30px;
-  padding: 5px 10px; /* ボタンの大きさを横長にする */
-  white-space: nowrap; /* テキストを1行で表示する */
-}
-
 
 .stop-button {
   background: linear-gradient(to bottom, #ff0000, #000000);

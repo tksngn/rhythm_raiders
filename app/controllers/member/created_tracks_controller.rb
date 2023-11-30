@@ -22,6 +22,7 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def guest_index
+    @guest_member = Member.find_by(email: 'guest@example.com')
     # ゲストメンバーは楽曲を作成できないので、作成済みの楽曲を取得する
     # is_guestカラムは楽曲がゲストメンバーによって試聴されたかどうかを表す
     @created_tracks = CreatedTrack.where(is_public: true)

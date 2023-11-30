@@ -1,0 +1,11 @@
+ja:
+  devise:
+    registrations:
+      new_member_registration_completed: "新規メンバー登録が完了しました"
+    sessions:
+      member:
+        signed_in: "ログインしました。"
+        signed_out: "ログアウトしました。"
+    failure:
+      already_authenticated: "すでにログインしています。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"

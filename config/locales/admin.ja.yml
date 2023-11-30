@@ -5,10 +5,8 @@ ja:
       value1: "値1"
       value2: "値2"
   devise:
-    registrations:
-      new_member_registration_completed: "新規メンバー登録が完了しました"
     sessions:
-      member:
+      admin:
+        signed_in: "管理者としてログインしました。"
         signed_out: "ログアウトしました。"
-
-
+    
