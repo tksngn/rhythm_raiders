@@ -1,27 +1,29 @@
 <div>
   <p>コメント件数：<%= @created_track.post_comments.count %></p>
   <% @created_track.post_comments.each do |post_comment| %>
-    <p><%= post_comment.member.get_created_track %></p>
+    <% post_comment.member.get_created_track.each do |created_track| %>
+      <p><%= created_track.title %></p> <!-- ここを修正 -->
+    <% end %>
     <%= post_comment.member.name %>
-    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment %>
+    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
+    <%= post_comment.comment_content %> <!-- ここを追加 -->
   <% end %>
 </div>
 <div>
-  <%= form_with model: [@created_track, @post_comment] do |f| %>
+  <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
     <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
     <%= f.submit "送信する" %>
   <% end %>
 </div>
-
 <% if @created_track.liked_by?(current_member) %>
   <p>
-    <%= link_to member_created_track_like_path(@created_track), method: :delete do %>
+    <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
       ♥<%= @created_track.likes.count %> いいね
     <% end %>
   </p>
   <% else %>
   <p>
-    <%= link_to member_created_track_like_path(@created_track), method: :post do %>
+    <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
       ♡<%= @created_track.likes.count %> いいね
     <% end %>
   </p>

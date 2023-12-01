@@ -9,7 +9,7 @@
     <% else %>
       <% @results.each do |result| %>
         <div class="result-item">
-          <%= link_to result.music_title, created_track_path(result) %>
+          <%= link_to result.music_title, member_created_track_path(result) %>
           <p><%= result.music_genre %></p>
           <p><%= result.creater_name %></p>
         </div>

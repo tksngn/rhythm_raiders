@@ -12,10 +12,14 @@ class Member < ApplicationRecord
   has_many :created_tracks, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
-  has_many :member_comments
-  has_many :posts
+  has_many :member_comments, dependent: :destroy
+  has_many :posts, dependent: :destroy
 
   enum gender: { Male: 0, Non_binary: 1, Female: 2 }
+
+  def get_created_track
+    self.created_tracks
+  end
 
   def self.guest
     find_or_create_by!(email: 'guest@example.com') do |member|

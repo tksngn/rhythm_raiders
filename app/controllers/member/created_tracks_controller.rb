@@ -1,6 +1,9 @@
 class Member::CreatedTracksController < ApplicationController
+  before_action :authenticate_member!
+  
   def show
     @created_track = CreatedTrack.find(params[:id])
+    @like = @created_track.likes.find_by(member_id: current_member.id)
     @post_comment = PostComment.new
   end
 

@@ -14,8 +14,8 @@ class CreatedTrack < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
-  def liked_by(member)
-    likes.exists?(member_id: member.id)
+  def liked_by?(member)
+    member && likes.where(member_id: member.id).exists?
   end
 end
 

@@ -14,11 +14,12 @@
 
   <body>
     <% flash.each do |message_type, message| %>
-      <div class="flash-message flash-<%= message_type %>">
-        <%= message %>
-      </div>
+      <% unless message_type == :notice && message == I18n.t('member.devise.registrations.new_member_registration_completed') %>
+        <div class="flash-message flash-<%= message_type %>">
+          <%= message %>
+        </div>
+      <% end %>
     <% end %>
-
     <%= yield %>
   </body>
 </html>

@@ -9,4 +9,14 @@ ja:
       admin:
         signed_in: "管理者としてログインしました。"
         signed_out: "ログアウトしました。"
-    
+    failure:
+      already_authenticated: "すでにログインしています。"
+      not_found_in_database: "メールアドレスまたはパスワードが違います。"
+      already_signed_out: "すでにログアウトしています。"
+      unauthenticated: "ログインしてください。"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      inactive: "アカウントが有効化されていません。"
+      locked: "アカウントがロックされています。"
+      last_attempt: "もう一度誤った情報を入力するとアカウントがロックされます。"
+      timeout: "セッションがタイムアウトしました。再度ログインしてください。"
+
