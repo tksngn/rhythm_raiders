@@ -1,6 +1,6 @@
 class Member::CreatedTracksController < ApplicationController
   before_action :authenticate_member!
-  
+
   def show
     @created_track = CreatedTrack.find(params[:id])
     @like = @created_track.likes.find_by(member_id: current_member.id)
@@ -9,6 +9,7 @@ class Member::CreatedTracksController < ApplicationController
 
   def index
     @created_tracks = CreatedTrack.all
+    @created_tracks = CreatedTrack.page(params[:page]).per(10)
   end
 
   def new

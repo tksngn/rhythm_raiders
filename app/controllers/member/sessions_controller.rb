@@ -17,7 +17,7 @@ class Member::SessionsController < Devise::SessionsController
       sign_in(resource_name, resource)
       respond_with resource, location: after_sign_in_path_for(resource)
     else
-      flash[:alert] = I18n.t("member.devise.failure.invalid", authentication_keys: "email")
+      # flash[:alert] = I18n.t("member.devise.failure.invalid", authentication_keys: "email")
       redirect_to new_member_session_path
     end
   end
@@ -25,11 +25,13 @@ class Member::SessionsController < Devise::SessionsController
   # DELETE /resource/sign_out
   def destroy
     signed_out = (Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name))
+=begin
     if signed_out
       flash[:notice] = I18n.t('member.devise.sessions.member.signed_out')
     else
       flash[:notice] = I18n.t('member.devise.failure.already_signed_out')
     end
+=end
     yield if block_given?
     respond_to_on_destroy
   end

@@ -1,7 +1,85 @@
 @use '~bootstrap/scss/bootstrap';
 
+/* 定義した色 */
+$dark-blue: #4267B2;
+$light-blue: #89CFF0;
+$dark-orange: #FF4500;
+$light-orange: #FFA500;
+
+/* ゲスト用楽曲一覧 */
+.guest-index {
+  align-items: center;
+  height: 100vh;
+  text-align: justify;
+  background-image: url('/images/dragoon.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.audio-player {
+  width: 100%;
+}
+
+.track-card {
+  border: 1px solid white;
+  background: linear-gradient(to left, #000000, #434343, #808080, #C0C0C0);
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 5px 10px 5px; /* 上、右、下。左 */
+}
+
+.track-info {
+  border-radius: 15px;
+  padding: 20px;
+  background: linear-gradient(to right, $dark-orange, $light-orange);
+  width: 100%;
+}
+
+.audio-section {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.btn-outline-secondary1 {
+  background: linear-gradient(to bottom, #008000, #000000);
+  color: white;
+  border: none;
+  margin-left: 10px;
+  margin-top: 30px;
+  padding: 5px 10px; /* ボタンの大きさを横長にする */
+}
+
+.stop-button {
+  background: linear-gradient(to bottom, $dark-orange, $light-orange);
+  color: white;
+  margin-left: 10px;/* Previewボタンとの間隔を調整 */
+  margin-top: 30px;
+}
+
+/* 本メンバー用の一覧 */
+.member-index {
+  align-items: center;
+  height: 100vh;
+  text-align: justify;
+  background-image: url('/images/28350918_m.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.navbar {
+  text-align: center;
+}
+
+.navbar .button {
+  margin: 0 10px;
+}
+
+/* いいね機能 */
 .like-button {
-  background: linear-gradient(to bottom, #4267B2, #89CFF0); /* ボタンの背景色を濃い青から薄い青のグラデーションに */
+  background: linear-gradient(to bottom, $dark-blue, $light-blue); /* ボタンの背景色を濃い青から薄い青のグラデーションに */
   color: white; /* テキストの色 */
   border: none; /* ボーダーを非表示に */
   margin-left: 10px; /* 左マージンを設定 */
@@ -13,7 +91,7 @@
 }
 
 .like-button:hover {
-  background: linear-gradient(to bottom, #FF4500, #FFA500); /* マウスオーバー時の背景色を逆のグラデーションに */
+  background: linear-gradient(to bottom, $dark-orange, $light-orange); /* マウスオーバー時の背景色を逆のグラデーションに */
 }
 
 .flash-message {
@@ -81,6 +159,11 @@ body, .card {
   color: #ffffff; /* テキストカラー */
 }
 
+.card-body {
+  padding: 0 !important;
+  margin-left: 5px;
+}
+
 .about {
   color: white;
   text-shadow: -2px 0 gray, 0 2px grey, 2px 0 grey, 0 -2px #323232;
@@ -106,16 +189,6 @@ body, .card {
   flex-direction: column;
   text-align: center;
   background-image: url('/images/281958-Sepik.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.guest-index {
-  align-items: center;
-  height: 100vh;
-
-  text-align: justify;
-  background-image: url('/images/dragoon.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -210,116 +283,46 @@ input[type="submit"] {
   text-shadow: 2px 2px #000000; /* グレーの縁取り */
 }
 
-/* ゲスト用楽曲一覧 */
-/*.track-item {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #323232;
-  color: #ffffff;
-  padding: 20px;
-}*/
 
-.audio-player {
-  width: 100%;
-}
+@media only screen and (max-width: 768px) {
+  /* ここに、画面の幅が768px以下の場合に適用するスタイルを記述します */
+  .track-card, .search_top, .member_top, .unsubscribe, .withdraw, .suspend, .bottomlogo, .bottomtext, .button, .button2, .result-item, .back-button, h1, p,
+  .track-info p, .flash-message, .text-center, .content p, .member_top, .member_login {
+    font-size: 14px;
+  }
 
-.track-card {
-  border: 1px solid white;
-  background: linear-gradient(to left, #000000, #434343, #808080, #C0C0C0);
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 5px 100px 5px 5px; /* 上、右、下。左 */
-}
-
-.track-info {
-  border-radius: 15px;
-  padding: 20px;
-  background: linear-gradient(to right, #00FFFF, #E0FFFF);
-  width: 100%;
-}
-
-.audio-section {
-  width: 30%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-end;
-}
-
-.btn-outline-secondary1 {
-  background: linear-gradient(to bottom, #008000, #000000);
-  color: white;
-  border: none;
-  margin-left: 10px;
-  margin-top: 30px;
-  padding: 5px 10px; /* ボタンの大きさを横長にする */
-}
-
-.stop-button {
-  background: linear-gradient(to bottom, #ff0000, #000000);
-  color: white;
-  margin-left: 10px;/* Previewボタンとの間隔を調整 */
-  margin-top: 30px;
-}
-
-.audio-player .controls .play-pause {
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
-}
-
-.audio-player .controls .play-pause .play {
-    background-position: -2px -2px;
-}
-
-.audio-player .controls .play-pause .pause {
-    display: none;
-    background-position: -2px -37px;
-}
-
-.audio-player .controls .play-pause .loading {
-    display: none;
-    background-position: -2px -72px;
-}
-
-.audio-player .controls .play-pause .error {
-    display: none;
-    background-position: -2px -107px;
-}
-
-.audio-player .controls .time {
-    font-size: 11px;
-    color: #ddd;
-    float: left;
-    width: 65px;
-    height: 25px;
-    line-height: 25px;
-    margin: 5px 0 0 15px;
-}
-
-.audio-player .controls .progress .slider {
+  .svg {
     width: 100%;
-    height: 5px;
-    position: relative;
-    cursor: pointer;
-    background: #333;
+    height: auto;
+  }
+
+  .track-info h3 {
+    font-size: 2.5vw;
+  }
+
+  .like-button, .btn, .copyright {
+    font-size: 1.5vw;
+  }
+
+  .content img {
+    width: 100%;
+    height: auto;
+  }
+
+  .content {
+    width: 100%;
+  }
+
+  .logo {
+    width: 50px;
+    height: 50px;
+  }
+
+  .about {
+    font-size: 2vw;
+  }
 }
 
-.audio-player .controls .progress .slider .loaded {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: #777;
-}
 
-.audio-player .controls .progress .slider .pace {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    background: #1abc9c;
-}
 
 
