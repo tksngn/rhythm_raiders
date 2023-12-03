@@ -69,8 +69,8 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
     t.datetime "release_date", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "music_file"
     t.boolean "is_guest", default: false
+    t.string "music_file"
     t.boolean "is_public", default: false
     t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
@@ -79,18 +79,6 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
     t.datetime "follow_timestamp", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "guests", force: :cascade do |t|
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["email"], name: "index_guests_on_email", unique: true
-    t.index ["reset_password_token"], name: "index_guests_on_reset_password_token", unique: true
   end
 
   create_table "likes", force: :cascade do |t|

@@ -3,7 +3,7 @@ class Member::CreatedTracksController < ApplicationController
 
   def show
     @created_track = CreatedTrack.find(params[:id])
-    @like = @created_track.likes.find_by(member_id: current_member.id)
+    @like = current_member ? @created_track.likes.find_by(member_id: current_member.id) : nil
     @post_comment = PostComment.new
   end
 

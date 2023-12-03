@@ -31,16 +31,17 @@ class Member::CustomersController < ApplicationController
       member.is_active = true
       member.active = true
       member.save!
+       # ここで新しいトラックを作成します
+      @created_track = CreatedTrack.new
+      @created_track.member = member
+      @created_track.music_title = "Fantasy Background Music"
+      @created_track.creater_name = "Guest" # ここでcreater_name属性に値を設定します
+      @created_track.creater_word = "ようこそゲストさん！"
+      @created_track.music_genre = "Genre" # ここでmusic_genre属性に値を設定します
+      @created_track.playback_duration = 30 # ここでplayback_duration属性に値を設定します
+      @created_track.music_file = "/bgm_sounds/fantasy-background-music-110593.mp3" # 公開可能なディレクトリへのパス
+      @created_track.save
     end
-
-    # ここで新しいトラックを作成します
-    @created_track = CreatedTrack.new
-    @created_track.music_title = "Fantasy Background Music"
-    @created_track.creater_name = "Guest" # ここでcreater_name属性に値を設定します
-    @created_track.music_genre = "Genre" # ここでmusic_genre属性に値を設定します
-    @created_track.playback_duration = 30 # ここでplayback_duration属性に値を設定します
-    @created_track.music_file = "/bgm_sounds/fantasy-background-music-110593.mp3" # 公開可能なディレクトリへのパス
-    @created_track.save
 
     sign_in member
     redirect_to guest_index_member_created_tracks_path, notice: 'ゲストメンバーとしてログインしました。'

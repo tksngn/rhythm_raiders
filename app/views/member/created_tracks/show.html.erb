@@ -1,30 +1,41 @@
-<div>
-  <p>コメント件数：<%= @created_track.post_comments.count %></p>
-  <% @created_track.post_comments.each do |post_comment| %>
-    <% post_comment.member.get_created_track.each do |created_track| %>
-      <p><%= created_track.title %></p> <!-- ここを修正 -->
+<div style="width: 76%; text-align: center;">
+  <h2 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">Music Detail</h2>
+  <div>
+    <p>コメント件数：<%= @created_track.post_comments.count %></p>
+    <% @created_track.post_comments.each do |post_comment| %>
+      <% post_comment.member.get_created_track.each do |created_track| %>
+        <p><%= created_track.title %></p> <!-- ここを修正 -->
+      <% end %>
+      <%= post_comment.member.name %>
+      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
+      <%= post_comment.comment_content %> <!-- ここを追加 -->
     <% end %>
-    <%= post_comment.member.name %>
-    <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
-    <%= post_comment.comment_content %> <!-- ここを追加 -->
-  <% end %>
-</div>
-<div>
-  <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
-    <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-    <%= f.submit "送信する" %>
-  <% end %>
-</div>
-<% if @created_track.liked_by?(current_member) %>
-  <p>
-    <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
-      ♥<%= @created_track.likes.count %> いいね
+  </div>
+  <div>
+    <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
+      <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+      <%= f.submit "Post a Comment" %>
     <% end %>
-  </p>
+  </div>
+  <% if @created_track.liked_by?(current_member) %>
+    <p>
+      <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
+        ♥<%= @created_track.likes.count %> いいね
+      <% end %>
+    </p>
   <% else %>
-  <p>
-    <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
-      ♡<%= @created_track.likes.count %> いいね
-    <% end %>
-  </p>
-<% end %>
+    <p>
+      <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
+        ♡<%= @created_track.likes.count %> いいね
+      <% end %>
+    </p>
+  <% end %>
+  <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div style="position: fixed; bottom: 0; width: 100%; text-align: center;">
+      <div style="text-align: center;">
+        <%= image_tag("rhythm_raiders_logo2.jpg") %>
+      </div>
+      ©20231225 Rhythm RAIDERS
+    </div>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <div class="member-index">
   <div class="flex-container">
-    <div class="container centered-content" style="width: 50%; text-align: center;">
+    <div class="container centered-content">
       <svg width="100%" height="100%" viewBox="0 0 600 80" preserveAspectRatio="xMidYMid meet">
         <defs>
           <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -23,54 +23,51 @@
       </div>
 
       <% @created_tracks.each do |created_track| %>
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-md-12">
-              <div class="card flex-md-row mb-4 shadow-sm h-md-250 rounded track-card"><!-- style="width: 100%; height: auto;"> -->
-                <div class="card-body d-flex flex-column align-items-start track-info col-md-8">
-                  <h3 class="mb-0" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">
-                    <%= created_track.music_title %>
-                  </h3>
-                  <p class="card-text mb-auto">Music Genre: <%= created_track.music_genre %></p>
-                  <p class="card-text mb-auto">Creater Name: <%= created_track.creater_name %></p>
-                  <p class="card-text mb-auto">A word from the creater: <%= created_track.creater_word %></p>
+        <div class="card mb-2">
+          <div class="card-body">
+            <div class="track-card">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="track-info">
+                    <h3 class="mb-0" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size: calc(20px + 1vw);">
+                      <%= link_to created_track.music_title, member_created_track_path(created_track) %>
+                    </h3>
+                    <div class="card-text" style="font-size: calc(10px + 1vw);">Music Genre: <%= created_track.music_genre %></div>
+                    <div class="card-text" style="font-size: calc(10px + 1vw);">Creater Name: <%= created_track.creater_name %></div>
+                    <div class="card-text" style="font-size: calc(10px + 1vw);">A word from the creater: <p><%= created_track.creater_word %></p></div>
+                  </div>
                 </div>
-                <div class="card-body d-flex flex-column align-items-start audio-section col-md-6">
-                  <div class="audio-player">
-                    <audio id="audio-player-<%= created_track.id %>" preload="auto">
-                        <source src="<%= created_track.music_file %>" type="audio/mpeg">
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div class="controls">
-                      <div class="play-pause">
-                          <p class="play"></p>
-                          <p class="pause"></p>
-                          <p class="loading"></p>
-                          <p class="error"></p>
-                      </div>
-                      <div class="time">
-                          <div class="current-time">00:00</div>
-                          <div class="total-time">00:00</div>
-                      </div>
-                      <div class="progress">
-                          <div class="slider">
-                              <div class="loaded"></div>
-                              <div class="pace"></div>
-                          </div>
-                      </div>
+                <div class="col-md-4">
+                  <div class="controls">
+                    <div class="play-pause">
+                      <p class="play m-0"></p>
+                      <p class="pause m-0"></p>
+                      <p class="loading m-0"></p>
+                      <p class="error m-0"></p>
+                    </div>
+                    <div class="time">
+                      <div class="current-time">00:00</div>
+                      <div class="total-time">00:00</div>
+                    </div>
+                    <div class="progress position-relative w-100 mb-2">
+                      <div class="slider position-absolute w-100" style="height: 1rem;"></div>
+                      <div class="loaded position-absolute" style="background-color: #f0f0f0; height: 1rem; top: 0;"></div>
+                      <div class="pace position-absolute" style="background-color: #000; height: 1rem; top: 0;"></div>
                     </div>
                   </div>
-                  <div style="display: flex; flex-direction: column; justify-content: space-evenly; align-items: flex-end;">
+                  <div>
                     <!-- いいね機能の追加 -->
-                    <button type="button" class="like-button" onclick="likeTrack(<%= created_track.id %>, <%= !current_member.is_guest %>)">
+                    <button type="button" class="like-button m-0 mb-2" onclick="likeTrack(<%= created_track.id %>, <%= !current_member.is_guest %>)">
                       <i class="fa-solid fa-thumbs-up"></i>
                       いいね！
                       <span id="like-count-<%= created_track.id %>">
                         <%= created_track.likes.count %>
                       </span>
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary1" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
-                    <button type="button" class="btn btn-sm btn-outline-secondary stop-button" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
+                    <div>
+                      <button type="button" class="btn btn-sm btn-outline-secondary1 m-0" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary stop-button m-0" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
+                    </div>
                   </div>
                 </div>
               </div>
@@ -150,8 +147,14 @@
         totalTime.textContent = formatTime(duration);
       });
 
+      // slider.addEventListener('click', function(e) {
+      //   var pos = (e.pageX  - this.offsetLeft) / this.offsetWidth;
+      //   audio.currentTime = pos * audio.duration;
+      // });
+
       slider.addEventListener('click', function(e) {
-        var pos = (e.pageX  - this.offsetLeft) / this.offsetWidth;
+        var sliderPos = this.getBoundingClientRect().left + window.pageXOffset
+        var pos = (e.pageX - sliderPos) / this.offsetWidth;
         audio.currentTime = pos * audio.duration;
       });
 
@@ -161,10 +164,10 @@
       });
 
       audio.addEventListener('progress', function() {
-        if (audio.buffered.length > 0) {
-            var loaded = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
-            loaded.style.width = loadPercent * 100 + '%';
-        }
+        // if (audio.buffered.length > 0) {
+        //     var loaded = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
+        //     loaded.style.width = loaded * 100 + '%';
+        // }
       });
 
       function formatTime(time) {
