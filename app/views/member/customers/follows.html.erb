@@ -1,0 +1,22 @@
+<div class="cover-member-index">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="font-weight-normal mt-5 mb-5">フォロー一覧</h1>
+    </div>
+    <div class="row justify-content-center">
+      <% @members.each do |member| %>
+      <div class="one-post card w-100">
+        <%= link_to member_customers_path(member) do %>
+        <p class="caption h4"><%= member.name %></p>
+        <div class="d-flex">
+          <%= attachment_image_tag @member, :profile_image, size: '50x50', fallback: "no_image.jpg", class: "mb-3 mt-3 ml-3 profile-img" %>
+          <h4 class="ml-5"><%= member.profile %></h4>
+        </div>
+        <p class="caption"><%= "#{member.posts.count} 投稿" %></p>
+        <% end %>
+      </div>
+      <% end %>
+    </div>
+    <%= paginate @members %>
+  </div>
+</div>

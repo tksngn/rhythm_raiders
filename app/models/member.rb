@@ -9,13 +9,33 @@ class Member < ApplicationRecord
   after_initialize :set_default_status, if: :new_record?
 
   has_one_attached :profile_image
+
   has_many :created_tracks, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
   has_many :member_comments, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
+  has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
+  has_many :following_member, through: :follower, source: :followed # 自分がフォローしている人
+  has_many :follower_member, through: :followed, source: :follower # 自分をフォローしている人
 
   enum gender: { Male: 0, Non_binary: 1, Female: 2 }
+
+    # ユーザーをフォローする
+  def follow(member_id)
+    follower.create(followed_id: member_id)
+  end
+
+  # ユーザーのフォローを外す
+  def unfollow(member_id)
+    follower.find_by(followed_id: member_id).destroy
+  end
+
+  # フォローしていればtrueを返す
+  def following?(member)
+    following_members.include?(member)
+  end
 
   def get_created_track
     self.created_tracks

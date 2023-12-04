@@ -1,2 +1,18 @@
 <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
-<h1>My Page</h1>
+<div class="row justify-content-center">
+   <% if member_signed_in? && @member == current_member %>
+   <h1 class="font-weight-normal mt-5 mb-5">マイページ</h1>
+   <% else %>
+   <h1 class="font-weight-normal mt-5 mb-5"><%= @member.name %>さんのページ</h1>
+   <% end %>
+ </div>
+ ---ここから---
+ <% if member_signed_in? && @member == current_member %>
+ <p class="d-flex justify-content-end">
+   <%= link_to "プロフィール編集", edit_member_customer_path(@member), class: "btn-sm btn-success" %>
+ </p>
+ <% end %>
+ <div class="d-flex">
+   <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "mb-3 profile-img" %>
+   <h4 class="ml-3 mb-3 card w-100"><%= @member.profile %></h4>
+ </div>

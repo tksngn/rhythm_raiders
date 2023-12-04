@@ -1,6 +1,9 @@
 class Member::CustomersController < ApplicationController
   def show
-
+    @member = Member.find(params[:id])
+    @posts = @member.posts.page(params[:page]).reverse_order
+    @following_members = @member.following_member
+    @follower_members = @member.follower_member
   end
 
   def index
@@ -12,11 +15,23 @@ class Member::CustomersController < ApplicationController
   end
 
   def edit
-
+    @member = Member.find(params[:id])
   end
 
   def update
+    @member = Member.find(params[:id])
+    @member.update(member_params)
+    redirect_to mypage_member_customers_path(@member.id)
+  end
 
+  def follows
+  member = Member.find(params[:id])
+    @members = member.following_member.page(params[:page]).per(3).reverse_order
+  end
+
+  def followers
+    member = Member.find(params[:id])
+    @members = member.follower_member.page(params[:page]).per(3).reverse_order
   end
 
   def guest_sign_in
@@ -56,5 +71,11 @@ class Member::CustomersController < ApplicationController
 
   def withdraw
 
+  end
+
+  private
+
+  def member_params
+    params.require(:member).permit(:name, :email, :profile, :profile_image)
   end
 end

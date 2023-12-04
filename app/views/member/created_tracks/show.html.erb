@@ -1,36 +1,64 @@
-<div style="width: 76%; text-align: center;">
-  <h2 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">Music Detail</h2>
-  <div>
-    <p>コメント件数：<%= @created_track.post_comments.count %></p>
-    <% @created_track.post_comments.each do |post_comment| %>
-      <% post_comment.member.get_created_track.each do |created_track| %>
-        <p><%= created_track.title %></p> <!-- ここを修正 -->
+<div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+  <div style="width: 76%; text-align: center;">
+    <h2 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">Music Detail</h2>
+    <div>
+      <p>コメント件数：<%= @created_track.post_comments.count %></p>
+      <% @created_track.post_comments.each do |post_comment| %>
+        <% post_comment.member.get_created_track.each do |created_track| %>
+          <p><%= created_track.title %></p> <!-- ここを修正 -->
+        <% end %>
+        <%= post_comment.member.name %>
+        <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
+        <%= post_comment.comment_content %> <!-- ここを追加 -->
       <% end %>
-      <%= post_comment.member.name %>
-      <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
-      <%= post_comment.comment_content %> <!-- ここを追加 -->
+    </div>
+    <div>
+      <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
+        <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
+        <%= f.submit "Post a Comment" %>
+      <% end %>
+    </div>
+    <% if @created_track.liked_by?(current_member) %>
+      <p>
+        <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
+          ♥<%= @created_track.likes.count %> いいね
+        <% end %>
+      </p>
+    <% else %>
+      <p>
+        <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
+          ♡<%= @created_track.likes.count %> いいね
+        <% end %>
+      </p>
     <% end %>
-  </div>
-  <div>
-    <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
-      <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
-      <%= f.submit "Post a Comment" %>
-    <% end %>
-  </div>
-  <% if @created_track.liked_by?(current_member) %>
-    <p>
-      <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
-        ♥<%= @created_track.likes.count %> いいね
+
+    <p class="d-flex justify-content-end">
+      <% if member_signed_in? && @member == current_member %>
+        <%= link_to "プロフィール編集", edit_member_customer_path(@user), class: "btn-sm btn-success" %>
       <% end %>
+      <% if following_member != @member %>
+        <% if current_member.following?(@member) %>
+          <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
+        <% else %>
+          <%= link_to 'フォローする', member_customer_relationships_path(@member.id), method: :POST, class:"btn-sm btn-success" %>
+        <% end %>
     </p>
-  <% else %>
-    <p>
-      <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
-        ♡<%= @created_track.likes.count %> いいね
       <% end %>
-    </p>
-  <% end %>
-  <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+    <div class="ml-3 mb-3 card w-100">
+      <div class="d-flex">
+        <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "mb-3 mt-3 ml-3 profile-img" %>
+        <h4 class="ml-5 m-3"><%= @member.profile %></h4>
+      </div>
+      <div class="d-flex">
+        <%= link_to follows_member_customers_path(@member) do %>
+          <h6>フォロー<%= @following_members.count %></h6>
+        <% end %>&nbsp;&nbsp;
+        <%= link_to followers_member_customers_path(@member) do %>
+          <h6>フォロワー<%= @follower_members.count %></h6>
+        <% end %>
+      </div>
+    </div>
+
     <div style="position: fixed; bottom: 0; width: 100%; text-align: center;">
       <div style="text-align: center;">
         <%= image_tag("rhythm_raiders_logo2.jpg") %>

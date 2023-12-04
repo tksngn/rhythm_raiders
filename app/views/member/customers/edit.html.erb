@@ -1,1 +1,27 @@
 <h1>登録情報編集画面</h1>
+<div class="cover-member-edit">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="font-weight-normal mt-5 mb-5">プロフィール編集</h1>
+    </div>
+    <div class="row justify-content-center">
+      <%= form_with model: @member, local:true do |f| %>
+      <div class="form-group">
+        <label class="form-label">name</label>
+        <label class="form-label">creater_name</label>
+        <%= f.text_field :creater_name, autofocus: true, id:"inputName", placeholder:"Creater Name", class: "form-control" %>
+      </div>
+      <div class="form-group">
+        <label class="form-label">ProfileImage</label><br>
+        <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "mb-3 profile-img" %><br>
+        <%= f.attachment_field :profile_image, placeholder: "ProfileImage" %>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Member Information</label>
+        <%= f.text_field :profile, class: "form-control" %><br>
+      </div>
+      <%= f.submit 'Member情報保存-Save Changes-', class: "btn btn-success" %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -28,10 +28,12 @@ Rails.application.routes.draw do
   namespace :member do
     resources :customers, only: [:index, :show, :edit, :update] do
       collection do
+        get :follows, :followers
         get :mypage
         get :unsubscribe
         patch :withdraw
       end
+      resource :relationships, only: [:create, :destroy]
     end
 
     resources :created_tracks, only: [:new, :create, :index, :show, :destroy] do

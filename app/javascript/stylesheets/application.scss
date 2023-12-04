@@ -1,5 +1,18 @@
 @use '~bootstrap/scss/bootstrap';
 
+.cover-member-edit {
+  height: 100%;
+  width: 100%;
+  background-image: url(/images/dragoon1.jpg);
+  background-color: rgba(255, 255, 255, 0.4);
+  background-blend-mode: lighten;
+  background-size: 100% 100%;
+}
+
+.profile-img {
+  border-radius: 50%;
+}
+
 /* 定義した色 */
 $dark-blue: #4267B2;
 $light-blue: #89CFF0;

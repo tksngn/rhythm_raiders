@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_01_050040) do
+ActiveRecord::Schema.define(version: 2023_12_04_000051) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -75,12 +75,6 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
     t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 
-  create_table "follows", force: :cascade do |t|
-    t.datetime "follow_timestamp", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "likes", force: :cascade do |t|
     t.integer "member_id", null: false
     t.integer "created_track_id", null: false
@@ -135,6 +129,8 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
     t.boolean "active"
     t.boolean "agreement"
     t.boolean "is_guest", default: false
+    t.string "profile"
+    t.string "profile_image_id"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
@@ -164,6 +160,15 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
     t.index ["member_id"], name: "index_posts_on_member_id"
   end
 
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id", null: false
+    t.integer "followed_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "created_tracks", "members"
@@ -173,4 +178,6 @@ ActiveRecord::Schema.define(version: 2023_12_01_050040) do
   add_foreign_key "post_comments", "created_tracks"
   add_foreign_key "post_comments", "members"
   add_foreign_key "posts", "members"
+  add_foreign_key "relationships", "members", column: "followed_id"
+  add_foreign_key "relationships", "members", column: "follower_id"
 end
