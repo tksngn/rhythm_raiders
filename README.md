@@ -57,6 +57,8 @@
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 使用素材
 フリー素材として以下を使用
-- pixabay (https://pixabay.com),photoAC(https://photo-ac.com) :サイトのデザインやレイアウトに使用する画像、音楽プレーヤー機能のテスト用（サンプルBGM）を提供しています。
+- pixabay (https://pixabay.com)
+- photoAC(https://photo-ac.com)
+- :サイトのデザインやレイアウトに使用する画像、音楽プレーヤー機能のテスト用（サンプルBGM）を提供しています。
 - <div>ロゴは <a href="https://www.designevo.com/jp/" title="無料オンラインロゴメーカー">DesignEvo</a> ロゴメーカーさんで作成しました。</div>
 
