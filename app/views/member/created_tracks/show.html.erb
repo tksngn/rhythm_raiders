@@ -34,9 +34,9 @@
 
     <p class="d-flex justify-content-end">
       <% if member_signed_in? && @member == current_member %>
-        <%= link_to "プロフィール編集", edit_member_customer_path(@user), class: "btn-sm btn-success" %>
+        <%= link_to "プロフィール編集", edit_member_customer_path(@member), class: "btn-sm btn-success" %>
       <% end %>
-      <% if following_member != @member %>
+      <% if @following_members != @member %>
         <% if current_member.following?(@member) %>
           <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
         <% else %>
@@ -46,14 +46,14 @@
       <% end %>
     <div class="ml-3 mb-3 card w-100">
       <div class="d-flex">
-        <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "mb-3 mt-3 ml-3 profile-img" %>
-        <h4 class="ml-5 m-3"><%= @member.profile %></h4>
+        <%= image_tag current_member.get_profile_image(100,100), class: "d-block mx-auto" %>
+        <h4 class="ml-5 m-3"><%= current_member.profile %></h4>
       </div>
       <div class="d-flex">
-        <%= link_to follows_member_customers_path(@member) do %>
+        <%= link_to follows_member_customer_path(@member) do %>
           <h6>フォロー<%= @following_members.count %></h6>
         <% end %>&nbsp;&nbsp;
-        <%= link_to followers_member_customers_path(@member) do %>
+        <%= link_to followers_member_customer_path(@member) do %>
           <h6>フォロワー<%= @follower_members.count %></h6>
         <% end %>
       </div>

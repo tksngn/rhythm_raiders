@@ -94,7 +94,7 @@
       $.ajax({
         type: "POST",
         url: "/member/created_tracks/" + trackId + "/likes",
-        data: { member_id: currentMemberId },
+        data: { member_id: <%= current_member.id %> },
         success: function(response) {
           // いいねの数を更新
           $('#like-count-' + trackId).text(response.like_count);

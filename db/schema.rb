@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_04_000051) do
+ActiveRecord::Schema.define(version: 2023_12_04_162732) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -135,6 +135,20 @@ ActiveRecord::Schema.define(version: 2023_12_04_000051) do
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "subject_type"
+    t.integer "subject_id"
+    t.integer "member_id", null: false
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.integer "action_type", null: false
+    t.boolean "checked", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_notifications_on_member_id"
+    t.index ["subject_type", "subject_id"], name: "index_notifications_on_subject"
+  end
+
   create_table "post_comments", force: :cascade do |t|
     t.integer "member_id"
     t.integer "created_track_id"
@@ -175,6 +189,7 @@ ActiveRecord::Schema.define(version: 2023_12_04_000051) do
   add_foreign_key "likes", "created_tracks"
   add_foreign_key "likes", "members"
   add_foreign_key "member_comments", "members"
+  add_foreign_key "notifications", "members"
   add_foreign_key "post_comments", "created_tracks"
   add_foreign_key "post_comments", "members"
   add_foreign_key "posts", "members"

@@ -1,18 +1,94 @@
-<%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
-<div class="row justify-content-center">
-   <% if member_signed_in? && @member == current_member %>
-   <h1 class="font-weight-normal mt-5 mb-5">マイページ</h1>
-   <% else %>
-   <h1 class="font-weight-normal mt-5 mb-5"><%= @member.name %>さんのページ</h1>
-   <% end %>
- </div>
- ---ここから---
- <% if member_signed_in? && @member == current_member %>
- <p class="d-flex justify-content-end">
-   <%= link_to "プロフィール編集", edit_member_customer_path(@member), class: "btn-sm btn-success" %>
- </p>
- <% end %>
- <div class="d-flex">
-   <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "mb-3 profile-img" %>
-   <h4 class="ml-3 mb-3 card w-100"><%= @member.profile %></h4>
- </div>
+<div class="container">
+
+   <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
+
+   <div class="row">
+      <div class="col-md-6">
+         <!-- mypage section -->
+         <div class="card mb-3">
+            <div class="card-body">
+               <h3 class="text-center">MyPage</h3>
+               <h5 class="text-center"><%= @member.name %></h5>
+               <h6 class="text-center">( <%= @member.creater_name %> )</h6>
+               <%= image_tag @member.get_profile_image(100,100), class: "d-block mx-auto" %>
+            </div>
+         </div>
+         <!--Mytrackes Section-->
+         <div class="card">
+            <div class="card-body">
+               <h3 class="text-center">MyTracks</h3>
+               <% @member.created_tracks.each do |created_track| %>
+                  <div>
+                     <%= link_to member_created_tracks_path(created_track.id) do %>
+                       <%= track.get_created_track %>
+                     <% end %>
+                     <p>Music Title：<%= track.music_title %></p>
+                     <p>Music Genre : <%= track.music_genre %></p>
+                     <p>Profile Image：<%= image_tag profile_image.member.get_profile_image(70,70) %></p>
+                     <p>Creater Name：<%= track.creater_name %></p>
+                     <p>A word from the creater：<%= track.creater_word %></p>
+                     <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+                  </div>
+               <% end %>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-6">
+         <!-- follow/follwer Section-->
+         <div class="card mb-3">
+            <div class="card-body">
+               <h3 class="text-center">Follow/Follower</h3>
+               <p class="text-center">
+                  Follower: <%= link_to @follower_members.count, followers_member_customer_path(current_member) %>
+               </p>
+               <p class="text-center">
+                  Following: <%= link_to @following_members.count, follows_member_customer_path(current_member) %>
+               </p>
+            </div>
+         </div>
+         <!-- Good Section-->
+         <div class="card mb-3">
+            <div class="card-body">
+               <h3 class="text-center">Good Sound</h3>
+               <ul>
+                  <% @member.likes.each do |like| %>
+                     <li><%= link_to like.created_track.music_title, member_created_tracks_path(like.created_track) %></li>
+                  <% end %>
+               </ul>
+            </div>
+         </div>
+         <!-- Information Section-->
+         <div class="card mb-6">
+            <div class="card-body">
+               <h3 class="text-center">Information</h3>
+               <p class="text-center">
+                  <%= link_to "Music Index", member_created_tracks_path %>
+               </p>
+               <p class="text-center">
+                  <%= link_to 'Home', member_top_path %>
+               </p>
+               <p class="text-center">
+                  <%= link_to "About", "/homes/about" %>
+               </p>
+               <p class="text-center">
+                  <% if @created_track && @member_track %>
+                    <%= link_to "Submit music", edit_member_created_track_member_track_path(@created_track, @member_track) %>
+                  <% else %>
+                    <%= link_to "Submit music", new_member_created_track_path %>
+                  <% end %>
+               </p>
+               <li class="nav-item text-center">
+                 <%= link_to notifications_path, class: "nav-link" do %>
+                    <% if current_member.notifications.where(checked: false).exists? %>
+                      <i class="fa-sharp fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
+                    <% else %>
+                      <i class="fa-sharp fa-solid fa-bell"></i>
+                    <% end %>
+                    通知一覧
+                 <% end %>
+               </li>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

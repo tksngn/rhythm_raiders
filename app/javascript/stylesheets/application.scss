@@ -164,7 +164,15 @@ input[type='radio'] {
     width: 100%;
 }
 
-body, .card {
+body {
+  font-family: Georgia, serif;
+  font-weight: bold;
+  font-style: italic;
+  background-color: #000000; /* ダークカラー */
+  color: #ffffff; /* テキストカラー */
+}
+
+.card {
   font-family: Georgia, serif;
   font-weight: bold;
   font-style: italic;

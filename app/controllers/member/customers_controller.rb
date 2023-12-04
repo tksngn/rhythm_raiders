@@ -11,7 +11,11 @@ class Member::CustomersController < ApplicationController
   end
 
   def mypage
-
+    @member = current_member
+    @created_track = current_member.created_tracks.first
+    @member_track = @created_track.member_tracks.first if @created_track
+    @following_members = @member.following_member
+    @follower_members = @member.follower_member
   end
 
   def edit
@@ -25,21 +29,21 @@ class Member::CustomersController < ApplicationController
   end
 
   def follows
-  member = Member.find(params[:id])
-    @members = member.following_member.page(params[:page]).per(3).reverse_order
+    member = Member.find(params[:id])
+    @members = member.following_member.reverse_order
   end
 
   def followers
     member = Member.find(params[:id])
-    @members = member.follower_member.page(params[:page]).per(3).reverse_order
+    @members = member.follower_member.reverse_order
   end
 
   def guest_sign_in
     member = Member.find_or_initialize_by(email: 'guest@example.com')
     if member.new_record?
       member.password = SecureRandom.urlsafe_base64
-      member.name = "Guest"
-      member.creater_name = "Guest"
+      member.name = "Kaiser Atrantiz"
+      member.creater_name = "Resiak Z"
       member.phone_number = "000-0000-0000"
       member.gender = 0
       member.is_privacy_policy_accepted = 1
@@ -50,7 +54,7 @@ class Member::CustomersController < ApplicationController
       @created_track = CreatedTrack.new
       @created_track.member = member
       @created_track.music_title = "Fantasy Background Music"
-      @created_track.creater_name = "Guest" # ここでcreater_name属性に値を設定します
+      @created_track.creater_name = "Resiak Z" # ここでcreater_name属性に値を設定します
       @created_track.creater_word = "ようこそゲストさん！"
       @created_track.music_genre = "Genre" # ここでmusic_genre属性に値を設定します
       @created_track.playback_duration = 30 # ここでplayback_duration属性に値を設定します

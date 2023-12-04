@@ -6,10 +6,10 @@
     <div class="row justify-content-center">
       <% @members.each do |member| %>
       <div class="one-post card w-100">
-        <%= link_to member_customers_path(user) do %>
-        <p class="caption h4"><%= member.name %></p>
+        <%= link_to member_customer_path(member) do %>
+        <p class="caption h4"><%= member.creater_name %></p>
         <div class="d-flex">
-          <%= attachment_image_tag @member, :profile_image, size: '50x50', fallback: "no_image.jpg", class: "mb-3 mt-3 ml-3 profile-img" %>
+          <%= image_tag member.get_profile_image(100, 100)%>
           <h4 class="ml-5"><%= member.profile %></h4>
         </div>
         <p class="caption"><%= "#{member.posts.count} 投稿" %></p>
@@ -17,6 +17,5 @@
       </div>
       <% end %>
     </div>
-    <%= paginate @members %>
   </div>
 </div>

@@ -28,10 +28,12 @@ Rails.application.routes.draw do
   namespace :member do
     resources :customers, only: [:index, :show, :edit, :update] do
       collection do
-        get :follows, :followers
         get :mypage
         get :unsubscribe
         patch :withdraw
+      end
+      member do
+        get :follows, :followers
       end
       resource :relationships, only: [:create, :destroy]
     end
@@ -39,12 +41,17 @@ Rails.application.routes.draw do
     resources :created_tracks, only: [:new, :create, :index, :show, :destroy] do
       resources :post_comments, only: [:create, :destroy]
       resources :likes, only: [:create, :destroy]
+      resources :member_tracks, only: [:new, :edit, :create, :destroy]
 
       collection do
         get :guest_index
       end
     end
   end
+
+scope module: :member do
+resources :notifications, only: [:index]
+end
 
   post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'
   get 'member_top', to: 'homes#member_top'

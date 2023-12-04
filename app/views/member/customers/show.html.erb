@@ -1,24 +1,36 @@
-<h1>メンバー・楽曲情報詳細画面</h1>
-<!-- ユーザーの詳細 -->
-<div>
-  <h3><%= @member.creater_name %></h3>
-  <%= image_tag @member.get_profile_image(100,100) %>
-  <% if @member.id == current_menber.id %>
-  <p><%= link_to "プロフィール編集", edit_member_customer_path(@member) %></p>
-  <% end %>
-</div>
+<div class="container">
 
-<!-- ユーザーの投稿一覧 -->
-<% @created_tracks.each do |created_track| %>
-  <div>
-    <%= link_to member_created_tracks_path(created_track.id) do %>
-      <%= track.get_created_track %>
+  <% if current_member != @member %>
+    <% if current_member.following?(@member) %>
+      <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
+    <% else %>
+      <%= link_to 'フォローする', member_customer_relationships_path(@member.id), method: :post, class:"btn-sm btn-success" %>
     <% end %>
-    <p>Music Title：<%= track.music_title %></p>
-    <p>Music Genre : <%= track.music_genre %></p>
-    <p>Profile Image：<%= image_tag profile_image.member.get_profile_image(70,70) %></p>
-    <p>Creater Name：<%= track.creater_name %></p>
-    <p>A word from the creater：<%= track.creater_word %></p>
-    <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+  <% end %>
+
+  <h1>メンバー・楽曲情報詳細画面</h1>
+  <!-- ユーザーの詳細 -->
+  <div>
+    <h3><%= @member.creater_name %></h3>
+    <%= image_tag @member.get_profile_image(100,100) %>
+    <% if @member.id == current_member.id %>
+    <p><%= link_to "プロフィール編集", edit_member_customer_path(@member) %></p>
+    <% end %>
   </div>
-<% end %>
+
+  <!-- ユーザーの投稿一覧 -->
+  <% @member.created_tracks.each do |created_track| %>
+    <div>
+      <%= link_to member_created_tracks_path(created_track.id) do %>
+        <%= track.get_created_track %>
+      <% end %>
+      <p>Music Title：<%= track.music_title %></p>
+      <p>Music Genre : <%= track.music_genre %></p>
+      <p>Profile Image：<%= image_tag profile_image.member.get_profile_image(70,70) %></p>
+      <p>Creater Name：<%= track.creater_name %></p>
+      <p>A word from the creater：<%= track.creater_word %></p>
+      <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+    </div>
+  <% end %>
+
+</div>

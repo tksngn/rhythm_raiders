@@ -41,11 +41,11 @@
       <!-- 投稿コメント情報表示 -->
       <% @member.member_comments.each do |comment| %>
         <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
-          <h2 style="text-align: center; color: orange;">コメント投稿者: <%= comment.user.name %></h2>
+          <h2 style="text-align: center; color: orange;">コメント投稿者: <%= comment.member.name %></h2>
           <p style="word-wrap: break-word;"><strong style="color: orange;">Comment:</strong> <%= comment.content %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Commented by:</strong> <%= comment.user.name %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= comment.user.email %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= comment.user.phone_number %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Commented by:</strong> <%= comment.member.name %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= comment.member.email %></p>
+          <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= comment.member.phone_number %></p>
       <!-- 利用停止ボタン -->
           <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
         </div>
