@@ -153,8 +153,8 @@ input[type='radio'] {
     font-weight: bold;
 }
 .logo {
-    position: fixed;
-    bottom: 10px;
+    position: relative;
+    top: 10px;
     right: 10px;
 }
 .copyright {
@@ -166,6 +166,7 @@ input[type='radio'] {
 
 body {
   font-family: Georgia, serif;
+  font-size: 0.8rem;
   font-weight: bold;
   font-style: italic;
   background-color: #000000; /* ダークカラー */

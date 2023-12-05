@@ -105,6 +105,7 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
   end
 
   create_table "member_tracks", force: :cascade do |t|
+    t.integer "member_id"
     t.integer "playback_count", null: false
     t.boolean "favorite_flag", null: false
     t.datetime "playlist_addition_timestamp", null: false

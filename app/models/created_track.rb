@@ -17,5 +17,18 @@ class CreatedTrack < ApplicationRecord
   def liked_by?(member)
     member && likes.where(member_id: member.id).exists?
   end
+
+  def member_tracks(member)
+  # ここで、memberは特定のMemberオブジェクトを指します
+  # Trackモデルが存在し、Memberとの間に適切な関連性が定義されていると仮定します
+  member.member_tracks
+  end
+
+  def get_created_track
+  # ここで、何らかの属性を返すコードを書きます
+  # 例えば、music_title属性を返す場合は以下のようになります：
+  self.music_title
+  end
+
 end
 

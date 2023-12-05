@@ -13,7 +13,7 @@ class Member::CustomersController < ApplicationController
   def mypage
     @member = current_member
     @created_track = current_member.created_tracks.first
-    @member_track = @created_track.member_tracks.first if @created_track
+    @member_track = @created_track.member_tracks(@member).first if @created_track
     @following_members = @member.following_member
     @follower_members = @member.follower_member
   end

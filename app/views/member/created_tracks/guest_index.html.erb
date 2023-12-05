@@ -92,10 +92,9 @@
       <%= paginate @created_tracks %>
     <% end %>
   </div>
-  <footer style="text-align: center; position: fixed; bottom: 0; width: 100%;">
+  <div style="text-align: center; position: fixed; bottom: 10; width: 100%;">
     <%= link_to 'Back to Home', member_top_path, method: :get, class: "button" %>
-    <p>©20231225 Rhythm RAIDERS</p>
-  </footer>
+  </div>
 
   <script>
     function likeTrack(trackId, isMember) {
