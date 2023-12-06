@@ -20,19 +20,19 @@
         <% end %>
       </div>
       <% if @created_track.liked_by?(current_member) %>
-        <p>
-          <%= link_to member_created_track_like_path(@created_track, @like), method: :delete do %>
+        <p class="mt-2">
+          <%= link_to member_created_track_likes_path(@created_track), method: :delete do %>
             ♥<%= @created_track.likes.count %> いいね
           <% end %>
         </p>
       <% else %>
-        <p>
+        <p class="mt-2">
           <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
             ♡<%= @created_track.likes.count %> いいね
           <% end %>
         </p>
       <% end %>
-  
+
       <p class="d-flex justify-content-end">
         <% if member_signed_in? && @member == current_member %>
           <%= link_to "プロフィール編集", edit_member_customer_path(@member), class: "btn-sm btn-success" %>
@@ -59,7 +59,7 @@
           <% end %>
         </div>
       </div>
-  
+
       <div style="position: fixed; bottom: 0; width: 100%; text-align: center;">
         <div style="text-align: center;">
           <%= image_tag("rhythm_raiders_logo2.jpg") %>

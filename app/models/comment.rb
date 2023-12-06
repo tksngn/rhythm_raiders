@@ -16,6 +16,6 @@ class Comment < ApplicationRecord
   end
 
   def create_notifications
-    Notification.create(subject: self, member: post_comment.member, action_type: :commented_to_own_post)
+    Notification.create(subject: self, member_id: post_comment.member.id)
   end
 end

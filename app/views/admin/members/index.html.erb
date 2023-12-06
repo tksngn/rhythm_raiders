@@ -29,9 +29,9 @@
             <tr>
               <td class="col-2 white-text"><%= link_to member.name, admin_member_path(member) %></td>
               <td class="col-1 white-text">
-                <% if member.active %>
+                <% if member.is_active %>
                   <%= link_to '有効', '#', class: 'btn btn-primary' %>
-                <% elsif !member.active %>
+                <% elsif !member.is_active %>
                   <%= link_to '停止中', edit_admin_member_path(member), class: 'btn btn-dark' %>
                 <% else %>
                   <%= link_to '退会', '#', class: 'btn btn-danger' %>

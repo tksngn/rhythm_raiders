@@ -40,7 +40,7 @@ Rails.application.routes.draw do
 
     resources :created_tracks, only: [:new, :create, :index, :show, :destroy] do
       resources :post_comments, only: [:create, :destroy]
-      resources :likes, only: [:create, :destroy]
+      resource :likes, only: [:create, :destroy]
       resources :member_tracks, only: [:new, :edit, :create, :destroy]
 
       collection do

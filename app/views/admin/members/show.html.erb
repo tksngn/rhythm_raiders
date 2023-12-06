@@ -17,8 +17,8 @@
       <div style="margin-left: auto; margin-right: auto; width: 50%;">
         <h2 style="text-align: center; color: orange;">投稿コメント詳細</h2>
         <p style="word-wrap: break-word;"><strong style="color: orange;">PostComment:</strong></p>
-        <% @member.member_comments.each do |comment| %>
-        <p style="word-wrap: break-word;"><%= comment.content %></p>
+        <% @member.post_comments.each do |comment| %>
+        <p style="word-wrap: break-word;"><%= comment.comment_content %></p>
         <% end %>
       </div>
     </div>

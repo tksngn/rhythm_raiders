@@ -1,0 +1,7 @@
+  <div>
+    <%= link_to notification.subject.member.creater_name, member_top_path(notification.subject.member) %>
+    があなたの
+    <%= link_to '投稿', member_created_track_path(notification.subject.created_track) %>
+    にコメントしました
+    <%= " (#{time_ago_in_words(notification.created_at)}前)" %>
+  </div>

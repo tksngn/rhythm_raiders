@@ -26,7 +26,7 @@ class Member < ApplicationRecord
 
     # ユーザーをフォローする
   def follow(member_id)
-    follower.create(followed_id: member_id)
+    follower.create!(followed_id: member_id)
   end
 
   # ユーザーのフォローを外す
@@ -55,8 +55,8 @@ class Member < ApplicationRecord
     email == 'guest@example.com'
   end
 
-  def withdrawn?
-    !active
+  def withdrawn? # FIXME: 退会系処理
+    !is_active
   end
 
   def get_profile_image(width, height)
@@ -69,8 +69,8 @@ class Member < ApplicationRecord
 
   private
 
-  def set_default_status
-    self.status ||= :active
+  def set_default_status # FIXME: 退会系処理
+    self.is_active ||= :active
   end
 end
 

@@ -57,13 +57,19 @@
                   </div>
                   <div>
                     <!-- いいね機能の追加 -->
-                    <button type="button" class="like-button m-0 mb-2" onclick="likeTrack(<%= created_track.id %>, <%= !current_member.is_guest %>)">
-                      <i class="fa-solid fa-thumbs-up"></i>
-                      いいね！
-                      <span id="like-count-<%= created_track.id %>">
-                        <%= created_track.likes.count %>
-                      </span>
-                    </button>
+                    <% if created_track.liked_by?(current_member) %>
+                      <p>
+                        <%= link_to member_created_track_likes_path(created_track), method: :delete, class: "like-button" do %>
+                          ♥<%= created_track.likes.count %> いいね
+                        <% end %>
+                      </p>
+                    <% else %>
+                      <p>
+                        <%= link_to member_created_track_likes_path(created_track), method: :post, class: "like-button" do %>
+                          ♡<%= created_track.likes.count %> いいね
+                        <% end %>
+                      </p>
+                    <% end %>
                     <div>
                       <button type="button" class="btn btn-sm btn-outline-secondary1 m-0" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary stop-button m-0" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
@@ -87,18 +93,6 @@
   </div>
 
   <script>
-    function likeTrack(trackId, isMember) {
-      $.ajax({
-        type: "POST",
-        url: "/member/created_tracks/" + trackId + "/likes",
-        data: { member_id: <%= current_member.id %> },
-        success: function(response) {
-          // いいねの数を更新
-          $('#like-count-' + trackId).text(response.like_count);
-        }
-      });
-    }
-
     function stopPreview() {
       var audios = document.getElementsByTagName('audio');
       for(var i = 0, len = audios.length; i < len; i++){

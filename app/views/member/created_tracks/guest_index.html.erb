@@ -64,13 +64,11 @@
                   </div>
                   <div>
                     <!-- いいね機能の追加 -->
-                    <button type="button" class="like-button" onclick="likeTrack(<%= created_track.id %>, <%= !current_member.is_guest %>)">
-                      <i class="fa-solid fa-thumbs-up"></i>
-                      いいね！
-                      <span id="like-count-<%= created_track.id %>">
-                        <%= created_track.likes.count %>
+                    <div class="mt-2">
+                      <span class="like-button">
+                        ♥<%= created_track.likes.count %> いいね
                       </span>
-                    </button>
+                    </div>
                     <div>
                       <button type="button" class="btn btn-sm btn-outline-secondary1" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary stop-button" id="stop-button" onclick="stopPreview();">Stop</button><!-- 追加した停止ボタン -->
@@ -97,19 +95,6 @@
   </div>
 
   <script>
-    function likeTrack(trackId, isMember) {
-      var guestMemberId = <%= @guest_member.id %>; // サーバーサイドからゲストメンバーのIDを取得
-      $.ajax({
-        type: "POST",
-        url: "/member/created_tracks/" + trackId + "/likes",
-        data: { member_id: isMember ? currentMemberId : guestMemberId }, // ここを修正
-        success: function(response) {
-          // いいねの数を更新
-          $('#like-count-' + trackId).text(response.like_count);
-        }
-      });
-    }
-
     function stopPreview() {
       var audios = document.getElementsByTagName('audio');
       for(var i = 0, len = audios.length; i < len; i++){

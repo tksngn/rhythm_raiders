@@ -54,6 +54,6 @@ class Admin::MembersController < ApplicationController
   end
 
   def member_params
-    params.require(:member).permit(:name, :email, :password, :password_confirmation, :active)
+    params.require(:member).permit(:name, :email, :password, :password_confirmation, :is_active)
   end
 end

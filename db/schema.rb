@@ -127,7 +127,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.boolean "is_active", default: true, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "active"
     t.boolean "agreement"
     t.boolean "is_guest", default: false
     t.string "profile"
@@ -140,9 +139,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.string "subject_type"
     t.integer "subject_id"
     t.integer "member_id", null: false
-    t.integer "follower_id"
-    t.integer "followed_id"
-    t.integer "action_type", null: false
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

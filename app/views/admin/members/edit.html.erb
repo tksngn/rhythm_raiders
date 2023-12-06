@@ -14,9 +14,9 @@
         <p style="word-wrap: break-word;"><strong style="color: orange;">Gender:</strong> <%= @member.gender %></p>
         <div style="margin-left: auto; margin-right: auto; width: 50%;">
           <!-- 利用停止のラジオボタン -->
-          <%= form.radio_button :active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
+          <%= form.radio_button :is_active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
           <!-- 利用停止解除のラジオボタン -->
-          <%= form.radio_button :active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
+          <%= form.radio_button :is_active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
         </div>
       </div>
       <div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">

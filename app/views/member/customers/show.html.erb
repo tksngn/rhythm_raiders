@@ -2,9 +2,9 @@
 
   <% if current_member != @member %>
     <% if current_member.following?(@member) %>
-      <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
+      <%= link_to 'フォロー外す', member_customer_relationships_path(@member), method: :delete, class: "btn-sm btn-danger" %>
     <% else %>
-      <%= link_to 'フォローする', member_customer_relationships_path(@member.id), method: :post, class:"btn-sm btn-success" %>
+      <%= link_to 'フォローする', member_customer_relationships_path(@member), method: :post, class:"btn-sm btn-success" %>
     <% end %>
   <% end %>
 
