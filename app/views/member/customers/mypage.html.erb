@@ -1,94 +1,95 @@
-<div class="container">
-
-   <%= image_tag("rhythm_raiders_logo2.jpg", alt: "RhythmRAIDERSのロゴ", class: "img-fluid") %>
-
-   <div class="row">
-      <div class="col-md-6">
-         <!-- mypage section -->
-         <div class="card mb-3">
-            <div class="card-body">
-               <h3 class="text-center">MyPage</h3>
-               <h5 class="text-center"><%= @member.name %></h5>
-               <h6 class="text-center">( <%= @member.creater_name %> )</h6>
-               <%= image_tag @member.get_profile_image(100,100), class: "d-block mx-auto" %>
-            </div>
-         </div>
-         <!--Mytrackes Section-->
-         <div class="card">
-            <div class="card-body">
-               <h3 class="text-center">MyTracks</h3>
-               <% @member.created_tracks.each do |created_track| %>
-                  <div>
-                     <%= link_to member_created_tracks_path(created_track.id) do %>
-                       <%= created_track.get_created_track %>
-                     <% end %>
-                     <div>Music Title：<%= created_track.music_title %></div>
-                     <div>Music Genre : <%= created_track.music_genre %></div>
-                     <div>Creater Name：<%= created_track.creater_name %></div>
-                     <div>A word from the creater：<%= created_track.creater_word %></div>
-                     <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
-                  </div>
-               <% end %>
-            </div>
-         </div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="text-center">
+        <%= image_tag("rhythm_raiders_logo2.jpg") %>
       </div>
+      <!-- mypage section -->
+      <div class="card mb-3">
+        <div class="card-body">
+          <h3 class="text-center">MyPage</h3>
+          <h5 class="text-center"><%= @member.name %></h5>
+          <h6 class="text-center">( <%= @member.creater_name %> )</h6>
+          <%= image_tag @member.get_profile_image(100,100), class: "d-block mx-auto" %>
+        </div>
+      </div>
+      <!--Mytrackes Section-->
+      <div class="card">
+        <div class="card-body">
+          <h3 class="text-center">MyTracks</h3>
+          <% @member.created_tracks.each do |created_track| %>
+            <div>
+              <%= link_to member_created_tracks_path(created_track.id) do %>
+               <%= created_track.get_created_track %>
+              <% end %>
+              <div>Music Title：<%= created_track.music_title %></div>
+              <div>Music Genre : <%= created_track.music_genre %></div>
+              <div>Creater Name：<%= created_track.creater_name %></div>
+              <div>A word from the creater：<%= created_track.creater_word %></div>
+              <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
       <div class="col-md-6">
-         <!-- follow/follwer Section-->
-         <div class="card mb-3">
-            <div class="card-body">
-               <h3 class="text-center">Follow/Follower</h3>
-               <p class="text-center">
-                  Follower: <%= link_to @follower_members.count, followers_member_customer_path(current_member) %>
-               </p>
-               <p class="text-center">
-                  Following: <%= link_to @following_members.count, follows_member_customer_path(current_member) %>
-               </p>
-            </div>
-         </div>
-         <!-- Good Section-->
-         <div class="card mb-3">
-            <div class="card-body">
-               <h3 class="text-center">Good Sound</h3>
-               <ul>
-                  <% @member.likes.each do |like| %>
-                     <li><%= link_to like.created_track.music_title, member_created_tracks_path(like.created_track) %></li>
-                  <% end %>
-               </ul>
-            </div>
-         </div>
-         <!-- Information Section-->
-         <div class="card mb-3">
-            <div class="card-body">
-               <h3 class="text-center">Information</h3>
-               <div class="text-center">
-                  <%= link_to "Music Index", member_created_tracks_path %>
-               </div>
-               <div class="text-center">
-                  <%= link_to 'Home', member_top_path %>
-               </div>
-               <div class="text-center">
-                  <%= link_to "About", "/homes/about" %>
-               </div>
-               <div class="text-center">
-                  <% if @created_track && @member_track %>
-                    <%= link_to "Submit music", edit_member_created_track_member_track_path(@created_track, @member_track) %>
+        <!-- follow/follwer Section-->
+        <div class="card mb-3">
+          <div class="card-body">
+             <h3 class="text-center">Follow/Follower</h3>
+             <p class="text-center">
+                Follower: <%= link_to @follower_members.count, followers_member_customer_path(current_member) %>
+             </p>
+             <p class="text-center">
+                Following: <%= link_to @following_members.count, follows_member_customer_path(current_member) %>
+             </p>
+          </div>
+        </div>
+        <!-- Good Section-->
+        <div class="card mb-3">
+          <div class="card-body">
+             <h3 class="text-center">Good Sound</h3>
+             <ul>
+                <% @member.likes.each do |like| %>
+                   <li><%= link_to like.created_track.music_title, member_created_tracks_path(like.created_track) %></li>
+                <% end %>
+             </ul>
+          </div>
+        </div>
+        <!-- Information Section-->
+        <div class="card mb-3">
+          <div class="card-body">
+             <h3 class="text-center">Information</h3>
+             <div class="text-center">
+                <%= link_to "Music Index", member_created_tracks_path %>
+             </div>
+             <div class="text-center">
+                <%= link_to 'Home', member_top_path %>
+             </div>
+             <div class="text-center">
+                <%= link_to "About", "/homes/about" %>
+             </div>
+             <div class="text-center">
+                <% if @created_track && @member_track %>
+                  <%= link_to "Submit music", edit_member_created_track_member_track_path(@created_track, @member_track) %>
+                <% else %>
+                  <%= link_to "Submit music", new_member_created_track_path %>
+                <% end %>
+             </div>
+             <li class="nav-item text-center">
+               <%= link_to notifications_path, class: "nav-link" do %>
+                  <% if current_member.notifications.where(checked: false).exists? %>
+                    <i class="fa-sharp fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
                   <% else %>
-                    <%= link_to "Submit music", new_member_created_track_path %>
+                    <i class="fa-sharp fa-solid fa-bell"></i>
                   <% end %>
-               </div>
-               <li class="nav-item text-center">
-                 <%= link_to notifications_path, class: "nav-link" do %>
-                    <% if current_member.notifications.where(checked: false).exists? %>
-                      <i class="fa-sharp fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
-                    <% else %>
-                      <i class="fa-sharp fa-solid fa-bell"></i>
-                    <% end %>
-                    通知一覧
-                 <% end %>
-               </li>
-            </div>
-         </div>
+                  通知一覧
+               <% end %>
+             </li>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 </div>
 

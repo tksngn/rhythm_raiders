@@ -5,6 +5,10 @@ class Member::CreatedTracksController < ApplicationController
     @created_track = CreatedTrack.find(params[:id])
     @like = current_member ? @created_track.likes.find_by(member_id: current_member.id) : nil
     @post_comment = PostComment.new
+
+    # 追加
+    @following_members = current_member.following_member
+    @follower_members = current_member.follower_member
   end
 
   def index

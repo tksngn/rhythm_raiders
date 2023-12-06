@@ -9,7 +9,7 @@
   <% end %>
 
   <h1>メンバー・楽曲情報詳細画面</h1>
-  <!-- ユーザーの詳細 -->
+  <!-- メンバーの詳細 -->
   <div>
     <h3><%= @member.creater_name %></h3>
     <%= image_tag @member.get_profile_image(100,100) %>
@@ -18,7 +18,7 @@
     <% end %>
   </div>
 
-  <!-- ユーザーの投稿一覧 -->
+  <!-- メンバーの投稿一覧 -->
   <% @member.created_tracks.each do |created_track| %>
     <div>
       <%= link_to member_created_tracks_path(created_track.id) do %>
