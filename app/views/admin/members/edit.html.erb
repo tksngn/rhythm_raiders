@@ -35,8 +35,18 @@
     <h2 style="text-align: center; color: orange;">投稿されたコメント詳細</h2>
     <div style="margin-left: auto; margin-right: auto; width: 50%;">
       <% @member.member_comments.each do |comment| %>
-        <p><strong>Comment:</strong> <%= comment.content %></p>
-        <p><strong>Commented by:</strong> <%= comment.user.name %></p>
+          <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
+            <!-- 投稿コメント編集フォーム -->
+            <p style="word-wrap: break-word;"><strong style="color: orange;">コメント:</strong>
+              <%= form.text_area :comment_comments.comment_content, value:comment_content %>
+            </p>
+          <% end %>
+        <% end %>
+      <% @member.member_comments.each do |comment| %>
+        <p><strong>Comment:</strong> <%= comment.comment_content %></p>
+        <p><strong>Commented by:</strong> <%= comment.creater_name %></p>
+        <!-- コメント削除ボタン -->
+          <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
       <% end %>
       <!-- 投稿コメント情報表示 -->
       <% @member.member_comments.each do |comment| %>
@@ -48,6 +58,8 @@
           <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= comment.member.phone_number %></p>
       <!-- 利用停止ボタン -->
           <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
+      <!-- コメント削除ボタン -->
+          <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
         </div>
       <% end %>
     </div>

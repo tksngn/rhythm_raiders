@@ -14,7 +14,7 @@
     <h3><%= @member.creater_name %></h3>
     <%= image_tag @member.get_profile_image(100,100) %>
     <% if @member.id == current_member.id %>
-    <p><%= link_to "プロフィール編集", edit_member_customer_path(@member) %></p>
+    <p><%= link_to "プロフィール編集", member_created_track_path(created_track) %></p>
     <% end %>
   </div>
 

@@ -7,7 +7,7 @@
           <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
             <!-- 投稿コメント編集フォーム -->
             <p style="word-wrap: break-word;"><strong style="color: orange;">コメント:</strong>
-              <%= form.text_area :content, value: comment.content %>
+              <%= form.text_area :member_comments.comment_content, value:comment_content %>
             </p>
           <% end %>
         <% end %>

@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
       <% @members.each do |member| %>
       <div class="one-post card w-100">
-        <%= link_to member_customer_path(member) do %>
+        <%= link_to member_created_track_path(member.created_tracks) do %>
         <p class="caption h4"><%= member.creater_name %></p>
         <div class="d-flex">
           <%= image_tag member.get_profile_image(100, 100)%>
