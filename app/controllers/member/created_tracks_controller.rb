@@ -18,14 +18,25 @@ class Member::CreatedTracksController < ApplicationController
 
   def new
     @created_track = CreatedTrack.new
+    @member = current_member
   end
 
   def create
-    @created_track = CreatedTrack.new(created_track_params)
-    if @created_track.save
-      redirect_to @created_track, notice: 'Track was successfully created.'
+    @created_track = CreatedTrack.new(created_track_params.merge(:member_id => current_member.id))
+    if @created_track.save!
+      redirect_to member_created_tracks_path , notice: 'Track was successfully created.'
     else
-      render :new
+      @created_tracks = CreatedTrack.page(params[:page]).per(5)
+      render :index
+    end
+  end
+
+  def update
+    @created_track = CreatedTrack.find(params[:id])
+    if @created_track.update(created_track_params)
+      redirect_to @created_track, notice: 'Track was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -35,7 +46,7 @@ class Member::CreatedTracksController < ApplicationController
     # is_guestカラムは楽曲がゲストメンバーによって試聴されたかどうかを表す
     @created_tracks = CreatedTrack.where(is_public: true)
     # ページネーションを適用する
-    @created_tracks = CreatedTrack.page(params[:page]).per(10)
+    @created_tracks = CreatedTrack.page(params[:page]).per(5)
   end
 
   private

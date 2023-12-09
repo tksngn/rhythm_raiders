@@ -14,6 +14,8 @@ class CreatedTrack < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
+  mount_uploader :music_file, AudiofileUploader
+
   def liked_by?(member)
     member && likes.where(member_id: member.id).exists?
   end

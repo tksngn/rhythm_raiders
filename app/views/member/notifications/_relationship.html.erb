@@ -1,8 +1,8 @@
   <div>
-    <% if notification.subject.follower.guest? %>
+    <% if notification.subject.follower.is_guest? %>
       ゲストメンバー
     <% else %>
-      <%= link_to notification.subject.member.creater_name, member_top_path(notification.subject.member) %>
+      <%= link_to notification.subject.followed.creater_name, member_top_path(notification.subject.followed) %>
     <% end %>
     があなたをフォローしました
     <%= " (#{time_ago_in_words(notification.created_at)}前)" %>

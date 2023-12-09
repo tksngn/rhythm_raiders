@@ -13,7 +13,7 @@ import "popper.js";
 import "bootstrap";
 import "../stylesheets/application";
 //import "../stylesheets/homes/unsubscribe";
-
+//= require audiojs
 
 Rails.start()
 Turbolinks.start()

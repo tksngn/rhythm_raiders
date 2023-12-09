@@ -39,6 +39,10 @@
                 </div>
                 <div class="col-md-4">
                   <div class="controls">
+                    <audio controls id="audio-player-<%= created_track.id %>" preload="auto">
+                        <source src="<%= created_track.music_file %>" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                    </audio>
                     <div class="play-pause">
                       <p class="play m-0"></p>
                       <p class="pause m-0"></p>
