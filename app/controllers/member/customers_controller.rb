@@ -4,6 +4,7 @@ class Member::CustomersController < ApplicationController
     @posts = @member.posts.page(params[:page]).reverse_order
     @following_members = @member.following_member
     @follower_members = @member.follower_member
+    @created_track = @member.created_tracks.find_by(id: params[:created_track_id])
   end
 
   def index

@@ -24,6 +24,9 @@
         Welcome, Guest!
         As a guest, you can enjoy a 30-second preview of each song with the preview button. However, by registering as a new user, you can enjoy all songs in full. Please take this opportunity to register.
       </p>
+      <div class="text-center mb-2">
+        <%= link_to 'Back to Home', member_top_path, method: :get, class: "button" %>
+      </div>
       <!-- 楽曲の一覧を表示するエリア -->
       <% @created_tracks.each do |created_track| %>
         <div class="card mb-2">
@@ -42,7 +45,7 @@
                 </div>
                 <div class="col-md-4">
                   <div class="controls">
-                    <audio id="audio-player-<%= created_track.id %>" preload="auto">
+                    <audio controls id="audio-player-<%= created_track.id %>" preload="auto">
                         <source src="<%= created_track.music_file %>" type="audio/mpeg">
                         Your browser does not support the audio element.
                     </audio>
@@ -89,9 +92,6 @@
       <p class="text-success">Records found.</p>
       <%= paginate @created_tracks %>
     <% end %>
-  </div>
-  <div style="text-align: center; position: fixed; bottom: 10; width: 100%;">
-    <%= link_to 'Back to Home', member_top_path, method: :get, class: "button" %>
   </div>
 
   <script>

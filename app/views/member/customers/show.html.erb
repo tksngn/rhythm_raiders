@@ -13,8 +13,8 @@
   <div>
     <h3><%= @member.creater_name %></h3>
     <%= image_tag @member.get_profile_image(100,100) %>
-    <% if @member.id == current_member.id %>
-    <p><%= link_to "プロフィール編集", member_created_track_path(created_track) %></p>
+    <% if @created_track %>
+    <p><%= link_to "プロフィール編集", member_created_track_path(@created_track) %></p>
     <% end %>
   </div>
 
@@ -22,13 +22,13 @@
   <% @member.created_tracks.each do |created_track| %>
     <div>
       <%= link_to member_created_tracks_path(created_track.id) do %>
-        <%= track.get_created_track %>
+        <%= created_track.get_created_track %>
       <% end %>
-      <p>Music Title：<%= track.music_title %></p>
-      <p>Music Genre : <%= track.music_genre %></p>
-      <p>Profile Image：<%= image_tag profile_image.member.get_profile_image(70,70) %></p>
-      <p>Creater Name：<%= track.creater_name %></p>
-      <p>A word from the creater：<%= track.creater_word %></p>
+      <p>Music Title：<%= created_track.music_title %></p>
+      <p>Music Genre : <%= created_track.music_genre %></p>
+      <p>Profile Image：<%= image_tag @member.get_profile_image(70,70) %></p>
+      <p>Creater Name：<%= created_track.creater_name %></p>
+      <p>A word from the creater：<%= created_track.creater_word %></p>
       <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
     </div>
   <% end %>
