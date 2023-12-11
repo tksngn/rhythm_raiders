@@ -18,7 +18,10 @@
         <h2 style="text-align: center; color: orange;">投稿コメント詳細</h2>
         <p style="word-wrap: break-word;"><strong style="color: orange;">PostComment:</strong></p>
         <% @member.post_comments.each do |comment| %>
-        <p style="word-wrap: break-word;"><%= comment.comment_content %></p>
+          <div class="border p-2" style="word-wrap: break-word;">
+            <%= comment.comment_content %>
+            <%= link_to "Delete", admin_post_comment_path(comment.created_track, comment), method: :delete, data: {confirm: "削除しても良いですか？"} %>
+          </div>
         <% end %>
       </div>
     </div>
@@ -26,9 +29,11 @@
       <div style="margin-left: auto; margin-right: auto; width: 50%;">
         <h2 style="text-align: center; color: orange;">投稿楽曲詳細</h2>
         <% if @track.present? %>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Music Title:</strong> <%= @track.music_title %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Music Genre:</strong> <%= @track.music_genre %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">A word from the creater:</strong> <%= @track.creater_word %></p>
+          <div class="border p-2">
+            <p class="m-0" style="word-wrap: break-word;"><strong style="color: orange;">Music Title:</strong> <%= @track.music_title %></p>
+            <p class="m-0" style="word-wrap: break-word;"><strong style="color: orange;">Music Genre:</strong> <%= @track.music_genre %></p>
+            <p class="m-0" style="word-wrap: break-word;"><strong style="color: orange;">A word from the creater:</strong> <%= @track.creater_word %></p>
+          </div>
         <% else %>
           <p>トラックが存在しません。</p>
         <% end %>

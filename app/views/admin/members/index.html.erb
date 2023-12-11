@@ -20,8 +20,8 @@
           <tr>
             <th class="col-2 white-text">UserName</th>
             <th class="col-1 white-text">Status</th>
-            <th class="col-3 white-text">MusicTitle</th>
-            <th class="col-6 white-text">Comment</th>
+            <th class="col-3 white-text">MusicCounts</th>
+            <th class="col-6 white-text">CommentCounts</th>
           </tr>
         </thead>
         <tbody>
@@ -37,8 +37,8 @@
                   <%= link_to '退会', '#', class: 'btn btn-danger' %>
                 <% end %>
               </td>
-              <td class="col-3 white-text"><%= link_to (member.created_tracks.first&.title || 'No tracks created'), admin_member_path(member) %></td>
-              <td class="col-6 white-text"><%= link_to (member.post_comments.first&.id || 'No comment'), admin_member_path(member) %></td>
+              <td class="col-3 white-text"><%= link_to (member.created_tracks.count > 0 ? member.created_tracks.count : 'No track created'), admin_member_path(member) %></td>
+              <td class="col-6 white-text"><%= link_to (member.post_comments.count > 0 ? member.post_comments.count : 'No comment'), admin_member_path(member) %></td>
             </tr>
           <% end %>
         </tbody>

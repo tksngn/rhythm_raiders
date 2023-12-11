@@ -77,122 +77,120 @@
           <% end %>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="pagination" style="display: flex; justify-content: center;">
-    <% if @created_tracks.empty? %>
-      <p class="text-danger">No records found.</p>
-    <% else %>
-      <p class="text-success">Records found.</p>
-      <%= paginate @created_tracks %>
-    <% end %>
+      <div class="pagination" style="display: flex; justify-content: center;">
+        <% if @created_tracks.empty? %>
+          <p class="text-danger">No records found.</p>
+        <% else %>
+          <p class="text-success">Records found.</p>
+          <%= paginate @created_tracks %>
+        <% end %>
+      </div>
+
+    <script>
+      function stopPreview() {
+        var audios = document.getElementsByTagName('audio');
+        for(var i = 0, len = audios.length; i < len; i++){
+            audios[i].pause();
+            audios[i].currentTime = 0;
+        }
+      }
+
+      function playPreview(id, isMember) {
+        var audio = document.getElementById('audio-player-' + id);
+        var playpause = document.querySelector('.play-pause');
+        var currentTime = document.querySelector('.current-time');
+        var totalTime = document.querySelector('.total-time');
+        var slider = document.querySelector('.slider');
+        var loaded = document.querySelector('.loaded');
+        var pace = document.querySelector('.pace');
+        var stopButton = document.getElementById("stop-button");
+
+        stopButton.addEventListener("click", function() {
+          audio.pause(); // 音楽を一時停止
+          audio.currentTime = 0; // 再生位置を初めに戻す
+        });
+
+
+        playpause.addEventListener('click', function() {
+          if (audio.paused) {
+              audio.play();
+              playpause.classList.remove('play');
+              playpause.classList.add('pause');
+          } else {
+              audio.pause();
+              playpause.classList.remove('pause');
+              playpause.classList.add('play');
+          }
+        });
+
+        audio.addEventListener('timeupdate', function() {
+          var curtime = parseInt(audio.currentTime, 10);
+          currentTime.textContent = formatTime(curtime);
+        });
+
+        audio.addEventListener('durationchange', function() {
+          var duration = parseInt(audio.duration, 10);
+          totalTime.textContent = formatTime(duration);
+        });
+
+        slider.addEventListener('click', function(e) {
+          var sliderPos = this.getBoundingClientRect().left + window.pageXOffset
+          var pos = (e.pageX - sliderPos) / this.offsetWidth;
+          audio.currentTime = pos * audio.duration;
+        });
+
+        audio.addEventListener('timeupdate', function() {
+          var pos = audio.currentTime / audio.duration;
+          pace.style.width = pos * 100 + '%';
+          // if (audio.buffered.length > 0) {
+          //   var loadPercent = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
+          //   console.log(Number(loadPercent) * 100);  // ここでloadPercentの値を確認
+          //   loaded.style.width = loadPercent * 1000 + '%';
+          // };
+        });
+
+        audio.addEventListener('progress', function() {
+          // if (audio.buffered.length > 0) {
+          //   var loadPercent = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
+          //   console.log(loadPercent);  // ここでloadPercentの値を確認
+          //   loaded.style.width = loadPercent * 100 + '%';
+          // };
+        });
+
+        function formatTime(time) {
+          var minutes = Math.floor(time / 60);
+          var seconds = time - minutes * 60;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+          return minutes + ':' + seconds;
+        }
+
+        audio.currentTime = 0;
+        audio.volume = 1; // ボリュームを最大に設定
+        audio.play();
+
+        if (!isMember) {
+           // ゲストの場合、再生ボタンを非表示にする
+          playpause.style.display = 'none';
+          let fadePoint = 30; // フェードアウトを開始する時間（秒）
+          let fadeDuration = 5; // フェードアウトの期間（秒）
+          let fadeAudio = setInterval(function () {
+            // フェードアウトを開始
+            if (audio.currentTime >= fadePoint) {
+              let fadeAmount = 1 / (fadeDuration * 10); // 10はsetIntervalの頻度に基づく
+              audio.volume = Math.max(audio.volume - fadeAmount, 0); // ボリュームが0未満にならないようにする
+
+              // ボリュームが0になったらオーディオを停止
+              if (audio.volume <= 0) {
+                audio.pause();
+                audio.currentTime = 0; // 追加: 再生位置を初めに戻す
+                clearInterval(fadeAudio);
+              }
+            }
+          }, 100); // 0.1秒ごとにボリュームを更新
+        }
+      }
+    </script>
   </div>
 </div>
-<script>
-  function stopPreview() {
-    var audios = document.getElementsByTagName('audio');
-    for(var i = 0, len = audios.length; i < len; i++){
-        audios[i].pause();
-        audios[i].currentTime = 0;
-    }
-  }
-
-  function playPreview(id, isMember) {
-    var audio = document.getElementById('audio-player-' + id);
-    var playpause = document.querySelector('.play-pause');
-    var currentTime = document.querySelector('.current-time');
-    var totalTime = document.querySelector('.total-time');
-    var slider = document.querySelector('.slider');
-    var loaded = document.querySelector('.loaded');
-    var pace = document.querySelector('.pace');
-    var stopButton = document.getElementById("stop-button");
-
-    stopButton.addEventListener("click", function() {
-      audio.pause(); // 音楽を一時停止
-      audio.currentTime = 0; // 再生位置を初めに戻す
-    });
-
-
-    playpause.addEventListener('click', function() {
-      if (audio.paused) {
-          audio.play();
-          playpause.classList.remove('play');
-          playpause.classList.add('pause');
-      } else {
-          audio.pause();
-          playpause.classList.remove('pause');
-          playpause.classList.add('play');
-      }
-    });
-
-    audio.addEventListener('timeupdate', function() {
-      var curtime = parseInt(audio.currentTime, 10);
-      currentTime.textContent = formatTime(curtime);
-    });
-
-    audio.addEventListener('durationchange', function() {
-      var duration = parseInt(audio.duration, 10);
-      totalTime.textContent = formatTime(duration);
-    });
-
-    slider.addEventListener('click', function(e) {
-      var sliderPos = this.getBoundingClientRect().left + window.pageXOffset
-      var pos = (e.pageX - sliderPos) / this.offsetWidth;
-      audio.currentTime = pos * audio.duration;
-    });
-
-    audio.addEventListener('timeupdate', function() {
-      var pos = audio.currentTime / audio.duration;
-      pace.style.width = pos * 100 + '%';
-      // if (audio.buffered.length > 0) {
-      //   var loadPercent = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
-      //   console.log(Number(loadPercent) * 100);  // ここでloadPercentの値を確認
-      //   loaded.style.width = loadPercent * 1000 + '%';
-      // };
-    });
-
-    audio.addEventListener('progress', function() {
-      // if (audio.buffered.length > 0) {
-      //   var loadPercent = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
-      //   console.log(loadPercent);  // ここでloadPercentの値を確認
-      //   loaded.style.width = loadPercent * 100 + '%';
-      // };
-    });
-
-    function formatTime(time) {
-      var minutes = Math.floor(time / 60);
-      var seconds = time - minutes * 60;
-      seconds = seconds < 10 ? '0' + seconds : seconds;
-      return minutes + ':' + seconds;
-    }
-
-    audio.currentTime = 0;
-    audio.volume = 1; // ボリュームを最大に設定
-    audio.play();
-
-    if (!isMember) {
-       // ゲストの場合、再生ボタンを非表示にする
-      playpause.style.display = 'none';
-      let fadePoint = 30; // フェードアウトを開始する時間（秒）
-      let fadeDuration = 5; // フェードアウトの期間（秒）
-      let fadeAudio = setInterval(function () {
-        // フェードアウトを開始
-        if (audio.currentTime >= fadePoint) {
-          let fadeAmount = 1 / (fadeDuration * 10); // 10はsetIntervalの頻度に基づく
-          audio.volume = Math.max(audio.volume - fadeAmount, 0); // ボリュームが0未満にならないようにする
-
-          // ボリュームが0になったらオーディオを停止
-          if (audio.volume <= 0) {
-            audio.pause();
-            audio.currentTime = 0; // 追加: 再生位置を初めに戻す
-            clearInterval(fadeAudio);
-          }
-        }
-      }, 100); // 0.1秒ごとにボリュームを更新
-    }
-  }
-</script>
-
-
 
 

@@ -51,7 +51,7 @@
            <h3 class="text-center" style="color: orange;">Good Sound</h3>
            <ul>
               <% @member.likes.each do |like| %>
-                 <li><%= link_to like.created_track.music_title, member_created_tracks_path(like.created_track) %></li>
+                 <li><%= link_to like.created_track.music_title, member_created_track_path(like.created_track) %></li>
               <% end %>
            </ul>
         </div>

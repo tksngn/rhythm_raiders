@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       end
     end
     resources :posts, only: [:index, :show, :destroy] do
+      resources :comments, only: [:destroy]
       member do
         get :suspend
         patch :suspend
