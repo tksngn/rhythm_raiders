@@ -22,7 +22,6 @@ $light-orange: #FFA500;
 /* ゲスト用楽曲一覧 */
 .guest-index {
   align-items: center;
-  height: 100vh;
   text-align: justify;
   background-image: url('/images/dragoon.jpg');
   background-repeat: no-repeat;
@@ -75,7 +74,6 @@ $light-orange: #FFA500;
 /* 本メンバー用の一覧 */
 .member-index {
   align-items: center;
-  height: 100vh;
   text-align: justify;
   background-image: url('/images/28350918_m.jpg');
   background-repeat: no-repeat;
@@ -199,7 +197,7 @@ a {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  min-height: 100vh;
+  min-height: 95vh;
   padding-bottom: 100px;
   flex-direction: row;
   text-align: justify;
@@ -214,9 +212,9 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   flex-direction: column;
-  text-align: center;
+  /*text-align: center;*/
   background-image: url('/images/281958-Sepik.jpg');
   background-repeat: no-repeat;
   background-size: cover;
@@ -228,7 +226,7 @@ a {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   flex-direction: column;
   text-align: center;
   background-image: url('/images/cai-fang-WoG139ylZJs-unsplash.jpg');
@@ -251,7 +249,7 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  height: 95vh;
   text-align: center;
   margin: 0;
   padding: 0;
