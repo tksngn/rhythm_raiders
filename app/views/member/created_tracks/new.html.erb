@@ -1,69 +1,71 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="mb-2">
-        <div class="text-left">
-          <%= image_tag("rhythm_raiders_logo1.jpg", class: "img-fluid") %>
+<div class="member-track-show">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2">
+        <div class="mb-2">
+          <div class="text-left">
+            <%= image_tag("rhythm_raiders_logo1.jpg", class: "img-fluid") %>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-10">
+        <div class="mt-2 mb-2">
+          <h3 style="color: orange;">Edit Member Information</h3>
+          <%= form_with model: @member, url: member_customer_path(@member), method: :patch do |f| %>
+            <p class="word-wrap: break-word;">
+              <strong style="color: orange;">Name:</strong> <%= f.text_field :name %>
+            </p>
+            <p class="word-wrap: break-word;">
+              <strong style="color: orange;">CreaterName:</strong> <%= f.text_field :creater_name %>
+            </p>
+            <p><strong style="color: orange;">ProfileImage:</strong> <%= f.file_field :profile_image %></p>
+            <p class="word-wrap: break-word;">
+              <strong style="color: orange;">Email:</strong> <%= f.email_field :email %>
+            </p>
+            <p><strong style="color: orange;">PhoneNumber:</strong> <%= f.telephone_field :phone_number %></p>
+            <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, options_for_select(['Male', 'Female', 'Non_binary']) %></p>
+            <div class="col-md-6 offset-md-6 mt-auto">
+              <div class="mb-2">
+                <div class="text-right">
+                  <%= f.submit "Member情報変更保存【Save Changes】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
+                </div>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </div>
-    <div class="col-md-10">
-      <div class="mt-2 mb-2">
-        <h3 style="color: orange;">Edit Member Information</h3>
-        <%= form_with model: @member, url: member_customer_path(@member), method: :patch do |f| %>
-          <p class="word-wrap: break-word;">
-            <strong style="color: orange;">Name:</strong> <%= f.text_field :name %>
-          </p>
-          <p class="word-wrap: break-word;">
-            <strong style="color: orange;">CreaterName:</strong> <%= f.text_field :creater_name %>
-          </p>
-          <p><strong style="color: orange;">ProfileImage:</strong> <%= f.file_field :profile_image %></p>
-          <p class="word-wrap: break-word;">
-            <strong style="color: orange;">Email:</strong> <%= f.email_field :email %>
-          </p>
-          <p><strong style="color: orange;">PhoneNumber:</strong> <%= f.telephone_field :phone_number %></p>
-          <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, options_for_select(['Male', 'Female', 'Non_binary']) %></p>
+    <div class="row">
+      <div class="col-md-10 offset-md-2">
+        <h3 style="color: orange;">Post Music Information</h3>
+        <%= form_with model: [:member, @created_track] do |f| %>
+          <div>
+          　<%= f.label :music_title %>
+          　<%= f.text_field :music_title %>
+            <%= f.label :music_file %>
+            <%= f.file_field :music_file , :size => 100 %>
+          </div>
+          <div>
+          　<%= f.label :creater_name %>
+          　<%= f.text_field :creater_name %>
+            <%= f.label :music_genre %>
+            <%= f.text_field :music_genre %>
+          </div>
+          <div>
+            <%= f.label :creater_word %>
+            <%= f.text_area :creater_word %>
+            <%= f.label :playback_duration %>
+            <%= f.number_field :playback_duration %>
+          </div>
           <div class="col-md-6 offset-md-6 mt-auto">
             <div class="mb-2">
               <div class="text-right">
-                <%= f.submit "Member情報変更保存【Save Changes】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
+                <%= f.submit "楽曲を投稿する【Post Music】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
               </div>
             </div>
           </div>
         <% end %>
       </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-10 offset-md-2">
-      <h3 style="color: orange;">Post Music Information</h3>
-      <%= form_with model: [:member, @created_track] do |f| %>
-        <div>
-        　<%= f.label :music_title %>
-        　<%= f.text_field :music_title %>
-          <%= f.label :music_file %>
-          <%= f.file_field :music_file , :size => 100 %>
-        </div>
-        <div>
-        　<%= f.label :creater_name %>
-        　<%= f.text_field :creater_name %>
-          <%= f.label :music_genre %>
-          <%= f.text_field :music_genre %>
-        </div>
-        <div>
-          <%= f.label :creater_word %>
-          <%= f.text_area :creater_word %>
-          <%= f.label :playback_duration %>
-          <%= f.number_field :playback_duration %>
-        </div>
-        <div class="col-md-6 offset-md-6 mt-auto">
-          <div class="mb-2">
-            <div class="text-right">
-              <%= f.submit "楽曲を投稿する【Post Music】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
-            </div>
-          </div>
-        </div>
-      <% end %>
     </div>
   </div>
 </div>

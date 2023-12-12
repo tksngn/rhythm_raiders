@@ -15,6 +15,9 @@ import "../stylesheets/application";
 //import "../stylesheets/homes/unsubscribe";
 //= require audiojs
 
+import WaveSurfer from "wavesurfer.js"
+window.WaveSurfer = WaveSurfer
+
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()

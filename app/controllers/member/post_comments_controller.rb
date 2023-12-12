@@ -5,12 +5,13 @@ class Member::PostCommentsController < ApplicationController
     comment = current_member.post_comments.new(comment_content: post_comment_params[:comment],like_count: 0)
     comment.created_track_id = created_track.id
     comment.save
-    redirect_to member_created_tracks_path(created_track)
+    redirect_to member_created_track_path(created_track)
   end
-  
+
   def destroy
-    @comment = current_member.comments.find(params[:id])
+    @comment = current_member.post_comments.find(params[:id])
     @comment.destroy!
+    redirect_to member_created_track_path(@comment.created_track_id)
   end
 
   private

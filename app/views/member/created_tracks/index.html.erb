@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="mb-2">
+        <div class="mb-1">
           <div class="text-center">
             <svg width="100%" height="100%" viewBox="0 0 600 80" preserveAspectRatio="xMidYMid meet">
               <defs>
@@ -18,8 +18,8 @@
               <text x="50%" y="50%" dy=".1em" text-anchor="middle" style="font: bold 40px Georgia; fill: url(#gradient1); stroke: grey; stroke-width: 1px;">Rhythm RAIDERS</text>
             </svg>
           </div>
+          <!-- 楽曲の一覧を表示するエリア -->
           <div class="text-center">
-            <!-- 楽曲の一覧を表示するエリア -->
             <div class="navbar">
               <%= link_to 'Home', member_top_path, method: :get, class: "button" %>
               <%= link_to 'Mypage', mypage_member_customers_path, method: :get, class: "button" %>
@@ -43,46 +43,24 @@
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <div class="controls">
-                        <audio controls id="audio-player-<%= created_track.id %>" preload="auto">
-                            <source src="<%= created_track.music_file %>" type="audio/mpeg">
-                            Your browser does not support the audio element.
-                        </audio>
-                        <div class="play-pause">
-                          <p class="play m-0"></p>
-                          <p class="pause m-0"></p>
-                          <p class="loading m-0"></p>
-                          <p class="error m-0"></p>
-                        </div>
-                        <div class="time">
-                          <div class="current-time">00:00</div>
-                          <div class="total-time">00:00</div>
-                        </div>
-                        <div class="progress position-relative w-100 mb-2">
-                          <div class="slider position-absolute w-100" style="height: 1rem;"></div>
-                          <div class="loaded position-absolute" style="background-color: #f0f0f0; height: 1rem; top: 0;"></div>
-                          <div class="pace position-absolute" style="background-color: #000; height: 1rem; top: 0;"></div>
-                        </div>
-                      </div>
-                      <div>
-                        <!-- いいね機能の追加 -->
+                      <%= render "layouts/player", created_track: created_track, is_guest: false %>
+                    </div>
+                      <!-- いいね機能の追加 -->
+                    <div class="col-md-8 mt-1">
+                      <div class="text-right">
                         <% if created_track.liked_by?(current_member) %>
-                          <p>
+                          <div>
                             <%= link_to member_created_track_likes_path(created_track), method: :delete, class: "like-button" do %>
                               ♥<%= created_track.likes.count %> いいね
                             <% end %>
-                          </p>
+                          </div>
                         <% else %>
-                          <p>
+                          <div>
                             <%= link_to member_created_track_likes_path(created_track), method: :post, class: "like-button" do %>
                               ♡<%= created_track.likes.count %> いいね
                             <% end %>
-                          </p>
+                          </div>
                         <% end %>
-                        <div>
-                          <button type="button" class="btn btn-sm btn-outline-secondary1 m-0" onclick="playPreview(<%= created_track.id %>, <%= !current_member.is_guest %>)">Preview</button>
-                          <button type="button" class="btn btn-sm btn-outline-secondary stop-button m-0" id="stop-button" onclick="stopPreview">Stop</button><!-- 追加した停止ボタン -->
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -90,98 +68,16 @@
               </div>
             </div>
           <% end %>
-          <div class="pagination" style="display: flex; justify-content: center;">
-            <% if @created_tracks.empty? %>
-              <p class="text-danger">No records found.</p>
-            <% else %>
-              <p class="text-success">Records found.</p>
-              <%= paginate @created_tracks %>
-            <% end %>
-          </div>
         </div>
       </div>
-
-      <script>
-        function stopPreview() {
-          var audios = document.getElementsByTagName('audio');
-          for(var i = 0, len = audios.length; i < len; i++){
-              audios[i].pause();
-              audios[i].currentTime = 0;
-          }
-        }
-
-        function playPreview(id, isMember) {
-          var audio = document.getElementById('audio-player-' + id);
-          var playpause = document.querySelector('.play-pause');
-          var currentTime = document.querySelector('.current-time');
-          var totalTime = document.querySelector('.total-time');
-          var slider = document.querySelector('.slider');
-          var loaded = document.querySelector('.loaded');
-          var pace = document.querySelector('.pace');
-          var stopButton = document.getElementById("stop-button");
-
-          stopButton.addEventListener("click", function() {
-            audio.pause(); // 音楽を一時停止
-            audio.currentTime = 0; // 再生位置を初めに戻す
-          });
-
-          playpause.addEventListener('click', function() {
-            if (audio.paused) {
-                audio.play();
-                playpause.classList.remove('play');
-                playpause.classList.add('pause');
-            } else {
-                audio.pause();
-                playpause.classList.remove('pause');
-                playpause.classList.add('play');
-            }
-          });
-
-          audio.addEventListener('timeupdate', function() {
-            var curtime = parseInt(audio.currentTime, 10);
-            currentTime.textContent = formatTime(curtime);
-          });
-
-          audio.addEventListener('durationchange', function() {
-            var duration = parseInt(audio.duration, 10);
-            totalTime.textContent = formatTime(duration);
-          });
-
-          // slider.addEventListener('click', function(e) {
-          //   var pos = (e.pageX  - this.offsetLeft) / this.offsetWidth;
-          //   audio.currentTime = pos * audio.duration;
-          // });
-
-          slider.addEventListener('click', function(e) {
-            var sliderPos = this.getBoundingClientRect().left + window.pageXOffset
-            var pos = (e.pageX - sliderPos) / this.offsetWidth;
-            audio.currentTime = pos * audio.duration;
-          });
-
-          audio.addEventListener('timeupdate', function() {
-            var pos = audio.currentTime / audio.duration;
-            pace.style.width = pos * 100 + '%';
-          });
-
-          audio.addEventListener('progress', function() {
-            // if (audio.buffered.length > 0) {
-            //     var loaded = audio.buffered.end(audio.buffered.length - 1) / audio.duration;
-            //     loaded.style.width = loaded * 100 + '%';
-            // }
-          });
-
-          function formatTime(time) {
-            var minutes = Math.floor(time / 60);
-            var seconds = time - minutes * 60;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            return minutes + ':' + seconds;
-          }
-
-          audio.currentTime = 0;
-          audio.volume = 1; // ボリュームを最大に設定
-          audio.play();
-        }
-      </script>
+    </div>
+    <div class="pagination" style="display: flex; justify-content: center;">
+      <% if @created_tracks.empty? %>
+        <p class="text-danger">No records found.</p>
+      <% else %>
+        <p class="text-success">Records found.</p>
+        <%= paginate @created_tracks %>
+      <% end %>
     </div>
   </div>
 </div>

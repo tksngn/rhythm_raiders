@@ -1,5 +1,13 @@
 @use '~bootstrap/scss/bootstrap';
 
+.member-track-show {
+  align-items: center;
+  text-align: justify;
+  background-image: url('/images/1174232.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .cover-member-edit {
   height: 100%;
   width: 100%;

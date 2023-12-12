@@ -1,0 +1,49 @@
+<div id="waveform_<%= created_track.id %>"></div>
+
+<div class="mt-1" style="display: flex; justify-content: space-between;">
+  <div class="">
+    <a class="btn btn-warning" onclick="wavesurfer_<%= created_track.id %>.playPause();">PLAY/STOP</a>
+    <a class="btn btn-danger" onclick="wavesurfer_<%= created_track.id %>.stop(); wavesurfer_<%= created_track.id %>.play();">Start Over</a>
+  </div>
+  <div class="text-right">
+    <a id="time_<%= created_track.id %>"></a>
+  </div>
+</div>
+
+<div class="mt-1">
+  <label for="volume_<%= created_track.id %>">Volume</label>
+  <input type="range" class="custom-range" id="volume_<%= created_track.id %>" value="50"></input>
+</div>
+
+<script>
+  $("waveform_<%= created_track.id %>").empty();
+  const wavesurfer_<%= created_track.id %> = WaveSurfer.create({
+    container: '#waveform_<%= created_track.id %>',
+    barWidth: 5,
+    barGap: 1,
+    waveColor: '#00ffcc',
+    cursorColor: '#000000',
+    progressColor: '#DB0F00',
+    url: '<%= created_track.music_file %>',
+    backend: 'MediaElement',
+    normalize: true,
+    barHeight: 0.2,
+  })
+
+  wavesurfer_<%= created_track.id %>.setVolume(0.5)
+
+
+    wavesurfer_<%= created_track.id %>.on('timeupdate', (currentTime) => {
+      <% if is_guest %>
+        if (currentTime >= 30) {
+          wavesurfer_<%= created_track.id %>.stop();
+        }
+      <% end %>
+      $("#time_<%= created_track.id %>").html(`${parseInt(currentTime)}sec.`)
+    })
+
+
+  $("#volume_<%= created_track.id %>").change(function() {
+    wavesurfer_<%= created_track.id %>.setVolume($(this).val() / 100);
+  })
+</script>

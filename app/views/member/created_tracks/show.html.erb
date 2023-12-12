@@ -68,16 +68,26 @@
           </div>
         </div>
         <div class="col-md-6">
+
+          <div class="mb-2">
+            <%= render "layouts/player", created_track: @created_track, is_guest: false %>
+          </div>
+
           <div class="mb-2">
             <p>コメント件数：<%= @created_track.post_comments.count %></p>
             <% if @created_track %>
               <% @created_track.post_comments.each do |post_comment| %>
-                <% post_comment.member.get_created_track.each do |created_track| %>
-                <p><%= created_track.music_title %></p> <!-- ここを修正 -->
-                <%= post_comment.member.creater_name %>
-                <%= post_comment.created_at.strftime('%Y/%m/%d') %><%= post_comment.comment_content %>
-                <%= post_comment.comment_content %> <!-- ここを追加 -->
-                <% end %>
+                <div class="border">
+                  <p class="m-0"><%= post_comment.created_track.music_title %></p>
+                  <p class="m-0"><%= post_comment.member.creater_name %></p>
+                  <p class="m-0"><%= post_comment.created_at.strftime('%Y/%m/%d') %></p>
+                  <%= simple_format(post_comment.comment_content) %>
+                  <%= link_to "Comment Delete",
+                              member_created_track_post_comment_path(post_comment.created_track, post_comment),
+                              method: :delete,
+                              data: {confirm: "削除してもよろしいですか？"}
+                  %>
+                </div>
               <% end %>
             <% end %>
           </div>
