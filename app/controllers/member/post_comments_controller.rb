@@ -7,6 +7,11 @@ class Member::PostCommentsController < ApplicationController
     comment.save
     redirect_to member_created_tracks_path(created_track)
   end
+  
+  def destroy
+    @comment = current_member.comments.find(params[:id])
+    @comment.destroy!
+  end
 
   private
 

@@ -1,2 +1,3 @@
-class Member::CommentsController < ApplicationController
+class CommentsController < ApplicationController
 end
+

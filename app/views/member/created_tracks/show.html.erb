@@ -6,20 +6,71 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-          <div class="mb-2">
-            <%= image_tag current_member.get_profile_image(100,100), class: "d-block mx-auto" %>
-            <h4 class="ml-5 m-3"><%= current_member.profile %></h4>
+          <h5 class="text-center m-1" style="color: orange; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Music & Creater Information<h5>
+          <h6 class="text-center ml-2 m-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red; border: 1px solid black;">Creater Name : <%= current_member.creater_name %></h6>
+          <div class="mb-2" style="display: flex; justify-content: space-between;">
+            <div class="track-info">
+              <div class="card-text" style="font-size: calc(8px + 1vw);">Music Title : <%= @created_track.music_title %></div>
+              <div class="card-text" style="font-size: calc(7px + 1vw);">Music Genre : <%= @created_track.music_genre %></div>
+              <div class="card-text" style="font-size: calc(7px + 1vw);">A word from the creater : <p><%= @created_track.creater_word %></p></div>
+            </div>
+            <div class="mb-2 mt-3">
+              <%= image_tag current_member.get_profile_image(100,100) %>
+            </div>
           </div>
-          <div class="d-flex">
-            <%= link_to follows_member_customer_path(current_member) do %>
-              <h6>フォロー<%= @following_members&.count.to_i %></h6>
-            <% end %>&nbsp;&nbsp;
-            <%= link_to followers_member_customer_path(current_member) do %>
-              <h6>フォロワー<%= @follower_members.count %></h6>
+          <div class="mb-2" style="display: flex; justify-content: space-between;">
+            <div class="offset-md-2">
+              <%= link_to follows_member_customer_path(current_member) do %>
+                <h6>Follow : <%= @following_members&.count.to_i %></h6>
+              <% end %>
+            </div>
+            <div class="mr-5">
+              <%= link_to followers_member_customer_path(current_member) do %>
+                <h6>Follower : <%= @follower_members.count %></h6>
+              <% end %>
+            </div>
+          </div>
+          <div class="mb-2" style="display: flex; justify-content: space-between;">
+            <div class="offset-md-2">
+              <% if @created_track && @created_track.liked_by?(current_member) %>
+                <%= link_to member_created_track_likes_path(@created_track), method: :delete do %>
+                  ♥<%= @created_track.likes.count %> いいね
+                <% end %>
+              <% else %>
+                <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
+                  ♡<%= @created_track.likes.count %> いいね
+                <% end %>
+              <% end %>
+            </div>
+            <div class="mr-5">
+              <% if member_signed_in? && @member == current_member %>
+                <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "btn-sm btn-success" %>
+              <% end %>
+              <% if @following_members != @member %>
+                <% if current_member.following?(@member) %>
+                  <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
+                <% else %>
+                  <%= link_to 'フォローする', member_customer_relationships_path(current_member.id), method: :POST, class:"btn-sm btn-success" %>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+          <div class="">
+            <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
+              <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", style: "width: 100%" %>
+              <div class="text-center mb-2">
+                <%= f.submit "Post a Comment", class: 'btn btn-primary' %>
+              </div>
             <% end %>
           </div>
+          <div class="text-center">
+            <%= image_tag("rhythm_raiders_logo2.jpg") %>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-2">
+            <p>コメント件数：<%= @created_track.post_comments.count %></p>
             <% if @created_track %>
-              <p>コメント件数：<%= @created_track.post_comments.count %></p>
               <% @created_track.post_comments.each do |post_comment| %>
                 <% post_comment.member.get_created_track.each do |created_track| %>
                 <p><%= created_track.music_title %></p> <!-- ここを修正 -->
@@ -28,48 +79,7 @@
                 <%= post_comment.comment_content %> <!-- ここを追加 -->
                 <% end %>
               <% end %>
-              <% if @created_track && @created_track.liked_by?(current_member) %>
-                <p class="mt-2">
-                  <%= link_to member_created_track_likes_path(@created_track), method: :delete do %>
-                    ♥<%= @created_track.likes.count %> いいね
-                  <% end %>
-                </p>
-              <% else %>
-                <p class="mt-2">
-                  <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
-                    ♡<%= @created_track.likes.count %> いいね
-                  <% end %>
-                </p>
-              <% end %>
             <% end %>
-            <div class="">
-              <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
-                <%= f.text_area :comment, rows: '6', placeholder: "コメントをここに", style: "width: 100%" %>
-                  <div class="">
-              <%= f.submit "Post a Comment" %>
-              </div>
-            <% end %>
-            <p class="d-flex justify-content-end">
-              <% if member_signed_in? && @member == current_member %>
-                <%= link_to "プロフィール編集", edit_member_customer_path(@member), class: "btn-sm btn-success" %>
-              <% end %>
-              <% if @following_members != @member %>
-                <% if current_member.following?(@member) %>
-                  <%= link_to 'フォロー外す', member_customer_relationships_path(@member.id), method: :delete, class: "btn-sm btn-danger" %>
-                <% else %>
-                  <%= link_to 'フォローする', member_customer_relationships_path(current_member.id), method: :POST, class:"btn-sm btn-success" %>
-                <% end %>
-            </p>
-              <% end %>
-            </div>
-            <div>
-              <%= image_tag("rhythm_raiders_logo2.jpg") %>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-2">
-
           </div>
         </div>
       </div>
