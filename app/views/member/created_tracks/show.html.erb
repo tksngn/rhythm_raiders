@@ -1,13 +1,13 @@
-<div class="container-fluid">
-  <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+<div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
+  <div class="container-fluid">
     <div style="width: 76%; text-align: center;">
-      <h2 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">Music Detail</h2>
+      <h1 style="color: red; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">Music Detail</h1>
     </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
           <h5 class="text-center m-1" style="color: orange; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">Music & Creater Information<h5>
-          <h6 class="text-center ml-2 m-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red; border: 1px solid black;">Creater Name : <%= current_member.creater_name %></h6>
+          <h6 class="text-center ml-2 m-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red; border: 1px solid grey;">Creater Name : <%= current_member.creater_name %></h6>
           <div class="mb-2" style="display: flex; justify-content: space-between;">
             <div class="track-info">
               <div class="card-text" style="font-size: calc(8px + 1vw);">Music Title : <%= @created_track.music_title %></div>
@@ -55,10 +55,10 @@
               <% end %>
             </div>
           </div>
-          <div class="">
+          <div class="mb-5">
             <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
               <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", style: "width: 100%" %>
-              <div class="text-center mb-2">
+              <div class="text-center mt-2">
                 <%= f.submit "Post a Comment", class: 'btn btn-primary' %>
               </div>
             <% end %>
@@ -90,6 +90,9 @@
                 </div>
               <% end %>
             <% end %>
+          </div>
+          <div class="text-center">
+            <%= link_to "Music Index", member_created_tracks_path, class:"btn-sm btn-success" %>
           </div>
         </div>
       </div>

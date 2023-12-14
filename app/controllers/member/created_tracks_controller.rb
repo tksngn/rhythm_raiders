@@ -13,7 +13,7 @@ class Member::CreatedTracksController < ApplicationController
 
   def index
     @created_tracks = CreatedTrack.all
-    @created_tracks = CreatedTrack.page(params[:page]).per(10)
+    @created_tracks = CreatedTrack.page(params[:page]).per(5)
   end
 
   def new

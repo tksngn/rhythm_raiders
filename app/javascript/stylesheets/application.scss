@@ -3,7 +3,7 @@
 .member-track-show {
   align-items: center;
   text-align: justify;
-  background-image: url('/images/1174232.jpg');
+  background-image: url('../images/1174232.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -11,7 +11,7 @@
 .cover-member-edit {
   height: 100%;
   width: 100%;
-  background-image: url(/images/dragoon1.jpg);
+  background-image: url(../images/dragoon1.jpg);
   background-color: rgba(255, 255, 255, 0.4);
   background-blend-mode: lighten;
   background-size: 100% 100%;
@@ -31,7 +31,7 @@ $light-orange: #FFA500;
 .guest-index {
   align-items: center;
   text-align: justify;
-  background-image: url('/images/dragoon.jpg');
+  background-image: url('../images/dragoon.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -83,7 +83,7 @@ $light-orange: #FFA500;
 .member-index {
   align-items: center;
   text-align: justify;
-  background-image: url('/images/28350918_m.jpg');
+  background-image: url('../images/28350918_m.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -209,7 +209,7 @@ a {
   padding-bottom: 100px;
   flex-direction: row;
   text-align: justify;
-  background-image: url('/images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
+  background-image: url('../images/peter-herrmann-qz81BQY9h1g-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -223,7 +223,7 @@ a {
   height: 95vh;
   flex-direction: column;
   /*text-align: center;*/
-  background-image: url('/images/281958-Sepik.jpg');
+  background-image: url('../images/281958-Sepik.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -237,7 +237,7 @@ a {
   height: 95vh;
   flex-direction: column;
   text-align: center;
-  background-image: url('/images/cai-fang-WoG139ylZJs-unsplash.jpg');
+  background-image: url('../images/cai-fang-WoG139ylZJs-unsplash.jpg');
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -261,7 +261,7 @@ input[type="submit"] {
   text-align: center;
   margin: 0;
   padding: 0;
-  background-image: url("/images/jymy-duhomme-MVTtSqHibDs-unsplash.jpg");
+  background-image: url("../images/jymy-duhomme-MVTtSqHibDs-unsplash.jpg");
   background-size: cover;
 }
 

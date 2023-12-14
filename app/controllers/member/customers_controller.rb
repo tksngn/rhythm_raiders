@@ -1,4 +1,5 @@
 class Member::CustomersController < ApplicationController
+
   def show
     @member = Member.find(params[:id])
     @posts = @member.posts.page(params[:page]).reverse_order
@@ -67,15 +68,15 @@ class Member::CustomersController < ApplicationController
     redirect_to guest_index_member_created_tracks_path, notice: 'ゲストメンバーとしてログインしました。'
   end
 
-
-
-
   def unsubscribe
-
+    @member = current_member
+    @member.update(is_active: false)
+    reset_session
   end
 
   def withdraw
-
+    @member = current_member
+    redirect_to withdraw_member_customers_path
   end
 
   private

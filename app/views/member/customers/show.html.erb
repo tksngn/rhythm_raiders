@@ -21,7 +21,7 @@
   <!-- メンバーの投稿一覧 -->
   <% @member.created_tracks.each do |created_track| %>
     <div>
-      <%= link_to member_created_tracks_path(created_track.id) do %>
+      <%= link_to member_created_track_path(created_track.id) do %>
         <%= created_track.get_created_track %>
       <% end %>
       <p>Music Title：<%= created_track.music_title %></p>

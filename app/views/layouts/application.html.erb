@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RhythmRaiders</title>
+    <title>Rhythm RAIDERS</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -12,17 +12,19 @@
     <link rel="icon" href="data:,"> <!-- 追加したコード -->
   </head>
 
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <% flash.each do |message_type, message| %>
       <div class="flash-message flash-<%= message_type %>">
         <%= message %>
       </div>
     <% end %>
-    <%= yield %>
-  </body>
-  <footer class="container-fluid">
-    <footer class="row text-center">
-      <p>©20231225 Rhythm RAIDERS</p>
+    <main class="flex-grow-1">
+      <%= yield %>
+    </main>
+    <footer class="">
+      <div class="text-center">
+        <p class="m-0">©20231225 Rhythm RAIDERS</p>
+      </div>
     </footer>
-  </footer>
+  </body>
 </html>
