@@ -69,14 +69,11 @@ class Member::CustomersController < ApplicationController
   end
 
   def unsubscribe
-    @member = current_member
-    @member.update(is_active: false)
-    reset_session
+    
   end
 
   def withdraw
-    @member = current_member
-    redirect_to withdraw_member_customers_path
+    
   end
 
   private
