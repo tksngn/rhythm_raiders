@@ -1,2 +1,2 @@
-class MemberLike < ApplicationRecord
+class MemberLike < ApplicationRecord # future: delete
 end

@@ -6,16 +6,16 @@ class Member < ApplicationRecord
   # validates :active, inclusion: { in: [true, false] }
   enum status: { active: 0, inactive: 1 }
 
-  after_initialize :set_default_status, if: :new_record?
+  # after_initialize :set_default_status, if: :new_record?
 
   has_one_attached :profile_image
 
   has_many :created_tracks, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
-  has_many :member_comments, dependent: :destroy
-  has_many :member_tracks, dependent: :destroy
-  has_many :posts, dependent: :destroy
+  has_many :member_comments, dependent: :destroy # future: delete
+  has_many :member_tracks, dependent: :destroy # future: delete
+  has_many :posts, dependent: :destroy # future: delete
   has_many :notifications, dependent: :destroy
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
@@ -55,9 +55,9 @@ class Member < ApplicationRecord
     email == 'guest@example.com'
   end
 
-  def withdrawn? # FIXME: 退会系処理
-    !is_active
-  end
+  # def withdrawn? # FIXME: 退会系処理
+  #   !is_active
+  # end
 
   def get_profile_image(width, height)
     unless profile_image.attached?
@@ -67,10 +67,18 @@ class Member < ApplicationRecord
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
 
-  private
+  # private
 
-  def set_default_status # FIXME: 退会系処理
-    self.is_active ||= :active
+  # def set_default_status # FIXME: 退会系処理
+  #   self.is_active ||= :active
+  # end
+
+  def active_for_authentication?
+    super && is_active?
+  end
+
+  def inactive_message
+    is_active? ? super : :inactive_locked
   end
 end
 

@@ -1,3 +1,3 @@
-class MemberTrack < ApplicationRecord
+class MemberTrack < ApplicationRecord # future: delete
 
 end

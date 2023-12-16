@@ -1,2 +1,2 @@
-class MemberPost < ApplicationRecord
+class MemberPost < ApplicationRecord # future: delete
 end

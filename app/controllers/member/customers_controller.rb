@@ -50,18 +50,7 @@ class Member::CustomersController < ApplicationController
       member.gender = 0
       member.is_privacy_policy_accepted = 1
       member.is_active = true
-      member.active = true
       member.save!
-       # ここで新しいトラックを作成します
-      @created_track = CreatedTrack.new
-      @created_track.member = member
-      @created_track.music_title = "Fantasy Background Music"
-      @created_track.creater_name = "Resiak Z" # ここでcreater_name属性に値を設定します
-      @created_track.creater_word = "ようこそゲストさん！"
-      @created_track.music_genre = "Genre" # ここでmusic_genre属性に値を設定します
-      @created_track.playback_duration = 30 # ここでplayback_duration属性に値を設定します
-      @created_track.music_file = "/bgm_sounds/fantasy-background-music-110593.mp3" # 公開可能なディレクトリへのパス
-      @created_track.save
     end
 
     sign_in member
@@ -69,11 +58,12 @@ class Member::CustomersController < ApplicationController
   end
 
   def unsubscribe
-    
+
   end
 
   def withdraw
-    
+    current_member.update(is_active: false)
+    sign_out(current_member)
   end
 
   private
