@@ -1,63 +1,124 @@
-<div class="table-responsive">
-  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 95%;">
-    <h2 style="text-align: center; color: orange;">メンバー情報編集</h2>
-
-    <%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
-      <div style="margin-left: auto; margin-right: auto; width: 50%;">
-        <!-- メンバー情報の編集フォーム -->
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Name:</strong> <%= @member.name %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Creater Name:</strong> <%= @member.creater_name %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Profile image:</strong> <%= @member.profile_image.present? ? (image_tag @member.profile_image, style: "height: 115px; width: 115px;") : (image_tag "no_image.jpg", style: "height: 151px; width: 113px;") %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= @member.email %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Password:</strong> <%= @member.encrypted_password %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= @member.phone_number %></p>
-        <p style="word-wrap: break-word;"><strong style="color: orange;">Gender:</strong> <%= @member.gender %></p>
-        <div style="margin-left: auto; margin-right: auto; width: 50%;">
-          <!-- 利用停止のラジオボタン -->
-          <%= form.radio_button :is_active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
-          <!-- 利用停止解除のラジオボタン -->
-          <%= form.radio_button :is_active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <div class="mt-2 mb-1">
+        <div class="text-center">
+          <%= image_tag("rhythm_raiders_logo1.jpg") %>
         </div>
       </div>
-      <div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">
-        <%= form.submit "変更保存", class: "btn btn-success", style: "width: 300px; font-size: 20px; padding: 10px 24px;" %>
-      </div>
-    <% end %>
-  </div>
-<!-- 追加した投稿コメント情報表示 -->
-  <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
-    <h2 style="text-align: center; color: orange;">投稿されたコメント詳細</h2>
-    <div style="margin-left: auto; margin-right: auto; width: 50%;">
-      <% @member.member_comments.each do |comment| %>
-          <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
-            <!-- 投稿コメント編集フォーム -->
-            <p style="word-wrap: break-word;"><strong style="color: orange;">コメント:</strong>
-              <%= form.text_area :comment_comments.comment_content, value:comment_content %>
-            </p>
-          <% end %>
-        <% end %>
-      <% @member.member_comments.each do |comment| %>
-        <p><strong>Comment:</strong> <%= comment.comment_content %></p>
-        <p><strong>Commented by:</strong> <%= comment.creater_name %></p>
-        <!-- コメント削除ボタン -->
-          <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-      <% end %>
-      <!-- 投稿コメント情報表示 -->
-      <% @member.member_comments.each do |comment| %>
-        <div style="border: 1px solid #ccc; border-radius: 10px; padding: 10px; position: relative; margin: 0 auto; width: 75%;">
-          <h2 style="text-align: center; color: orange;">コメント投稿者: <%= comment.member.name %></h2>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Comment:</strong> <%= comment.content %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Commented by:</strong> <%= comment.member.name %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Email:</strong> <%= comment.member.email %></p>
-          <p style="word-wrap: break-word;"><strong style="color: orange;">Phone Number:</strong> <%= comment.member.phone_number %></p>
-      <!-- 利用停止ボタン -->
-          <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
-      <!-- コメント削除ボタン -->
-          <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
-        </div>
-      <% end %>
     </div>
-  <div style="position: fixed; bottom: 5px; right: 5px;">
-    <%= image_tag("rhythm_raiders_logo1.jpg") %>
+    <div class="col-md-10">
+      <div class="mt-2 mb-2">
+        <div class="text-center">
+          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
+            <h2 class="m-0">
+              <strong style="color: #f23f23;">メンバー情報編集</strong>
+            </h2>
+            <%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
+              <!-- メンバー情報の編集フォーム -->
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Name:</strong>
+                <%= @member.name %>
+              </p>
+              <p class="m-1"><strong style="word-wrap: break-word;">
+                <strong style="color: orange;">Creater Name:</strong>
+                <%= @member.creater_name %>
+              </p>
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Profile image:</strong>
+                <%= @member.profile_image.present? ? (image_tag @member.profile_image, style: "height: 100px; width: 100px;") : (image_tag "no_image.jpg", style: "height: 100px; width: 100px;") %>
+              </p>
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Email:</strong>
+                <%= @member.email %>
+              </p>
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Password:</strong>
+                <%= @member.encrypted_password %>
+              </p>
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Phone Number:</strong>
+                <%= @member.phone_number %>
+              </p>
+              <p class="m-1" style="word-wrap: break-word;">
+                <strong style="color: orange;">Gender:</strong>
+                <%= @member.gender %>
+              </p>
+                <!-- 利用停止のラジオボタン -->
+                <%= form.radio_button :is_active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
+                <!-- 利用停止解除のラジオボタン -->
+                <br><br>
+                <%= form.radio_button :is_active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
+              <div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">
+                <%= form.submit "変更保存", class: "btn btn-success", style: "width: 300px; font-size: 20px; padding: 10px 24px;" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="mb-1">
+        <div class="text-center">
+          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
+            <h2 class="m-0">
+              <strong style="color: #f23f23;">投稿されたコメント詳細</strong>
+            </h2>
+            <div class="mb-1">
+              <% @member.member_comments.each do |comment| %>
+                <%= form_with(model: comment, url: admin_comment_path(comment), local: true) do |form| %>
+                  <p class="m-1" style="word-wrap: break-word;">
+                    <strong style="color: orange;">コメント:</strong>
+                    <%= form.text_area :comment_comments.comment_content, value:comment_content %>
+                  </p>
+                <% end %>
+              <% end %>
+              <% @member.member_comments.each do |comment| %>
+                <p class="m-1">
+                  <strong>Comment:</strong>
+                  <%= comment.comment_content %>
+                </p>
+                <p class="m-1">
+                  <strong>Commented by:</strong>
+                  <%= comment.creater_name %>
+                </p>
+                <!-- コメント削除ボタン -->
+                <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+              <% end %>
+            </div>
+                <!-- 投稿コメント情報表示 -->
+            <div class="mb-1">
+              <% @member.member_comments.each do |comment| %>
+                <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
+                  <h2 class="m-0">
+                    <strong style="color: #f23f23;">コメント投稿者:
+                      <%= comment.member.creater_name %>
+                    </strong>
+                  </h2>
+                  <p class="m-1" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Comment:</strong>
+                    <%= comment.member.comment_content %>
+                  </p>
+                  <p class="m-1" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Commented by:</strong>
+                    <%= comment.member.creater_name %>
+                  </p>
+                  <p class="m-1" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Email:</strong>
+                    <%= comment.member.email %>
+                  </p>
+                  <p class="m-1" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Phone Number:</strong>
+                    <%= comment.member.phone_number %>
+                  </p>
+              <!-- 利用停止ボタン -->
+                  <%= button_to '利用停止', { action: :ban, id: comment.user.id }, method: :post, class: 'btn btn-danger' %>
+              <!-- コメント削除ボタン -->
+                  <%= button_to 'コメント削除', { action: :destroy, id: comment.id }, method: :delete, data: { confirm: '本当に削除しますか？' }, class: 'btn btn-danger' %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
