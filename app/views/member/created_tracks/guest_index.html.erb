@@ -5,7 +5,7 @@
         <div class="mb-1">
           <h1 class="text-center" style="color: red;">Rhythm RAIDERS</h1><br>
           <h3 class="text-center" style="color: red;">ゲストログイン完了</h3><br>
-          <h3 class="text-center" style="color: orange;">Guest LogIn  Completed</h3>
+          <h3 class="text-center" style="color: #f23f23;">Guest LogIn  Completed</h3>
         </div>
         <div class="text-center mb-1">
           <p class="text" style="color: black; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray; font-size: 0.7em;">
@@ -31,7 +31,7 @@
                         <%= created_track.music_title %>
                       </h3>
                       <div class="card-text" style="font-size: calc(10px + 1vw);">Music Genre: <%= created_track.music_genre %></div>
-                      <div class="card-text" style="font-size: calc(10px + 1vw);">Creater Name: <%= created_track.creater_name %></div>
+                      <div class="card-text" style="font-size: calc(10px + 1vw);">Creater Name: <%= created_track.member.creater_name %></div>
                       <div class="card-text" style="font-size: calc(10px + 1vw);">A word from the creater: <p><%= created_track.creater_word %></p></div>
                     </div>
                   </div>

@@ -2,7 +2,7 @@ class Member::PostCommentsController < ApplicationController
 
   def create
     created_track = CreatedTrack.find(params[:created_track_id])
-    comment = current_member.post_comments.new(comment_content: post_comment_params[:comment],like_count: 0)
+    comment = current_member.post_comments.new(comment_content: post_comment_params[:comment])
     comment.created_track_id = created_track.id
     comment.save
     redirect_to member_created_track_path(created_track)

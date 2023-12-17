@@ -40,6 +40,12 @@ class Member::CreatedTracksController < ApplicationController
     end
   end
 
+  def destroy
+    @created_track = current_member.created_tracks.find(params[:id])
+    @created_track.destroy!
+    redirect_to member_created_track_path(@created_trak.created_track_id)
+  end
+
   def guest_index
     @guest_member = Member.find_by(email: 'guest@example.com')
     # ゲストメンバーは楽曲を作成できないので、作成済みの楽曲を取得する
@@ -52,6 +58,6 @@ class Member::CreatedTracksController < ApplicationController
   private
 
   def created_track_params
-    params.require(:created_track).permit(:music_title, :creater_name, :music_genre, :creater_word, :playback_duration, :music_file, :sample_music_file, :is_guest, :is_public)
+    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file)
   end
 end

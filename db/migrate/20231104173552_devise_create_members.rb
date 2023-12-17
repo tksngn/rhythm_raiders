@@ -20,6 +20,7 @@ class DeviseCreateMembers < ActiveRecord::Migration[6.1]
       t.integer :gender, null: false
       t.integer :is_privacy_policy_accepted, null: false
       t.boolean :is_active, null: false, default: true
+      t.string :profile # ADD
       ## Trackable
       # t.integer  :sign_in_count, default: 0, null: false
       # t.datetime :current_sign_in_at

@@ -14,7 +14,7 @@ class Admin::MembersController < ApplicationController
         # 例：リダイレクトする、エラーメッセージを表示する、など
 
         end
-      @comments = @member.member_comments
+      #@comments = @member.member_comments
     else
       # メンバーが見つからない場合の処理をここに書く
       # 例：リダイレクトする、エラーメッセージを表示する、など
@@ -23,9 +23,9 @@ class Admin::MembersController < ApplicationController
 
   def edit
     @member = Member.find(params[:id])
-    @posts = @member.posts
-    @post = @posts.first # これは一例で、実際のコードは要件によります
-    @comments = Comment.where(post_id: @posts.pluck(:id))
+    #@posts = @member.posts
+    #@post = @posts.first # これは一例で、実際のコードは要件によります
+    #@comments = Comment.where(post_id: @posts.pluck(:id))
   end
 
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Member::RegistrationsController < Devise::RegistrationsController
-  prepend_before_action :require_no_authentication, only: [:new, :create]
+  # prepend_before_action :require_no_authentication, only: [:new, :create]
   before_action :configure_sign_up_params, only: [:create]
   before_action :ensure_normal_member, only: %i[update destroy]
 
@@ -12,32 +12,32 @@ class Member::RegistrationsController < Devise::RegistrationsController
   end
 
   # GET /resource/sign_up
-  def new
-    super
-  end
+  # def new
+  #   super
+  # end
 
-  def create
-    build_resource(sign_up_params)
+  # def create
+  #   build_resource(sign_up_params)
 
-    resource.save
-    yield resource if block_given?
-    if resource.persisted?
-      if resource.active_for_authentication?
-        sign_up(resource_name, resource)
-        redirect_to new_member_session_path # ログイン画面にリダイレクト
-      else
-        set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
-        expire_data_after_sign_in!
-        respond_with resource, location: after_inactive_sign_up_path_for(resource)
-      end
-    else
-      clean_up_passwords resource
-      set_minimum_password_length
-      puts resource.errors.full_messages # バリデーションエラーのメッセージを表示
-      respond_with resource
-    end
-  end
-  
+  #   resource.save
+  #   yield resource if block_given?
+  #   if resource.persisted?
+  #     if resource.active_for_authentication?
+  #       sign_up(resource_name, resource)
+  #       redirect_to new_member_session_path # ログイン画面にリダイレクト
+  #     else
+  #       set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"
+  #       expire_data_after_sign_in!
+  #       respond_with resource, location: after_inactive_sign_up_path_for(resource)
+  #     end
+  #   else
+  #     clean_up_passwords resource
+  #     set_minimum_password_length
+  #     puts resource.errors.full_messages # バリデーションエラーのメッセージを表示
+  #     respond_with resource
+  #   end
+  # end
+
   def destroy
     resource.update(is_active: false)  # メンバーを非アクティブに設定
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
@@ -55,7 +55,7 @@ class Member::RegistrationsController < Devise::RegistrationsController
 
   # The path used after sign up.
   def after_sign_up_path_for(resource)
-    new_member_session_path
+    mypage_member_customers_path
   end
 end
 

@@ -13,9 +13,6 @@ class Member < ApplicationRecord
   has_many :created_tracks, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
-  has_many :member_comments, dependent: :destroy # future: delete
-  has_many :member_tracks, dependent: :destroy # future: delete
-  has_many :posts, dependent: :destroy # future: delete
   has_many :notifications, dependent: :destroy
   has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
   has_many :followed, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy

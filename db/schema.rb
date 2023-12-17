@@ -52,26 +52,14 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end
 
-  create_table "comments", force: :cascade do |t|
-    t.string "comment_content", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "posted_member_name"
-  end
-
   create_table "created_tracks", force: :cascade do |t|
     t.integer "member_id"
     t.string "music_title", null: false
-    t.string "creater_name", null: false
     t.string "music_genre", null: false
     t.string "creater_word", limit: 100
-    t.integer "playback_duration", null: false
-    t.datetime "release_date", null: false
+    t.string "music_file", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "is_guest", default: false
-    t.string "music_file"
-    t.boolean "is_public", default: false
     t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 
@@ -83,34 +71,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_track_id"], name: "index_likes_on_created_track_id"
     t.index ["member_id"], name: "index_likes_on_member_id"
-  end
-
-  create_table "member_comments", force: :cascade do |t|
-    t.integer "member_id"
-    t.string "comment_content", null: false
-    t.integer "like_count", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["member_id"], name: "index_member_comments_on_member_id"
-  end
-
-  create_table "member_likes", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "member_posts", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "member_tracks", force: :cascade do |t|
-    t.integer "member_id"
-    t.integer "playback_count", null: false
-    t.boolean "favorite_flag", null: false
-    t.datetime "playlist_addition_timestamp", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "members", force: :cascade do |t|
@@ -125,12 +85,9 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.integer "gender", null: false
     t.integer "is_privacy_policy_accepted", null: false
     t.boolean "is_active", default: true, null: false
+    t.string "profile"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "agreement"
-    t.boolean "is_guest", default: false
-    t.string "profile"
-    t.string "profile_image_id"
     t.index ["email"], name: "index_members_on_email", unique: true
     t.index ["reset_password_token"], name: "index_members_on_reset_password_token", unique: true
   end
@@ -150,25 +107,10 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.integer "member_id"
     t.integer "created_track_id"
     t.string "comment_content", null: false
-    t.integer "like_count", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["created_track_id"], name: "index_post_comments_on_created_track_id"
     t.index ["member_id"], name: "index_post_comments_on_member_id"
-  end
-
-  create_table "post_likes", force: :cascade do |t|
-    t.datetime "like_timestamp", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.integer "member_id"
-    t.string "post_comment", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["member_id"], name: "index_posts_on_member_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -185,11 +127,9 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
   add_foreign_key "created_tracks", "members"
   add_foreign_key "likes", "created_tracks"
   add_foreign_key "likes", "members"
-  add_foreign_key "member_comments", "members"
   add_foreign_key "notifications", "members"
   add_foreign_key "post_comments", "created_tracks"
   add_foreign_key "post_comments", "members"
-  add_foreign_key "posts", "members"
   add_foreign_key "relationships", "members", column: "followed_id"
   add_foreign_key "relationships", "members", column: "follower_id"
 end

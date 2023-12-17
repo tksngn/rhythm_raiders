@@ -1,21 +1,29 @@
-<div class="cover-member-index">
-  <div class="container">
-    <div class="row justify-content-center">
-      <h1 class="font-weight-normal mt-5 mb-5">フォロワー一覧</h1>
-    </div>
-    <div class="row justify-content-center">
-      <% @members.each do |member| %>
-      <div class="one-post card w-100">
-        <%= link_to member_customer_path(member) do %>
-        <p class="caption h4"><%= member.creater_name %></p>
-        <div class="d-flex">
-          <%= image_tag member.get_profile_image(100, 100)%>
-          <h4 class="ml-5"><%= member.profile %></h4>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="text-center">
+        <div class="mt-5">
+          <h1 class="m-1">
+            <strong style="color: #f23f23;">フォロワー一覧</strong>
+          </h1>
         </div>
-        <p class="caption"><%= "#{member.created_tracks.count} 投稿" %></p>
-        <% end %>
       </div>
-      <% end %>
+      <div class="mb-1">
+        <div class="text-center">
+          <% @members.each do |member| %>
+            <%= link_to member_customer_path(member) do %>
+              <p class="caption h4"><%= member.creater_name %></p>
+              <p class="m-1">
+                <%= image_tag member.get_profile_image(100, 100)%>
+                <h4 class="ml-5"><%= member.profile %></h4>
+              </p>
+              <div class="m-1">
+                <p class="caption"><%= "#{member.created_tracks.count} 投稿" %></p>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
