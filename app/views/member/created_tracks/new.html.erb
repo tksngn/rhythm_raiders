@@ -28,7 +28,7 @@
               <strong style="color: orange;">Email:</strong> <%= f.email_field :email %>
             </p>
             <p><strong style="color: orange;">PhoneNumber:</strong> <%= f.telephone_field :phone_number %></p>
-            <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, options_for_select(['Male', 'Female', 'Non_binary']) %></p>
+            <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, ['Male', 'Female', 'Non_binary'] %></p>
             <div class="col-md-6 offset-md-6 mt-auto">
               <div class="mb-2">
                 <div class="text-right">

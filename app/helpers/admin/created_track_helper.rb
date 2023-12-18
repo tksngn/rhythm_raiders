@@ -1,0 +1,2 @@
+module Admin::CreatedTrackHelper
+end

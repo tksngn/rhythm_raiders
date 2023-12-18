@@ -12,6 +12,8 @@ Rails.application.routes.draw do
         post :unban
       end
     end
+    resources :created_tracks, only: [:destroy] do
+    end
     resources :posts, only: [:index, :show, :destroy] do
       resources :comments, only: [:destroy]
       member do

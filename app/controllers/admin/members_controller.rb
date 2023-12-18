@@ -38,7 +38,6 @@ class Admin::MembersController < ApplicationController
     end
   end
 
-
   def unban
     @member = Member.find(params[:id])
     @member.update(active: true)

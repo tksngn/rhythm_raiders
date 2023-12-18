@@ -46,7 +46,11 @@
             <% @member.post_comments.each do |comment| %>
               <div class="border p-2" style="word-wrap: break-word;">
                 <%= comment.comment_content %>
-                <%= link_to "Delete", admin_post_comment_path(comment.created_track, comment), method: :delete, data: {confirm: "削除しても良いですか？"} %>
+                <%= link_to "Delete",
+                    admin_post_comment_path(comment.created_track, comment),
+                    method: :delete,
+                    data: {confirm: "削除しても良いですか？"}
+                %>
               </div>
             <% end %>
           </div>
@@ -59,20 +63,27 @@
               <strong style="color: #f23f23;">投稿楽曲詳細</strong>
             </h2>
             <% if @track.present? %>
-              <div class="border p-2">
-                <p class="m-0" style="word-wrap: break-word;">
-                  <strong style="color: orange;">Music Title:</strong>
-                  <%= @track.music_title %>
-                </p>
-                <p class="m-0" style="word-wrap: break-word;">
-                  <strong style="color: orange;">Music Genre:</strong>
-                  <%= @track.music_genre %>
-                </p>
-                <p class="m-0" style="word-wrap: break-word;">
-                  <strong style="color: orange;">A word from the creater:</strong>
-                  <%= @track.creater_word %>
-                </p>
-              </div>
+              <% @member.created_tracks.each do |created_track| %>
+                <div class="border p-2">
+                  <p class="m-0" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Music Title:</strong>
+                    <%= created_track.music_title %>
+                  </p>
+                  <p class="m-0" style="word-wrap: break-word;">
+                    <strong style="color: orange;">Music Genre:</strong>
+                    <%= created_track.music_genre %>
+                  </p>
+                  <p class="m-0" style="word-wrap: break-word;">
+                    <strong style="color: orange;">A word from the creater:</strong>
+                    <%= created_track.creater_word %>
+                  </p>
+                  <%= link_to "Track Delete",
+                    admin_created_track_path(created_track.id),
+                    method: :delete,
+                    data: {confirm: "削除してもよろしいですか？"}
+                  %>
+                </div>
+              <% end %>
             <% else %>
               <p>トラックが存在しません。</p>
             <% end %>

@@ -65,11 +65,13 @@
         <div class="card-body">
           <h3 class="text-center" style="color: #f23f23;">ーGood Soundー</h3>
           <div class="text-center">
-            <li>
+            <div>
               <% @member.likes.each do |like| %>
-                <%= link_to like.created_track.music_title, member_created_track_path(like.created_track) %>
+                <div>
+                  <%= link_to like.created_track.music_title, member_created_track_path(like.created_track) %>
+                </div>
               <% end %>
-            </li>
+            </div>
           </div>
         </div>
       </div>
