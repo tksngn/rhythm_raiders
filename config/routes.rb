@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   end
 
 scope module: :member do
-resources :notifications, only: [:index]
+resources :notifications, only: [:index, :destroy]
 end
 
   post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'

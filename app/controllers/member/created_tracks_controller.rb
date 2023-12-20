@@ -41,9 +41,9 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def destroy
-    @created_track = current_member.created_tracks.find(params[:id])
+    @created_track = CreatedTrack.find(params[:id])
     @created_track.destroy!
-    redirect_to member_created_track_path(@created_trak.created_track_id)
+    redirect_to member_created_track_path(@created_track.id)
   end
 
   def guest_index

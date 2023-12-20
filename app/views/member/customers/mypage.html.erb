@@ -35,10 +35,10 @@
               A word from the creater：<%= created_track.creater_word %>
             </div>
             <div class="text-center mt-1">
-              <%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %>
+              <%= link_to "#{created_track.post_comments.count} Comment", member_created_track_path(created_track.id) %>
               　|
               <%= link_to "Track Delete",
-                  member_created_track_path(created_track),
+                  member_created_track_path(created_track.id),
                   method: :delete,
                   data: {confirm: "削除してもよろしいですか？"}
               %>

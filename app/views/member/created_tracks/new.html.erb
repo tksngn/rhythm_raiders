@@ -15,7 +15,7 @@
       </div>
       <div class="col-md-10">
         <div class="mt-2 mb-2">
-          <h3 style="color: orange;">Edit Member Information</h3>
+          <h3 style="color: #f23f23;">ーEdit Member Informationー</h3>
           <%= form_with model: @member, url: member_customer_path(@member), method: :patch do |f| %>
             <p class="word-wrap: break-word;">
               <strong style="color: orange;">Name:</strong> <%= f.text_field :name %>
@@ -42,20 +42,22 @@
     </div>
     <div class="row">
       <div class="col-md-10 offset-md-2">
-        <h3 style="color: orange;">Post Music Information</h3>
+        <h3 style="color: #f23f23;">ーPost Music Informationー</h3>
         <%= form_with model: [:member, @created_track] do |f| %>
-          <div>
-          　<%= f.label :music_title %>
-          　<%= f.text_field :music_title %>
-            <%= f.label :music_file %>
-            <%= f.file_field :music_file , :size => 100 %>
+          <div class="m-1">
+            <strong style="color: orange">Music Tilte :</strong>
+            <%= f.text_field :music_tilte %>
           </div>
-          <div>
-            <%= f.label :music_genre %>
+          <div class="m-1">
+            <strong style="color: orange">Music File :</strong>
+            <%= f.file_field :music_file %>
+          </div>
+          <div class="m-1">
+            <strong style="color: orange">Music Genre :</strong>
             <%= f.text_field :music_genre %>
           </div>
-          <div>
-            <%= f.label :creater_word %>
+          <div class="m-1">
+            <strong style="color: orange">Creater Word :</strong>
             <%= f.text_area :creater_word %>
           </div>
           <div class="col-md-6 offset-md-6 mt-auto">

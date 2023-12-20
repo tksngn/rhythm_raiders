@@ -7,6 +7,6 @@ class Admin::CreatedTracksController < ApplicationController
   def destroy
     @created_track = CreatedTrack.find(params[:id])
     @created_track.destroy
-    redirect_to admin_posts_path
+    redirect_to admin_members_path
   end
 end
