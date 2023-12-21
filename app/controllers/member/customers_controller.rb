@@ -13,6 +13,7 @@ class Member::CustomersController < ApplicationController
   end
 
   def mypage
+    is_guest
     @member = current_member
     # @created_track = current_member.created_tracks.first
     # @member_track = @created_track.member_tracks(@member).first if @created_track
@@ -70,5 +71,11 @@ class Member::CustomersController < ApplicationController
 
   def member_params
     params.require(:member).permit(:name, :email, :creater_name, :phone_number, :gender, :profile, :profile_image)
+  end
+
+  def is_guest
+    if current_member.email == 'guest@example.com'
+      redirect_to guest_index_member_created_tracks_path
+    end
   end
 end
