@@ -1,4 +1,4 @@
-class MemberTracksController < ApplicationController
+class Member::MemberTracksController < ApplicationController
 
   def new
     @member_track = MemberTrack.new
