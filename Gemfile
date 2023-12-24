@@ -72,7 +72,6 @@ group :production do
 end
 
 group :development do
-  gem 'dotenv-rails'# 環境変数を管理するためのgem
   gem 'bullet'# N+1問題を検出するためのgem
 end
 
@@ -98,4 +97,4 @@ gem 'audiojs-rails'
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
-
+gem 'dotenv-rails'# 環境変数を管理するためのgem
