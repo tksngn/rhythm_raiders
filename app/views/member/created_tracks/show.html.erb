@@ -47,9 +47,9 @@
               <% end %>
             </div>
             <div class="mr-5">
-              <!--<% if member_signed_in? && @member == current_member %>-->
-              <!--  <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "btn-sm btn-success" %>-->
-              <!--<% end %>-->
+              <% if member_signed_in? && @member == current_member %>
+                <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "btn-sm btn-success" %>
+              <% end %>
               <% unless @created_track.member == current_member %>
                 <% if current_member.following?(@created_track.member) %>
                   <%= link_to 'フォロー外す', member_customer_relationships_path(@created_track.member), method: :delete, class: "btn-sm btn-danger" %>

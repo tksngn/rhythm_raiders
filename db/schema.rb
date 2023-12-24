@@ -60,7 +60,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.string "music_file", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["member_id"], name: "index_created_tracks_on_member_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -69,8 +68,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.datetime "like_timestamp", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_track_id"], name: "index_likes_on_created_track_id"
-    t.index ["member_id"], name: "index_likes_on_member_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -99,7 +96,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.boolean "checked", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["member_id"], name: "index_notifications_on_member_id"
     t.index ["subject_type", "subject_id"], name: "index_notifications_on_subject"
   end
 
@@ -109,8 +105,6 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.string "comment_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["created_track_id"], name: "index_post_comments_on_created_track_id"
-    t.index ["member_id"], name: "index_post_comments_on_member_id"
   end
 
   create_table "relationships", force: :cascade do |t|
@@ -118,18 +112,8 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.integer "followed_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["followed_id"], name: "index_relationships_on_followed_id"
-    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "created_tracks", "members"
-  add_foreign_key "likes", "created_tracks"
-  add_foreign_key "likes", "members"
-  add_foreign_key "notifications", "members"
-  add_foreign_key "post_comments", "created_tracks"
-  add_foreign_key "post_comments", "members"
-  add_foreign_key "relationships", "members", column: "followed_id"
-  add_foreign_key "relationships", "members", column: "follower_id"
 end

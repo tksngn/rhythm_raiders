@@ -11,7 +11,7 @@
         <div class="result-item">
           <%= link_to result.music_title, member_created_track_path(result) %>
           <p><%= result.music_genre %></p>
-          <p><%= result.creater_name %></p>
+          <p><%= result.member.creater_name %></p>
         </div>
       <% end %>
     <% end %>
