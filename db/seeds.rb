@@ -6,7 +6,50 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+puts "seedの実行を開始"
+
 Admin.create!(
   email: 'raiders@masters.com',
   password: 'rhythmmaster'
 )
+
+Test01 = Member.find_or_create_by!(email: "test1@example.com") do |member|
+  member.password = "password01"
+  member.name = "Test01"
+  member.creater_name = "tester01"
+end
+
+Test02 = Member.find_or_create_by!(email: "test2@example.com") do |member|
+  member.password = "password02"
+  member.name = "Test02"
+  member.creater_name = "tester02"
+end
+
+Test03 = Member.find_or_create_by!(email: "test3@example.com") do |member|
+  member.password = "password03"
+  member.name = "Test03"
+  member.creater_name = "tester03"
+end
+
+CreatedTrack.find_or_create_by!(music_title: "Fantasy World") do |created_track|
+  created_track.music_genre = "Orchestra"
+  created_track.music_file = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/fantasy-background-music-110593.mp3"), filename:"fantasy-background-music-110593.mp3")
+  created_track.creater_word = "壮大な感じの素晴らしい曲に仕上がりました！"
+  created_track.member = Test01
+end
+
+CreatedTrack.find_or_create_by!(music_title: "Medieval Cityscape") do |created_track|
+  created_track.music_genre = "Medieval BGM"
+  created_track.music_file = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/field.mp3"), filename:"field.mp3")
+  created_track.creater_word = "中世の街並みを表現できるいい曲になりました！"
+  created_track.member = Test02
+end
+
+CreatedTrack.find_or_create_by!(music_title: "Turmoil of Battle") do |created_track|
+  created_track.music_genre = "Battle BGM"
+  created_track.music_file = ActiveStorage::Blob.create_and_upload!(io: File.open("#{Rails.root}/db/fixtures/worldsend.mp3"), filename:"worldsend.mp3")
+  created_track.creater_word = "激しい戦いの火蓋が切って落とされました！"
+  created_track.member = Test03
+end
+
+puts "seedの実行が完了しました"

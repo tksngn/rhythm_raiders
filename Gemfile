@@ -66,15 +66,14 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
-
-gem 'dotenv-rails'
 group :production do
-  gem 'mysql2' 
+  gem 'mysql2'
   gem 'aws-sdk-s3'
 end
 
-# 環境変数を管理するためのgem
 group :development do
+  gem 'dotenv-rails'# 環境変数を管理するためのgem
+  gem 'bullet'# N+1問題を検出するためのgem
 end
 
 # 定期的なタスクをスケジューリングするためのgem
@@ -82,10 +81,6 @@ group :production do
   gem 'whenever', require: false
 end
 
-# N+1問題を検出するためのgem
-group :development do
-  gem 'bullet'
-end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'devise'
@@ -103,4 +98,4 @@ gem 'audiojs-rails'
 gem "net-smtp"
 gem "net-pop"
 gem "net-imap"
-gem 'dotenv-rails'
+
