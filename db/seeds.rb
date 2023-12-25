@@ -8,10 +8,9 @@
 
 puts "seedの実行を開始"
 
-Admin.create!(
-  email: 'raiders@masters.com',
-  password: 'rhythmmaster'
-)
+Admin.find_or_create_by!(email: ENV['ADMIN_EMAIL']) do |admin|
+  admin.password = ENV['ADMIN_PASSWORD']
+end
 
 Test01 = Member.find_or_create_by!(email: "test1@example.com") do |member|
   member.password = "password01"
