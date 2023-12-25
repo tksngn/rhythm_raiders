@@ -16,18 +16,27 @@ Test01 = Member.find_or_create_by!(email: "test1@example.com") do |member|
   member.password = "password01"
   member.name = "Test01"
   member.creater_name = "tester01"
+  member.phone_number = "00000000000"
+  member.gender = 0
+  member.is_privacy_policy_accepted = true
 end
 
 Test02 = Member.find_or_create_by!(email: "test2@example.com") do |member|
   member.password = "password02"
   member.name = "Test02"
   member.creater_name = "tester02"
+  member.phone_number = "00000000000"
+  member.gender = 0
+  member.is_privacy_policy_accepted = true
 end
 
 Test03 = Member.find_or_create_by!(email: "test3@example.com") do |member|
   member.password = "password03"
   member.name = "Test03"
   member.creater_name = "tester03"
+  member.phone_number = "00000000000"
+  member.gender = 0
+  member.is_privacy_policy_accepted = true
 end
 
 CreatedTrack.find_or_create_by!(music_title: "Fantasy World") do |created_track|
