@@ -23,11 +23,12 @@ class Member::CreatedTracksController < ApplicationController
 
   def create
     @created_track = CreatedTrack.new(created_track_params.merge(:member_id => current_member.id))
-    if @created_track.save!
+    if @created_track.save
       redirect_to member_created_tracks_path , notice: 'Track was successfully created.'
     else
       @created_tracks = CreatedTrack.page(params[:page]).per(5)
-      render :index
+      @member = current_member
+      render :new
     end
   end
 
@@ -42,6 +43,7 @@ class Member::CreatedTracksController < ApplicationController
 
   def destroy
     @created_track = CreatedTrack.find(params[:id])
+    redirect_to root_path and return unless @created_track.member = current_member
     @created_track.destroy!
     redirect_to mypage_member_customers_path(current_member.id)
   end

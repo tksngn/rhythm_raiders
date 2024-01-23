@@ -1,5 +1,6 @@
 class Admin::CreatedTracksController < ApplicationController
-
+  before_action :authenticate_admin!
+  
   def index
     @created_tracks = CreatedTrack.all
   end

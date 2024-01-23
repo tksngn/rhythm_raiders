@@ -27,8 +27,13 @@ class Member::CustomersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
-    @member.update(member_params)
-    redirect_to mypage_member_customers_path(@member.id)
+    redirect_to root_path and return unless @member = current_member
+    if @member.update(member_params)
+      redirect_to mypage_member_customers_path(@member.id)
+    else
+      @created_track = CreatedTrack.new()
+      render 'member/created_tracks/new'
+    end
   end
 
   def follows

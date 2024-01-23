@@ -61,6 +61,7 @@
           </div>
           <div class="mb-5">
             <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
+              <%= render 'layouts/errors', model: @post_comment %>
               <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", style: "width: 100%" %>
               <div class="text-center mt-2">
                 <%= f.submit "Post a Comment", class: 'btn btn-primary' %>

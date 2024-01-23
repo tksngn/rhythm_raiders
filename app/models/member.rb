@@ -21,6 +21,8 @@ class Member < ApplicationRecord
 
   enum gender: { Male: 0, Non_binary: 1, Female: 2 }
 
+  validates :creater_name, presence: true
+
     # ユーザーをフォローする
   def follow(member_id)
     follower.create!(followed_id: member_id)

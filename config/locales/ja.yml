@@ -170,7 +170,6 @@ ja:
         other: "%{count} 件のエラーが発生したため %{resource} は保存されませんでした。"
   activerecord:
     errors:
-      messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
         restrict_dependent_destroy:
           has_one: "%{record}が存在しているので削除できません"
@@ -253,6 +252,7 @@ ja:
   errors:
     format: "%{attribute}%{message}"
     messages:
+      extension_allowlist_error: ファイルの形式が正しくありません。
       accepted: を受諾してください
       blank: を入力してください
       confirmation: と%{attribute}の入力が一致しません
