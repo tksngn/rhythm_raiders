@@ -1,12 +1,9 @@
 class Member < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-  # validates :active, inclusion: { in: [true, false] }
+  
   enum status: { active: 0, inactive: 1 }
-
-  # after_initialize :set_default_status, if: :new_record?
 
   has_one_attached :profile_image
 
@@ -54,10 +51,6 @@ class Member < ApplicationRecord
     email == 'guest@example.com'
   end
 
-  # def withdrawn? # FIXME: 退会系処理
-  #   !is_active
-  # end
-
   def get_profile_image(width, height)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
@@ -65,12 +58,6 @@ class Member < ApplicationRecord
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
   end
-
-  # private
-
-  # def set_default_status # FIXME: 退会系処理
-  #   self.is_active ||= :active
-  # end
 
   def active_for_authentication?
     super && is_active?

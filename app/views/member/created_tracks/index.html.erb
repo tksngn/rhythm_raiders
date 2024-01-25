@@ -27,11 +27,16 @@
               <%= link_to 'Logout', destroy_member_session_path, method: :delete, class: "button" %>
             </div>
           </div>
-          <div class="text-right mt-3 mb-2">
+          <div class="text-center mt-3 mb-2">
             <%= form_with(url: search_index_path, method: "get", local: true) do |form| %>
               <%= form.text_field :keyword, placeholder: "Enter keyword" %>
               <%= form.submit "検索" %>
             <% end %>
+          </div>
+          <div class="text-right">
+            <%= link_to "いいね順", member_created_tracks_path(sort: "good") %>
+            <%= link_to "コメント順", member_created_tracks_path(sort: "comment") %>
+            <%= link_to "ランダム", member_created_tracks_path(sort: "random") %>
           </div>
           <% @created_tracks.each do |created_track| %>
             <div class="card mb-2">

@@ -12,8 +12,27 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def index
-    @created_tracks = CreatedTrack.all
-    @created_tracks = CreatedTrack.page(params[:page]).per(5)
+    # TODO: 複数同じものが表示された場合、.distinctをつける
+
+    # 配列時のKaminari
+    # refs: https://stackoverflow.com/questions/37562514/kaminari-pagination-not-effecting-the-table
+    case params[:sort]
+    when "good"
+      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:likes).group(:created_track_id).order(created_track_id: :desc)).page(params[:page]).per(5)
+    when "comment"
+      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:post_comments).group(:created_track_id).order(created_track_id: :desc)).page(params[:page]).per(5)
+    when "random"
+      # SQLiteの場合は、RANDOM()だが、MySQLの場合は、RAND()である。
+      # refs: https://www.javadrive.jp/ruby/if/index10.html
+      # refs: https://qiita.com/mightysosuke/items/3903368006eebdf239be
+      # refs: https://kemarii.com/blog/rails/rails-env-branch/
+      method = Rails.env.production? ? "RAND()" : "RANDOM()" # 本番環境または開発環境によって条件分岐
+      @created_tracks = Kaminari.paginate_array(CreatedTrack.order(method)).page(params[:page]).per(5)
+    else
+      @created_tracks = CreatedTrack.page(params[:page]).per(5)
+    end
+
+
   end
 
   def new
