@@ -25,6 +25,11 @@
             <%= form.submit "検索" %>
           <% end %>
         </div>
+        <div class="text-right">
+          <%= link_to "いいね順 ：", guest_index_member_created_tracks_path(sort: "good") %>
+          <%= link_to "コメント順 ：", guest_index_member_created_tracks_path(sort: "comment") %>
+          <%= link_to "ランダム", guest_index_member_created_tracks_path(sort: "random") %>
+        </div>
         <!-- 楽曲の一覧を表示するエリア -->
         <% @created_tracks.each do |created_track| %>
           <div class="card mb-2">

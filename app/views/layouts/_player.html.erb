@@ -16,7 +16,8 @@
 </div>
 
 <script>
-  $("waveform_<%= created_track.id %>").empty();
+$(document).on('turbolinks:load', function() {
+  $("#waveform_<%= created_track.id %>").empty();
   const wavesurfer_<%= created_track.id %> = WaveSurfer.create({
     container: '#waveform_<%= created_track.id %>',
     barWidth: 5,
@@ -46,4 +47,6 @@
   $("#volume_<%= created_track.id %>").change(function() {
     wavesurfer_<%= created_track.id %>.setVolume($(this).val() / 100);
   })
+
+});
 </script>
