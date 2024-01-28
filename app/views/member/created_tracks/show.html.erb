@@ -74,7 +74,7 @@
         </div>
         <div class="col-md-6">
           <div class="mb-2">
-            <%= render "layouts/player", created_track: @created_track, is_guest: false %>
+            <%= render "layouts/player", created_track: created_track, is_guest: false %>
           </div>
           <div class="mb-2">
             <p>コメント件数：<%= @created_track.post_comments.count %></p>
