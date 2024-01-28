@@ -33,15 +33,14 @@ $(document).on('turbolinks:load', function() {
 
   wavesurfer_<%= created_track.id %>.setVolume(0.5)
 
-
-    wavesurfer_<%= created_track.id %>.on('timeupdate', (currentTime) => {
-      <% if is_guest %>
-        if (currentTime >= 30) {
-          wavesurfer_<%= created_track.id %>.stop();
-        }
-      <% end %>
-      $("#time_<%= created_track.id %>").html(`${parseInt(currentTime)}sec.`)
-    })
+  wavesurfer_<%= created_track.id %>.on('timeupdate', (currentTime) => {
+    <% if is_guest %>
+      if (currentTime >= 30) {
+        wavesurfer_<%= created_track.id %>.stop();
+      }
+    <% end %>
+    $("#time_<%= created_track.id %>").html(`${parseInt(currentTime)}sec.`)
+  })
 
 
   $("#volume_<%= created_track.id %>").change(function() {
