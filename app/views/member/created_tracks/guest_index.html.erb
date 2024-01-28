@@ -26,9 +26,9 @@
           <% end %>
         </div>
         <div class="text-right">
-          <%= link_to "いいね順", member_created_tracks_path(sort: "good") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
-          <%= link_to "コメント順", member_created_tracks_path(sort: "comment") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
-          <%= link_to "ランダム", member_created_tracks_path(sort: "random") %>
+          <%= link_to "いいね順", guest_index_member_created_tracks_path(sort: "good") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
+          <%= link_to "コメント順", guest_index_member_created_tracks_path(sort: "comment") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
+          <%= link_to "ランダム", guest_index_member_created_tracks_path(sort: "random") %>
         </div>
         <!-- 楽曲の一覧を表示するエリア -->
         <% @created_tracks.each do |created_track| %>
