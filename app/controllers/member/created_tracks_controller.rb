@@ -17,9 +17,9 @@ class Member::CreatedTracksController < ApplicationController
     # refs: https://stackoverflow.com/questions/37562514/kaminari-pagination-not-effecting-the-table
     case params[:sort]
     when "good"
-      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:likes).group(:created_track_id).order(created_track_id: :desc)).page(params[:page]).per(5)
+      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:likes).group(:id).order("count(likes.created_track_id) desc")).page(params[:page]).per(5)
     when "comment"
-      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:post_comments).group(:created_track_id).order(created_track_id: :desc)).page(params[:page]).per(5)
+      @created_tracks = Kaminari.paginate_array(CreatedTrack.left_outer_joins(:post_comments).group(:id).order("count(post_comments.created_track_id) desc")).page(params[:page]).per(5)
     when "random"
       # SQLiteの場合は、RANDOM()だが、MySQLの場合は、RAND()である。
       # refs: https://www.javadrive.jp/ruby/if/index10.html
