@@ -16,9 +16,10 @@
 </div>
 
 <script>
+var  wavesurfer_<%= created_track.id %> = "";
 $(document).on('turbolinks:load', function() {
   $("#waveform_<%= created_track.id %>").empty();
-  const wavesurfer_<%= created_track.id %> = WaveSurfer.create({
+    wavesurfer_<%= created_track.id %> = WaveSurfer.create({
     container: '#waveform_<%= created_track.id %>',
     barWidth: 5,
     barGap: 1,
