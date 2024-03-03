@@ -25,6 +25,9 @@
             <%= form.submit "検索" %>
           <% end %>
         </div>
+        <div class="text-center mb-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;">
+            ーwaveが表示されない時はリロードしてくださいー
+          </div>
         <div class="text-right">
           <%= link_to "いいね順", guest_index_member_created_tracks_path(sort: "good") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
           <%= link_to "コメント順", guest_index_member_created_tracks_path(sort: "comment") %><span class="mx-2" style="font-style: normal;">&#0058;</span>
