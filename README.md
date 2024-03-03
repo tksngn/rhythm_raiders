@@ -2,7 +2,7 @@
 # <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="50" height="50"> Rhythm RAIDERS
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="40" height="40"> サイト概要
 ### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> サイトテーマ
-「Rhythm RAIDERS」は、ゲーム音楽制作者とファンをつなぐゲーム音楽投稿コミュニティサイトです。
+「Rhythm RAIDERS」は、音楽制作者とファンをつなぐ音楽投稿コミュニティサイトです。
 
 ### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 著作権に関する方針
 このサイトは、著作権に配慮した形で運営されます。具体的には、以下のような方向性を持っています。
@@ -10,12 +10,12 @@
 - オリジナル音楽の推奨: サイトは、制作者が自身のオリジナル作品を共有する場として機能します。これにより、制作者は自身の音楽を広め、フィードバックを得ることができます。また、ファンは新しい音楽を発見し、お気に入りの制作者とつながることができます。
 - 著作権フリー音楽の共有: ゲームに関連する著作権フリーの音楽を共有することも可能です。これにより、ゲーム開発者は新しいプロジェクトのために音楽を探すことができます。
 
-以上の方向性により、「Rhythm RAIDERS」は法的な問題を避けつつ、ゲーム音楽制作者とファンが安全に交流できる場を提供します。私たちは、全てのユーザーがこのサイトを通じて音楽とゲームへの情熱を共有できることを願っています。
+以上の方向性により、「Rhythm RAIDERS」は法的な問題を避けつつ、音楽制作者とファンが安全に交流できる場を提供します。私たちは、全てのユーザーがこのサイトを通じて音楽への情熱を共有できることを願っています。
 ​
 ### <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> テーマを選んだ理由
-私がテーマを選んだ理由は、自身の経験とゲーム音楽への情熱から来ています。私はかつてバンド活動をしており、その経験から音楽の力を深く理解しています。また、10年以上にわたりMMORPGをプレイしてきました。そのゲームでの体験が、私がPCを購入し、最終的に開発に興味を持つきっかけとなりました。
+私がテーマを選んだ理由は、自身の経験と音楽への情熱から来ています。私はかつてバンド活動をしており、その経験から音楽の力を深く理解しています。また、10年以上にわたりMMORPGをプレイしてきました。そのゲームでの体験が、私がPCを購入し、最終的に開発に興味を持つきっかけとなりました。
 
-このような背景から、ゲーム音楽がゲーム体験を豊かにする重要な要素であることを実感しています。しかし、制作者とファンが交流したり、新しい音楽を発見したりするための専用のプラットフォームが不足していると感じていました。そこで、「Rhythm RAIDERS」を通じて、制作者とファンが直接つながり、情熱を共有できる場を提供したいと考えました。私自身の音楽とゲームへの愛情がこのプロジェクトの原動力となっています。
+このような背景から、音楽がゲーム体験を豊かにする重要な要素であることを実感しています。しかし、制作者とファンが交流したり、新しい音楽を発見したりするための専用のプラットフォームが不足していると感じていました。そこで、「Rhythm RAIDERS」を通じて、制作者とファンが直接つながり、情熱を共有できる場を提供したいと考えました。私自身の音楽とゲームへの愛情がこのプロジェクトの原動力となっています。
 
 
 ​
