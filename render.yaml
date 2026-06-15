@@ -1,0 +1,31 @@
+# Render Blueprint — 無料 Web(Docker) + 無料 Postgres を一括作成する。
+# Render ダッシュボードの New → Blueprint からこのリポジトリを選ぶと読み込まれる。
+databases:
+  - name: rhythm-raiders-db
+    plan: free
+
+services:
+  - type: web
+    name: rhythm-raiders
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    # root はログインへ302リダイレクトするため、200を返すパスをヘルスチェックに使う
+    healthCheckPath: /members/sign_in
+    envVars:
+      - key: RAILS_ENV
+        value: production
+      - key: RAILS_LOG_TO_STDOUT
+        value: "true"
+      - key: RAILS_SERVE_STATIC_FILES
+        value: "true"
+      - key: SECRET_KEY_BASE
+        generateValue: true
+      - key: ADMIN_EMAIL
+        value: admin@example.com
+      - key: ADMIN_PASSWORD
+        sync: false          # 値はダッシュボードで各自設定
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rhythm-raiders-db
+          property: connectionString

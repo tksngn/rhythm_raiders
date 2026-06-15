@@ -67,7 +67,7 @@ group :test do
   gem 'webdrivers'
 end
 group :production do
-  gem 'mysql2'
+  gem 'pg'
   gem 'aws-sdk-s3'
 end
 

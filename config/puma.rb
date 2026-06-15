@@ -42,10 +42,13 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
-bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
-rails_root = Dir.pwd
-# 本番環境のみデーモン起動
-if Rails.env.production?
+# 旧AWS(nginx+unixソケット+デーモン)用の設定は、`PUMA_DAEMONIZE` が指定された
+# 場合のみ有効化する。Render/Docker など PaaS では TCP の `$PORT`(上記)を
+# フォアグラウンドで待ち受ける必要があるため、既定ではこのブロックを実行しない
+# (daemonize するとコンテナの主プロセスが即終了してしまう)。
+if Rails.env.production? && ENV['PUMA_DAEMONIZE'].present?
+  rails_root = Dir.pwd
+  bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
   pidfile File.join(rails_root, 'tmp', 'pids', 'puma.pid')
   state_path File.join(rails_root, 'tmp', 'pids', 'puma.state')
   stdout_redirect(
@@ -53,6 +56,5 @@ if Rails.env.production?
     File.join(rails_root, 'log', 'puma-error.log'),
     true
   )
-  # デーモン
   daemonize
 end

@@ -1,0 +1,15 @@
+# 本番Dockerビルドに不要・有害なもの（ローカルのLinux外ビルド成果物を持ち込まない）
+.git
+.gitignore
+node_modules
+tmp
+log
+storage
+public/packs
+public/assets
+db/*.sqlite3
+.env
+config/master.key
+*.code-workspace
+Dockerfile.demo
+docker-compose.demo.yml
