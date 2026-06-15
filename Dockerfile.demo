@@ -1,0 +1,25 @@
+# Local demo image for Rhythm_raiders (Rails 6.1 / Ruby 3.1.2 / Webpacker 5)
+# NOTE: ローカルでデモを動かすための補助ファイル。アプリ本体のコードではない。
+FROM ruby:3.1.2-bullseye
+
+# System deps + Node 16 + Yarn.
+# Webpacker 5 (webpack 4) は Node 16 が安定。libvips は image_processing 用、libsqlite3-dev は sqlite3 gem 用。
+RUN apt-get update -qq \
+ && apt-get install -y --no-install-recommends curl gnupg build-essential libsqlite3-dev libvips \
+ && curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+ && apt-get install -y --no-install-recommends nodejs \
+ && npm install -g yarn \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN gem install bundler -v 2.3.19
+
+WORKDIR /app
+
+# NOTE: Node 16 は webpack 4 をそのまま動かせるため --openssl-legacy-provider は不要
+#       (むしろ Node 16 には当該フラグが無く NODE_OPTIONS に入れると node が起動失敗する)
+ENV RAILS_ENV=development \
+    NODE_ENV=development \
+    BUNDLE_WITHOUT=production \
+    DISABLE_SPRING=1
+
+EXPOSE 3000

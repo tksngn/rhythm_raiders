@@ -1,0 +1,23 @@
+# Local demo runner for Rhythm_raiders
+#   起動:  docker compose -f docker-compose.demo.yml up --build
+#   URL :  http://localhost:3100   (Wave-Nexus が 3000/3001/3002/8000 を使うため 3100 に割当して混同回避)
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.demo
+    image: rhythm-raiders-demo
+    ports:
+      - "3100:3000"
+    volumes:
+      - .:/app
+      - bundle:/usr/local/bundle
+      - node_modules:/app/node_modules
+    environment:
+      RAILS_ENV: development
+      DISABLE_SPRING: "1"
+    command: bash /app/bin/docker-demo.sh
+
+volumes:
+  bundle:
+  node_modules:
