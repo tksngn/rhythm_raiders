@@ -22,7 +22,7 @@ services:
       - key: SECRET_KEY_BASE
         generateValue: true
       - key: ADMIN_EMAIL
-        value: admin@example.com
+        value: raiders@masters.com
       - key: ADMIN_PASSWORD
         sync: false          # 値はダッシュボードで各自設定
       - key: DATABASE_URL
