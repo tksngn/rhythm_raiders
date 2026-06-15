@@ -39,25 +39,26 @@ Test03 = Member.find_or_create_by!(email: "test3@example.com") do |member|
   member.is_privacy_policy_accepted = true
 end
 
-CreatedTrack.find_or_create_by!(music_title: "Fantasy World") do |created_track|
-  created_track.music_genre = "Orchestra"
-  created_track.music_file = File.open("#{Rails.root}/db/fixtures/fantasy-background-music-110593.mp3")
-  created_track.creater_word = "壮大な感じの素晴らしい曲に仕上がりました！"
-  created_track.member = Test01
-end
+# NOTE: 本番(Render)では CarrierWave のアップロードファイル(public/uploads)が
+#       デプロイ/再起動ごとに消える一方、DBレコードは Postgres に永続する。
+#       find_or_create_by! のブロックはレコード作成時しか走らないため、
+#       2回目以降の起動ではファイルだけ欠落して 404 になる。
+#       これを避けるため、レコードの有無に関わらず毎回ファイルを登録し直す。
+seed_tracks = [
+  { title: "Fantasy World",      genre: "Orchestra",    file: "fantasy-background-music-110593.mp3", word: "壮大な感じの素晴らしい曲に仕上がりました！", member: Test01 },
+  { title: "Medieval Cityscape", genre: "Medieval BGM", file: "field.mp3",                            word: "中世の街並みを表現できるいい曲になりました！", member: Test02 },
+  { title: "Turmoil of Battle",  genre: "Battle BGM",   file: "worldsend.mp3",                        word: "激しい戦いの火蓋が切って落とされました！",     member: Test03 },
+]
 
-CreatedTrack.find_or_create_by!(music_title: "Medieval Cityscape") do |created_track|
-  created_track.music_genre = "Medieval BGM"
-  created_track.music_file = File.open("#{Rails.root}/db/fixtures/field.mp3")
-  created_track.creater_word = "中世の街並みを表現できるいい曲になりました！"
-  created_track.member = Test02
-end
-
-CreatedTrack.find_or_create_by!(music_title: "Turmoil of Battle") do |created_track|
-  created_track.music_genre = "Battle BGM"
-  created_track.music_file = File.open("#{Rails.root}/db/fixtures/worldsend.mp3")
-  created_track.creater_word = "激しい戦いの火蓋が切って落とされました！"
-  created_track.member = Test03
+seed_tracks.each do |t|
+  created_track = CreatedTrack.find_or_initialize_by(music_title: t[:title])
+  created_track.music_genre  = t[:genre]
+  created_track.creater_word = t[:word]
+  created_track.member       = t[:member]
+  File.open("#{Rails.root}/db/fixtures/#{t[:file]}") do |f|
+    created_track.music_file = f
+  end
+  created_track.save!
 end
 
 puts "seedの実行が完了しました"
