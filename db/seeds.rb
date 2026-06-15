@@ -55,10 +55,10 @@ seed_tracks.each do |t|
   created_track.music_genre  = t[:genre]
   created_track.creater_word = t[:word]
   created_track.member       = t[:member]
-  File.open("#{Rails.root}/db/fixtures/#{t[:file]}") do |f|
-    created_track.music_file = f
-  end
+  # save! までファイルを開いたままにする（ブロックで閉じるとアップロードに失敗しうる）
+  created_track.music_file = File.open("#{Rails.root}/db/fixtures/#{t[:file]}")
   created_track.save!
+  puts "  track seeded: #{created_track.music_title} -> #{created_track.music_file.url}"
 end
 
 puts "seedの実行が完了しました"
