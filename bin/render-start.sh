@@ -3,6 +3,10 @@
 # NOTE: LF改行必須（.gitattributes の bin/* text eol=lf で保証）。
 set -e
 
+# puma が pidfile(tmp/pids/server.pid)を書けるようディレクトリを用意
+# (.dockerignore で tmp を除外しているためイメージには無い)
+mkdir -p tmp/pids
+
 # DB を作成しスキーマ反映（既存なら未適用マイグレーションのみ）
 bundle exec rails db:prepare
 # デモデータ投入（find_or_create_by! なので冪等）
