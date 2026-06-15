@@ -76,6 +76,7 @@ docker compose -f docker-compose.demo.yml down
 |---|---|---|
 | 会員 | test1@example.com | password01 |
 
+※ 上記はローカル動作確認用のデモアカウントです。
 ※ 管理者アカウントは `.env` の `ADMIN_EMAIL` / `ADMIN_PASSWORD` で設定します（値は各自の環境で管理）。
 
 ​
