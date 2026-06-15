@@ -39,6 +39,14 @@ Test03 = Member.find_or_create_by!(email: "test3@example.com") do |member|
   member.is_privacy_policy_accepted = true
 end
 
+# NOTE: ActiveStorage の profile_image も同じ罠にかかる。
+#       Member#get_profile_image は未添付時に no_image.jpg を添付するが、
+#       blob記録は Postgres に永続し実ファイル(storage/)は再起動で消えるため、
+#       古い添付が残ると 404 になる。起動毎に purge して作り直させる。
+Member.find_each do |m|
+  m.profile_image.purge if m.profile_image.attached?
+end
+
 # NOTE: 本番(Render)では CarrierWave のアップロードファイル(public/uploads)が
 #       デプロイ/再起動ごとに消える一方、DBレコードは Postgres に永続する。
 #       find_or_create_by! のブロックはレコード作成時しか走らないため、
