@@ -75,7 +75,8 @@ docker compose -f docker-compose.demo.yml down
 | 区分 | メールアドレス | パスワード |
 |---|---|---|
 | 会員 | test1@example.com | password01 |
-| 管理者 | admin@example.com | password |
+
+※ 管理者アカウントは `.env` の `ADMIN_EMAIL` / `ADMIN_PASSWORD` で設定します（値は各自の環境で管理）。
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 使用素材
