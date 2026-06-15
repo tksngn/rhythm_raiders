@@ -46,9 +46,11 @@ plugin :tmp_restart
 # 場合のみ有効化する。Render/Docker など PaaS では TCP の `$PORT`(上記)を
 # フォアグラウンドで待ち受ける必要があるため、既定ではこのブロックを実行しない
 # (daemonize するとコンテナの主プロセスが即終了してしまう)。
-if Rails.env.production? && ENV['PUMA_DAEMONIZE'].present?
+# NOTE: `bundle exec puma -C config/puma.rb` で起動する場合、この設定ファイルは
+#       Rails ロード前に評価されるため `Rails` 定数は使えない。ENV と Dir.pwd で判定する。
+if ENV.fetch("RAILS_ENV", "development") == "production" && ENV['PUMA_DAEMONIZE'].present?
   rails_root = Dir.pwd
-  bind "unix://#{Rails.root}/tmp/sockets/puma.sock"
+  bind "unix://#{rails_root}/tmp/sockets/puma.sock"
   pidfile File.join(rails_root, 'tmp', 'pids', 'puma.pid')
   state_path File.join(rails_root, 'tmp', 'pids', 'puma.state')
   stdout_redirect(
