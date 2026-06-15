@@ -47,8 +47,9 @@ plugin :tmp_restart
 # フォアグラウンドで待ち受ける必要があるため、既定ではこのブロックを実行しない
 # (daemonize するとコンテナの主プロセスが即終了してしまう)。
 # NOTE: `bundle exec puma -C config/puma.rb` で起動する場合、この設定ファイルは
-#       Rails ロード前に評価されるため `Rails` 定数は使えない。ENV と Dir.pwd で判定する。
-if ENV.fetch("RAILS_ENV", "development") == "production" && ENV['PUMA_DAEMONIZE'].present?
+#       Rails(ActiveSupport)ロード前に評価される。`Rails` 定数や `present?` など
+#       Rails拡張は使えないため、素のRuby(ENV / Dir.pwd / nil判定)で書く。
+if ENV.fetch("RAILS_ENV", "development") == "production" && !ENV["PUMA_DAEMONIZE"].to_s.empty?
   rails_root = Dir.pwd
   bind "unix://#{rails_root}/tmp/sockets/puma.sock"
   pidfile File.join(rails_root, 'tmp', 'pids', 'puma.pid')
