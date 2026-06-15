@@ -47,12 +47,35 @@
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 開発環境
-- OS：Linux(CentOS)
-- 言語：HTML,CSS,JavaScript,Ruby,SQL
-- フレームワーク：Ruby on Rails
-- JSライブラリ：jQuery,Howler.js(音楽プレーヤー機能用)
-- IDE：Cloud9
-- クラウドストレージ：Amazon S3(音楽ファイルのストレージ用)
+- 言語：HTML,CSS,JavaScript,Ruby(3.1.2),SQL
+- フレームワーク：Ruby on Rails(6.1.7)
+- DB：開発 SQLite3 ／ 本番 MySQL
+- 認証：Devise（Member / Admin）＋ ActiveAdmin
+- フロント：Webpacker 5 + webpack 4（Bootstrap / jQuery / turbolinks）
+- JSライブラリ：wavesurfer.js / audiojs（音楽プレーヤー機能用）
+- ファイル保存：ActiveStorage（開発 ローカルDisk ／ 本番 Amazon S3）
+- アプリサーバ：Puma
+
+​
+## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> ローカルでの起動（Docker）
+Ruby を直接インストールせず、Docker だけで起動できます（Windows / Mac / Linux 共通）。
+
+```bash
+# 起動（初回はイメージbuild + gem/yarn install で数分かかります）
+docker compose -f docker-compose.demo.yml up --build
+
+# 停止
+docker compose -f docker-compose.demo.yml down
+```
+
+- アクセスURL：http://localhost:3100
+- 初回起動時に master.key の生成・DB作成・seed投入まで自動で行われます。
+
+#### ログイン情報（seedデータ）
+| 区分 | メールアドレス | パスワード |
+|---|---|---|
+| 会員 | test1@example.com | password01 |
+| 管理者 | admin@example.com | password |
 
 ​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 使用素材
