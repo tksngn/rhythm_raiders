@@ -1,109 +1,99 @@
-<div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; background: url(<%= asset_path 'yuheng-ouyang-P6XgsKAB8xI-unsplash.jpg' %>) no-repeat center center fixed; -webkit-background-size: cover; -moz-background-size: cover; -o-background-size: cover; background-size: cover;">
-  <div class="container-fluid">
-    <div class="col-md-12">
-      <div class="text-center">
-        <div class="mt-2">
-          <h1 style="color: #f23f23; text-shadow: -1px 0 gray, 0 1px gray, 1px 0 gray, 0 -1px gray;">ーMusic Detailー</h1>
+<div class="track-show">
+  <div class="track-show__inner">
+    <h1 class="track-show__title">Music <span>Detail</span></h1>
+
+    <div class="track-show__grid">
+      <!-- 左: 楽曲 & 制作者情報 + プレーヤー + コメント投稿 -->
+      <section class="ts-card">
+        <h2 class="ts-heading">Music &amp; Creator</h2>
+
+        <div class="ts-creator">
+          <div class="ts-avatar">
+            <%= image_tag @created_track.member.get_profile_image(100, 100) %>
+          </div>
+          <div class="ts-creator__meta">
+            <p class="ts-creator__name">Creator : <%= @created_track.member.creater_name %></p>
+            <div class="ts-stats">
+              <%= link_to follows_member_customer_path(current_member), class: "ts-stat" do %>
+                Follow <strong><%= @following_members&.count.to_i %></strong>
+              <% end %>
+              <%= link_to followers_member_customer_path(current_member), class: "ts-stat" do %>
+                Follower <strong><%= @follower_members.count %></strong>
+              <% end %>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-6">
-          <h5 class="text-center m-1" style="color: orange; text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">ーMusic & Creater Informationー<h5>
-          <h6 class="text-center ml-2 m-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red; border: 1px solid grey;">Creater Name : <%= @created_track.member.creater_name %></h6>
-          <div class="mb-2" style="display: flex; justify-content: space-between;">
-            <div class="track-info">
-              <div class="card-text" style="font-size: calc(8px + 1vw);">Music Title : <%= @created_track.music_title %></div>
-              <div class="card-text" style="font-size: calc(7px + 1vw);">Music Genre : <%= @created_track.music_genre %></div>
-              <div class="card-text" style="font-size: calc(7px + 1vw);">A word from the creater : <p><%= @created_track.creater_word %></p></div>
+
+        <div class="ts-info">
+          <p><span>Title</span><%= @created_track.music_title %></p>
+          <p><span>Genre</span><%= @created_track.music_genre %></p>
+          <p><span>Word</span><%= @created_track.creater_word %></p>
+        </div>
+
+        <div class="ts-actions">
+          <% if @created_track && @created_track.liked_by?(current_member) %>
+            <%= link_to member_created_track_likes_path(@created_track), method: :delete, class: "ts-btn ts-btn--like is-liked" do %>
+              ♥ <%= @created_track.likes.count %>
+            <% end %>
+          <% else %>
+            <%= link_to member_created_track_likes_path(@created_track), method: :post, class: "ts-btn ts-btn--like" do %>
+              ♡ <%= @created_track.likes.count %>
+            <% end %>
+          <% end %>
+
+          <% if member_signed_in? && @member == current_member %>
+            <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "ts-btn" %>
+          <% end %>
+          <% unless @created_track.member == current_member %>
+            <% if current_member.following?(@created_track.member) %>
+              <%= link_to 'フォロー外す', member_customer_relationships_path(@created_track.member), method: :delete, class: "ts-btn ts-btn--danger" %>
+            <% else %>
+              <%= link_to 'フォローする', member_customer_relationships_path(@created_track.member), method: :POST, class: "ts-btn ts-btn--primary" %>
+            <% end %>
+          <% end %>
+        </div>
+
+        <div class="ts-player">
+          <p class="ts-note">ーwaveが表示されない時はリロードしてくださいー</p>
+          <%= render "layouts/player", created_track: @created_track, is_guest: false %>
+        </div>
+
+        <div class="ts-comment-form">
+          <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
+            <%= render 'layouts/errors', model: @post_comment %>
+            <%= f.text_area :comment, rows: '4', placeholder: "コメントをここに", class: "ts-textarea" %>
+            <div class="text-center mt-2">
+              <%= f.submit "Post a Comment", class: "ts-btn ts-btn--primary ts-btn--block" %>
             </div>
-            <div class="mb-2 mt-3">
-              <%= image_tag @created_track.member.get_profile_image(100,100) %>
-            </div>
-          </div>
-          <div class="mb-2" style="display: flex; justify-content: space-between;">
-            <div class="offset-md-2">
-              <%= link_to follows_member_customer_path(current_member) do %>
-                <h6>Follow : <%= @following_members&.count.to_i %></h6>
-              <% end %>
-            </div>
-            <div class="mr-5">
-              <%= link_to followers_member_customer_path(current_member) do %>
-                <h6>Follower : <%= @follower_members.count %></h6>
-              <% end %>
-            </div>
-          </div>
-          <div class="mb-2" style="display: flex; justify-content: space-between;">
-            <div class="offset-md-2">
-              <% if @created_track && @created_track.liked_by?(current_member) %>
-                <%= link_to member_created_track_likes_path(@created_track), method: :delete do %>
-                  ♥<%= @created_track.likes.count %> いいね
-                <% end %>
-              <% else %>
-                <%= link_to member_created_track_likes_path(@created_track), method: :post do %>
-                  ♡<%= @created_track.likes.count %> いいね
-                <% end %>
-              <% end %>
-            </div>
-            <div class="mr-5">
-              <% if member_signed_in? && @member == current_member %>
-                <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "btn-sm btn-success" %>
-              <% end %>
-              <% unless @created_track.member == current_member %>
-                <% if current_member.following?(@created_track.member) %>
-                  <%= link_to 'フォロー外す', member_customer_relationships_path(@created_track.member), method: :delete, class: "btn-sm btn-danger" %>
-                <% else %>
-                  <%= link_to 'フォローする', member_customer_relationships_path(@created_track.member), method: :POST, class:"btn-sm btn-success" %>
-                <% end %>
-              <% end %>
-            </div>
-          </div>
-          <div class="mb-5">
-            <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
-              <%= render 'layouts/errors', model: @post_comment %>
-              <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに", style: "width: 100%" %>
-              <div class="text-center mt-2">
-                <%= f.submit "Post a Comment", class: 'btn btn-primary' %>
+          <% end %>
+        </div>
+      </section>
+
+      <!-- 右: コメント一覧 -->
+      <section class="ts-card">
+        <h2 class="ts-heading">Comments <span><%= @created_track.post_comments.count %></span></h2>
+
+        <% if @created_track %>
+          <% @created_track.post_comments.each do |post_comment| %>
+            <div class="ts-comment">
+              <div class="ts-comment__head">
+                <span class="ts-comment__name"><%= post_comment.member.creater_name %></span>
+                <span class="ts-comment__date"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
               </div>
-            <% end %>
-          </div>
-          <div class="text-center mb-2" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;">
-            ーwaveが表示されない時はリロードしてくださいー
-          </div>
-          <div class="mb-2">
-            <%= render "layouts/player", created_track: @created_track, is_guest: false %>
-          </div>
-          <div class="text-center">
-            <%= image_tag("rhythm_raiders_logo2.jpg") %>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="mb-2">
-            <div style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;">
-              コメント件数：<%= @created_track.post_comments.count %>
+              <div class="ts-comment__body"><%= simple_format(post_comment.comment_content) %></div>
+              <%= link_to "削除",
+                          member_created_track_post_comment_path(post_comment.created_track, post_comment),
+                          method: :delete,
+                          data: { confirm: "削除してもよろしいですか？" },
+                          class: "ts-comment__del" %>
             </div>
-            <% if @created_track %>
-              <% @created_track.post_comments.each do |post_comment| %>
-                <div class="border">
-                  <p class="m-0"><%= post_comment.created_track.music_title %></p>
-                  <p class="m-0"><%= post_comment.member.creater_name %></p>
-                  <p class="m-0"><%= post_comment.created_at.strftime('%Y/%m/%d') %></p>
-                  <%= simple_format(post_comment.comment_content) %>
-                  <%= link_to "Comment Delete",
-                              member_created_track_post_comment_path(post_comment.created_track, post_comment),
-                              method: :delete,
-                              data: {confirm: "削除してもよろしいですか？"}
-                  %>
-                </div>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="text-center">
-            <%= link_to "Music Index", member_created_tracks_path, class:"btn-sm btn-success" %>
-          </div>
+          <% end %>
+        <% end %>
+
+        <div class="text-center mt-3">
+          <%= link_to "♪ Music Index", member_created_tracks_path, class: "ts-btn ts-btn--primary" %>
         </div>
-      </div>
+      </section>
     </div>
   </div>
 </div>
