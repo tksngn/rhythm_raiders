@@ -245,19 +245,29 @@ a {
 /* ===== Top page (member_top) — dark + neon redesign ===== */
 $neon: #00ffcc;
 
-.member_top {
+.member_top,
+.member_login {
   position: relative;
   overflow: hidden;
   padding: 40px 16px;
 }
 
 /* 背景画像の上に暗いグラデーションを重ねてガラスカードを引き立てる */
-.member_top::before {
+.member_top::before,
+.member_login::before {
   content: "";
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at 50% 28%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.88));
   z-index: 0;
+}
+
+/* サインアップは項目が多く縦に長いのでページスクロールを許可 */
+.auth-signup {
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  align-items: flex-start;
 }
 
 /* 旧 .member_top > * { margin-bottom:50px; font-size:25px } を打ち消す */
@@ -501,6 +511,77 @@ input[type="submit"].auth-submit {
 
 .auth-tagline {
   font-size: 0.95rem;
+}
+
+.auth-card--wide {
+  max-width: 560px;
+}
+
+.auth-input--file {
+  padding: 9px 12px;
+  font-size: 0.85rem;
+}
+
+.auth-field__legend {
+  font-size: 0.78rem;
+  font-style: normal;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-radio {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-style: normal;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+
+  input[type="radio"] { transform: scale(1.2); }
+}
+
+/* 折りたたみ式の利用規約 */
+.auth-terms {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+
+  summary {
+    padding: 12px 16px;
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 700;
+    color: $neon;
+    list-style: none;
+    user-select: none;
+
+    &::-webkit-details-marker { display: none; }
+    &::after { content: " ▼"; font-size: 0.7em; opacity: 0.7; }
+  }
+
+  &[open] summary::after { content: " ▲"; }
+}
+
+.auth-terms__body {
+  padding: 4px 18px 16px;
+  max-height: 240px;
+  overflow-y: auto;
+  text-align: left;
+
+  h4 { color: #fff; font-style: normal; margin: 12px 0 6px; }
+
+  p {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    font-style: normal;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: none;
+    margin: 0 0 8px;
+  }
 }
 
 @media (max-width: 480px) {
