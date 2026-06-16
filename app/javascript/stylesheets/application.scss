@@ -258,7 +258,7 @@ $neon: #00ffcc;
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 28%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.88));
+  background: radial-gradient(circle at 50% 28%, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62));
   z-index: 0;
 }
 
@@ -595,12 +595,12 @@ input[type="submit"].auth-submit {
   text-align: left;
 }
 
-/* 背景の上に暗いオーバーレイ */
+/* 背景の上に暗いオーバーレイ（背景画像が透ける程度に薄め） */
 .tracks-page::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.93));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.72));
   z-index: 0;
 }
 
@@ -849,7 +849,7 @@ input[type="submit"].auth-submit {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.92));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72));
   z-index: 0;
 }
 
@@ -936,7 +936,7 @@ $violet: #b06cff;
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.93));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.74));
   z-index: 0;
 }
 
@@ -1200,7 +1200,13 @@ input[type="submit"].ts-btn--primary {
   position: relative;
   min-height: 100vh;
   padding: 36px 16px 60px;
-  background: radial-gradient(circle at 50% 0%, rgba(0, 255, 204, 0.07), transparent 55%), #0a0c0e;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.78)),
+    url('../images/dragoon.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 .mypage__inner {
