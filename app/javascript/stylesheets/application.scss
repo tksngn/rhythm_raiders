@@ -1195,6 +1195,213 @@ input[type="submit"].ts-btn--primary {
   .track-show__grid { grid-template-columns: 1fr; }
 }
 
+/* ===== マイページ (mypage) — ダーク+ネオン(ティール) glass ===== */
+.mypage {
+  position: relative;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 255, 204, 0.07), transparent 55%), #0a0c0e;
+}
+
+.mypage__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.mypage__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+  align-items: start;
+}
+
+.mypage__col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mp-card {
+  padding: 22px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.mp-heading {
+  margin: 0 0 16px;
+  text-align: center;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: #fff;
+  text-shadow: none;
+
+  span { color: $neon; text-shadow: 0 0 12px rgba(0, 255, 204, 0.6); }
+}
+
+/* プロフィール */
+.mp-card--profile { text-align: center; }
+
+.mp-avatar img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 204, 0.6);
+  box-shadow: 0 0 18px rgba(0, 255, 204, 0.4);
+}
+
+.mp-name {
+  margin: 12px 0 2px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  text-shadow: none;
+}
+
+.mp-creator {
+  margin: 0;
+  font-style: normal;
+  color: $neon;
+  text-shadow: none;
+}
+
+/* My Tracks */
+.mp-track {
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.mp-track__title {
+  margin: 0 0 4px;
+  font-size: 1.05rem;
+
+  a { color: $neon; text-shadow: 0 0 8px rgba(0, 255, 204, 0.4); }
+}
+
+.mp-track__meta,
+.mp-track__word {
+  margin: 0 0 2px;
+  font-style: normal;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+  text-shadow: none;
+}
+
+.mp-track__actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.mp-link {
+  font-style: normal;
+  font-size: 0.8rem;
+  color: #9be7dd;
+  text-shadow: none;
+
+  &:hover { color: $neon; }
+}
+
+.mp-link--danger {
+  color: #ff9aa7;
+  &:hover { color: #ff5e62; }
+}
+
+/* Follow / Follower */
+.mp-stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.mp-stat {
+  flex: 1;
+  max-width: 160px;
+  padding: 12px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  text-align: center;
+  font-style: normal;
+  color: #cdeee8;
+  text-shadow: none;
+  transition: 0.2s;
+
+  strong { display: block; font-size: 1.5rem; color: $neon; }
+  &:hover { background: rgba(0, 255, 204, 0.12); transform: translateY(-2px); }
+}
+
+/* Good Sound */
+.mp-like {
+  padding: 8px 6px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  font-style: normal;
+  color: #d7fff8;
+
+  a { color: #d7fff8; text-shadow: none; &:hover { color: $neon; } }
+}
+
+/* Information ナビ */
+.mp-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mp-navlink {
+  display: block;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 255, 204, 0.3);
+  background: rgba(255, 255, 255, 0.05);
+  color: #d7fff8;
+  font-style: normal;
+  font-weight: 700;
+  text-shadow: none;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s, color 0.2s;
+
+  &:hover {
+    color: #04201b;
+    background: linear-gradient(135deg, #00ffcc, #00bfa5);
+    box-shadow: 0 0 16px rgba(0, 255, 204, 0.5);
+    transform: translateY(-2px);
+  }
+}
+
+.mp-navlink--accent {
+  color: #04201b;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+  border: none;
+}
+
+.mp-empty {
+  margin: 0;
+  text-align: center;
+  font-style: normal;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .mypage__grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }

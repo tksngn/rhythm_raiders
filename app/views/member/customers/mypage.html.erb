@@ -1,112 +1,95 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-6">
-      <div class="text-center">
-        <%= image_tag("rhythm_raiders_logo2.jpg") %>
-      </div>
-      <!-- mypage section -->
-      <div class="card mt-2 mb-3">
-        <div class="card-body">
-          <h3 class="text-center" style="color: #f23f23;">ーMyPageー</h3>
-          <h5 class="text-center" style="color: orange;"><%= @member.name %></h5>
-          <h6 class="text-center" style="color: orange;">( <%= @member.creater_name %> )</h6>
-          <%= image_tag @member.get_profile_image(100,100), class: "d-block mx-auto" %>
-        </div>
-      </div>
-      <!--Mytrackes Section-->
-      <div class="card">
-        <div class="card-body">
-          <h3 class="text-center" style="color: #f23f23;">ーMyTracksー</h3>
-          <% @member.created_tracks.each do |created_track| %>
-            <div class="text-center">
-              <h4>
-                <%= link_to member_created_track_path(created_track.id) do %>
-                  <%= created_track.music_title %>
-                <% end %>
-              </h4>
-            </div>
-            <div class="text-center m-0">
-              Music Genre : <%= created_track.music_genre %>
-            </div>
-            <div class="text-center m-0">
-              Creater Name：<%= created_track.member.creater_name %>
-            </div>
-            <div class="text-center m-0">
-              A word from the creater：<%= created_track.creater_word %>
-            </div>
-            <div class="text-center mt-1">
-              <%= link_to "#{created_track.post_comments.count} Comment", member_created_track_path(created_track.id) %>
-              　|
-              <%= link_to "Track Delete",
-                  member_created_track_path(created_track.id),
-                  method: :delete,
-                  data: {confirm: "削除してもよろしいですか？"}
-              %>
-            </div>
-          <% end %>
-        </div>
-      </div>
+<div class="mypage">
+  <div class="mypage__inner">
+    <div class="hero-logo">
+      <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders") %>
     </div>
-    <div class="col-md-6">
-      <!-- follow/follwer Section-->
-      <div class="card mt-2 mb-3">
-        <div class="card-body">
-           <h3 class="text-center" style="color: #f23f23;">ーFollow/Followerー</h3>
-           <p class="text-center">
-              Follower: <%= link_to @follower_members.count, followers_member_customer_path(current_member) %>
-           </p>
-           <p class="text-center">
-              Following: <%= link_to @following_members.count, follows_member_customer_path(current_member) %>
-           </p>
-        </div>
-      </div>
-      <!-- Good Section-->
-      <div class="card mb-3">
-        <div class="card-body">
-          <h3 class="text-center" style="color: #f23f23;">ーGood Soundー</h3>
-          <div class="text-center">
-            <div>
-              <% @member.likes.each do |like| %>
-                <div>
-                  <%= link_to like.created_track.music_title, member_created_track_path(like.created_track) %>
+
+    <div class="mypage__grid">
+      <div class="mypage__col">
+        <!-- Profile -->
+        <section class="mp-card mp-card--profile">
+          <h3 class="mp-heading">My <span>Page</span></h3>
+          <div class="mp-avatar">
+            <%= image_tag @member.get_profile_image(120, 120) %>
+          </div>
+          <p class="mp-name"><%= @member.name %></p>
+          <p class="mp-creator">( <%= @member.creater_name %> )</p>
+        </section>
+
+        <!-- My Tracks -->
+        <section class="mp-card">
+          <h3 class="mp-heading">My <span>Tracks</span></h3>
+          <% if @member.created_tracks.any? %>
+            <% @member.created_tracks.each do |created_track| %>
+              <div class="mp-track">
+                <h4 class="mp-track__title">
+                  <%= link_to created_track.music_title, member_created_track_path(created_track.id) %>
+                </h4>
+                <p class="mp-track__meta">Genre : <%= created_track.music_genre %></p>
+                <p class="mp-track__word"><%= created_track.creater_word %></p>
+                <div class="mp-track__actions">
+                  <%= link_to "#{created_track.post_comments.count} Comments", member_created_track_path(created_track.id), class: "mp-link" %>
+                  <%= link_to "Delete",
+                      member_created_track_path(created_track.id),
+                      method: :delete,
+                      data: { confirm: "削除してもよろしいですか？" },
+                      class: "mp-link mp-link--danger" %>
                 </div>
-              <% end %>
-            </div>
-          </div>
-        </div>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="mp-empty">まだ投稿がありません。</p>
+          <% end %>
+        </section>
       </div>
-      <!-- Information Section-->
-      <div class="card mt-3" style="background-image: url(<%= asset_path "dragoon.jpg" %>); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-        <div class="card-body">
-          <h3 class="text-center" style="color: #f23f23; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;">
-            ーInformationー
-          </h3>
-          <div class="text-center">
-            <%= link_to "Music Index", member_created_tracks_path %>
+
+      <div class="mypage__col">
+        <!-- Follow / Follower -->
+        <section class="mp-card">
+          <h3 class="mp-heading">Follow / <span>Follower</span></h3>
+          <div class="mp-stats">
+            <%= link_to followers_member_customer_path(current_member), class: "mp-stat" do %>
+              <strong><%= @follower_members.count %></strong> Follower
+            <% end %>
+            <%= link_to follows_member_customer_path(current_member), class: "mp-stat" do %>
+              <strong><%= @following_members.count %></strong> Following
+            <% end %>
           </div>
-          <div class="text-center">
-            <%= link_to "Home", member_top_path %>
-          </div>
-          <div class="text-center">
-            <%= link_to "About", "/homes/about" %>
-          </div>
-          <div class="text-center">
-            <%= link_to "Edit & Post music", new_member_created_track_path %>
-          </div>
-          <div class="nav-item text-center">
-            <%= link_to notifications_path, class: "nav-link" do %>
+        </section>
+
+        <!-- Good Sound -->
+        <section class="mp-card">
+          <h3 class="mp-heading">Good <span>Sound</span></h3>
+          <% if @member.likes.any? %>
+            <% @member.likes.each do |like| %>
+              <div class="mp-like">
+                ♥ <%= link_to like.created_track.music_title, member_created_track_path(like.created_track) %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="mp-empty">いいねした楽曲がありません。</p>
+          <% end %>
+        </section>
+
+        <!-- Information -->
+        <section class="mp-card">
+          <h3 class="mp-heading"><span>Information</span></h3>
+          <nav class="mp-nav">
+            <%= link_to "♪ Music Index", member_created_tracks_path, class: "mp-navlink" %>
+            <%= link_to "Home", member_top_path, class: "mp-navlink" %>
+            <%= link_to "About", "/homes/about", class: "mp-navlink" %>
+            <%= link_to "Edit & Post music", new_member_created_track_path, class: "mp-navlink mp-navlink--accent" %>
+            <%= link_to notifications_path, class: "mp-navlink" do %>
               <% if current_member.notifications.where(checked: false).exists? %>
                 <i class="fa-sharp fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
               <% else %>
                 <i class="fa-sharp fa-solid fa-bell"></i>
               <% end %>
-                通知一覧
+              通知一覧
             <% end %>
-          </div>
-        </div>
+          </nav>
+        </section>
       </div>
     </div>
   </div>
 </div>
-
-
