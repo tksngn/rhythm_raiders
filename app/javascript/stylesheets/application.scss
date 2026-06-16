@@ -586,8 +586,8 @@ input[type="submit"].auth-submit {
   }
 }
 
-/* ===== 楽曲一覧 (member-index) — dark + neon ===== */
-.member-index {
+/* ===== 楽曲一覧 (member-index / guest-index 共通 = .tracks-page) — dark + neon ===== */
+.tracks-page {
   position: relative;
   overflow-x: hidden;
   min-height: 100vh;
@@ -596,7 +596,7 @@ input[type="submit"].auth-submit {
 }
 
 /* 背景の上に暗いオーバーレイ */
-.member-index::before {
+.tracks-page::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -605,7 +605,7 @@ input[type="submit"].auth-submit {
 }
 
 /* 中身を中央寄せ・幅制限し、オーバーレイより前面に */
-.member-index > .container-fluid {
+.tracks-page > .container-fluid {
   position: relative;
   z-index: 1;
   max-width: 920px;
@@ -613,14 +613,15 @@ input[type="submit"].auth-submit {
 }
 
 /* ナビをネオンのピルボタンに */
-.member-index .navbar {
+.tracks-page .navbar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
 }
 
-.member-index .navbar .button {
+.tracks-page .navbar .button,
+.tracks-page .text-center > .button {
   margin: 0;
   padding: 8px 18px;
   border-radius: 999px;
@@ -640,7 +641,7 @@ input[type="submit"].auth-submit {
 }
 
 /* 検索フォーム */
-.member-index form input[type="text"] {
+.tracks-page form input[type="text"] {
   padding: 10px 16px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -652,7 +653,7 @@ input[type="submit"].auth-submit {
   &:focus { border-color: $neon; box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.18); }
 }
 
-.member-index form input[type="submit"] {
+.tracks-page form input[type="submit"] {
   margin-left: 8px;
   padding: 10px 22px;
   border: none;
@@ -664,7 +665,7 @@ input[type="submit"].auth-submit {
 }
 
 /* 並び替えリンク */
-.member-index .text-right a {
+.tracks-page .text-right a {
   color: #9be7dd;
   font-style: normal;
 
@@ -672,12 +673,12 @@ input[type="submit"].auth-submit {
 }
 
 /* 楽曲カードをガラス化（旧オレンジ/黒グラデを上書き） */
-.member-index .card {
+.tracks-page .card {
   background: transparent !important;
   border: none;
 }
 
-.member-index .track-card {
+.tracks-page .track-card {
   padding: 16px;
   border-radius: 16px;
   border: 1px solid rgba(0, 255, 204, 0.22);
@@ -687,7 +688,7 @@ input[type="submit"].auth-submit {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
-.member-index .track-info {
+.tracks-page .track-info {
   background: transparent;
   border-radius: 0;
   padding: 0;
@@ -704,7 +705,7 @@ input[type="submit"].auth-submit {
 }
 
 /* いいねボタンをネオン基調に */
-.member-index .like-button {
+.tracks-page .like-button {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(0, 255, 204, 0.4);
   color: #d7fff8;
@@ -718,11 +719,120 @@ input[type="submit"].auth-submit {
 }
 
 /* ページネーション */
-.member-index .pagination {
+.tracks-page .pagination {
   position: relative;
   z-index: 1;
 
   a, span { color: #cdeee8; }
+}
+
+/* ===== 楽曲一覧の「動き」 — イコライザー & カードの登場/ホバー ===== */
+
+/* タイトル下の動くイコライザー（音量バー） */
+.tracks-page .eq-bars {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 5px;
+  height: 36px;
+  margin: 4px 0 16px;
+}
+
+.tracks-page .eq-bars span {
+  width: 5px;
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #00ffcc, #00bfa5);
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+  transform-origin: bottom;
+  animation: eq-bounce 1s ease-in-out infinite;
+}
+
+.tracks-page .eq-bars span:nth-child(1) { animation-delay: -0.9s; }
+.tracks-page .eq-bars span:nth-child(2) { animation-delay: -0.2s; }
+.tracks-page .eq-bars span:nth-child(3) { animation-delay: -0.6s; }
+.tracks-page .eq-bars span:nth-child(4) { animation-delay: -0.1s; }
+.tracks-page .eq-bars span:nth-child(5) { animation-delay: -0.8s; }
+.tracks-page .eq-bars span:nth-child(6) { animation-delay: -0.4s; }
+.tracks-page .eq-bars span:nth-child(7) { animation-delay: -0.7s; }
+.tracks-page .eq-bars span:nth-child(8) { animation-delay: -0.3s; }
+.tracks-page .eq-bars span:nth-child(9) { animation-delay: -0.5s; }
+
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.25); opacity: 0.7; }
+  50%      { transform: scaleY(1);    opacity: 1; }
+}
+
+/* カードの登場アニメ（フェードイン＋せり上がり、最初の数枚をstagger） */
+.tracks-page .card {
+  animation: card-in 0.55s ease both;
+}
+.tracks-page .card:nth-child(1) { animation-delay: 0.02s; }
+.tracks-page .card:nth-child(2) { animation-delay: 0.10s; }
+.tracks-page .card:nth-child(3) { animation-delay: 0.18s; }
+.tracks-page .card:nth-child(4) { animation-delay: 0.26s; }
+.tracks-page .card:nth-child(5) { animation-delay: 0.34s; }
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ホバーで浮き上がり＆ネオン発光 */
+.tracks-page .track-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.tracks-page .track-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 255, 204, 0.6);
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.55), 0 0 24px rgba(0, 255, 204, 0.28);
+}
+
+/* 動きを抑える設定のユーザーには停止 */
+@media (prefers-reduced-motion: reduce) {
+  .tracks-page .eq-bars span,
+  .tracks-page .card {
+    animation: none;
+  }
+}
+
+/* ===== 楽曲一覧の配置・余白の調整（全体バランス） ===== */
+
+/* ヘッダー各ブロックの縦リズムを均一に */
+.tracks-page .navbar { margin-bottom: 18px; }
+.tracks-page .container-fluid form { margin-bottom: 14px; }
+
+/* 検索入力を程よい幅に（フル幅で間延びさせない） */
+.tracks-page .container-fluid form input[type="text"] {
+  width: min(360px, 72%);
+}
+
+/* 並び替えリンクの行に余白 */
+.tracks-page .col-md-12 > .mb-1 > .text-right {
+  margin-bottom: 14px;
+}
+
+/* カード同士の間隔を広げて呼吸を作る */
+.tracks-page .card.mb-2 {
+  margin-bottom: 20px !important;
+}
+
+/* カード内：情報とプレーヤーの縦位置を揃え、折返し時の縦間隔を確保 */
+.tracks-page .track-card > .row {
+  align-items: center;
+  row-gap: 14px;
+}
+
+/* いいねは行全体を使い、カードの右端にきれいに揃える */
+.tracks-page .track-card .col-md-8.mt-1 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+/* 情報テキストの行間を整えて読みやすく */
+.tracks-page .track-info .card-text {
+  line-height: 1.55;
+  margin-bottom: 2px;
 }
 
 @media (max-width: 480px) {
