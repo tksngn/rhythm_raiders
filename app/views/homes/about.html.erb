@@ -1,78 +1,53 @@
 <div class="about">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="mb-2">
-          <div class="text-center">
-            <%= link_to root_path do %>
-              <%= image_tag("rhythm_raiders_logo2.jpg") %>
-            <% end %>
-          </div>
-          <div class="mt-2 mb-2">
-            <div class="text-center">
-              <h1 style="color: orange;">§ Site Overview §<h1>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-2">
-          <div class="text-center">
-            <h5 style="color: orange;">§ 主な利用シーン §</h5>
-          </div>
-        </div>
-        <div>
-          <p class="text-break">
-            ・新曲の投稿：制作者が新しい作品を投稿し、音楽コミュニティと共有する時。<br>
-            ・音楽の探索：メンバーが新しい音楽を探し、自分の音楽に対する情熱を充実させたい時。<br>
-            ・フィードバックの交換：制作者とファンが意見や感想を交換し、互いの視点を深める時。<br>
-            ・コミュニティ参加：同じ興味を持つメンバーと交流し、音楽に対する共通の理解を深める時。
-          </p>
-        </div>
-        <div class="mt-2 mb-1">
-          <div class="text-center">
-            <h5 style="color: orange;">§ 著作権に関する方針 §</h5>
-          </div>
-        </div>
-        <div>
-          <p class="text-break">
-            このサイトは、著作権に配慮した形で運営されます。具体的には、以下のような方向性を持っています。<br>
-              ・著作権の尊重: すでにゲームで使用されている楽曲の共有は基本的に避けます。これは、著作権者の許可なく楽曲を共有することが法的な問題を引き起こす可能性があるためです。また、著作権者が本来得られる利益（音楽の購入、サブスクリプションでの聴取など）が失われることを防ぎます。<br>
-              ・オリジナル音楽の推奨: サイトは、制作者が自身のオリジナル作品を共有する場として機能します。これにより、制作者は自身の音楽を広め、フィードバックを得ることができます。また、ファンは新しい音楽を発見し、お気に入りの制作者とつながることができます。<br>
-              ・著作権フリー音楽の共有: ゲームに関連する著作権フリーの音楽を共有することも可能です。これにより、ゲーム開発者は新しいプロジェクトのために音楽を探すことができます。<br>
-            以上の方向性により、「Rhythm RAIDERS」は法的な問題を避けつつ、ゲーム音楽制作者とファンが安全に交流できる場を提供します。私たちは、全てのがこのサイトを通じて音楽とゲームへの情熱を共有できることを願っています。
-          </p>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="mb-2">
-          <div class="text-center">
-            <h style="color: orange;">§ Key Usage Seenarios §</h4>
-          </div>
-        </div>
-        <div>
-          <p class="text-break">
-            ・New Song Submission: When creators post new works to share with the music community.<br>
-            ・Music Discovery: When users want to enrich their passion for music by finding new songs.<br>
-            ・Feedback Exchange: When creators and fans exchange opinions and deepen their perspectives.<br>
-            ・Community Participation: When users with the same interests interact and deepen their understanding of music.
-          </p>
-        </div>
-        <div class="mt-2 mb-1">
-          <div class="text-center">
-            <h4 style="color: orange;">§ Copyright Policy §</h4>
-          </div>
-        </div>
-        <div>
-          <p class="text-break">
-            This site operates with respect for copyright. Specifically, it has the following directions<br>
-              ・Respect for Copyright: We generally avoid sharing songs already used in games. This prevents potential legal issues and loss of profits for copyright holders.<br>
-              ・Promotion of Original Music: The site serves as a platform for creators to share their original works, allowing them to spread their music and receive feedback. Fans can discover new music and connect with their favorite creators.<br>
-              ・Sharing of Copyright-Free Music: It’s possible to share copyright-free music related to games. This allows game developers to find music for new projects.<br>
-            With these directions, ‘Rhythm RAIDERS’ provides a safe space for game music creators and fans to interact while avoiding legal issues. We hope all users can share their passion for music and games through this site.
-          </p>
-        </div>
-      </div>
+  <div class="about-inner">
+    <div class="hero-logo">
+      <%= link_to root_path do %>
+        <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders") %>
+      <% end %>
     </div>
+
+    <h1 class="about-title">§ Site <span>Overview</span> §</h1>
+
+    <div class="about-grid">
+      <section class="about-card">
+        <h3 class="about-heading">§ 主な利用シーン §</h3>
+        <p>
+          ・新曲の投稿：制作者が新しい作品を投稿し、音楽コミュニティと共有する時。<br>
+          ・音楽の探索：メンバーが新しい音楽を探し、自分の音楽に対する情熱を充実させたい時。<br>
+          ・フィードバックの交換：制作者とファンが意見や感想を交換し、互いの視点を深める時。<br>
+          ・コミュニティ参加：同じ興味を持つメンバーと交流し、音楽に対する共通の理解を深める時。
+        </p>
+
+        <h3 class="about-heading">§ 著作権に関する方針 §</h3>
+        <p>
+          このサイトは、著作権に配慮した形で運営されます。具体的には、以下のような方向性を持っています。<br>
+          ・著作権の尊重: すでにゲームで使用されている楽曲の共有は基本的に避けます。著作権者の許可なく楽曲を共有することによる法的な問題や、著作権者が本来得られる利益の損失を防ぐためです。<br>
+          ・オリジナル音楽の推奨: 制作者が自身のオリジナル作品を共有する場として機能します。制作者は音楽を広めフィードバックを得られ、ファンは新しい音楽を発見してお気に入りの制作者とつながれます。<br>
+          ・著作権フリー音楽の共有: ゲームに関連する著作権フリーの音楽も共有できます。ゲーム開発者が新しいプロジェクトのために音楽を探せます。<br>
+          以上の方向性により、「Rhythm RAIDERS」は法的な問題を避けつつ、ゲーム音楽制作者とファンが安全に交流できる場を提供します。
+        </p>
+      </section>
+
+      <section class="about-card">
+        <h3 class="about-heading">§ Key Usage Scenarios §</h3>
+        <p>
+          ・New Song Submission: When creators post new works to share with the music community.<br>
+          ・Music Discovery: When users want to enrich their passion for music by finding new songs.<br>
+          ・Feedback Exchange: When creators and fans exchange opinions and deepen their perspectives.<br>
+          ・Community Participation: When users with the same interests interact and deepen their understanding of music.
+        </p>
+
+        <h3 class="about-heading">§ Copyright Policy §</h3>
+        <p>
+          This site operates with respect for copyright. Specifically, it has the following directions:<br>
+          ・Respect for Copyright: We generally avoid sharing songs already used in games. This prevents potential legal issues and loss of profits for copyright holders.<br>
+          ・Promotion of Original Music: The site lets creators share their original works, spread their music and receive feedback. Fans can discover new music and connect with their favorite creators.<br>
+          ・Sharing of Copyright-Free Music: Copyright-free music related to games can be shared, so game developers can find music for new projects.<br>
+          With these directions, "Rhythm RAIDERS" provides a safe space for game music creators and fans to interact while avoiding legal issues.
+        </p>
+      </section>
+    </div>
+
+    <%= link_to "← Back to Top", root_path, class: "neon-btn neon-btn--ghost hero-logout" %>
   </div>
 </div>

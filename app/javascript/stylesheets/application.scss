@@ -835,6 +835,88 @@ input[type="submit"].auth-submit {
   margin-bottom: 2px;
 }
 
+/* ===== About 画面 — dark + neon の glass カード ===== */
+.about {
+  position: relative;
+  display: block;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding: 40px 16px 60px;
+  flex-direction: column;
+}
+
+.about::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.92));
+  z-index: 0;
+}
+
+.about-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.about-title {
+  margin: 0;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: none;
+
+  span { color: $neon; text-shadow: 0 0 14px rgba(0, 255, 204, 0.7); }
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.about-card {
+  padding: 24px 26px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  text-align: left;
+}
+
+.about-heading {
+  margin: 0 0 10px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: $neon;
+  text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+
+  &:not(:first-child) { margin-top: 22px; }
+}
+
+.about-card p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.8;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: none;
+}
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }
