@@ -262,12 +262,14 @@ $neon: #00ffcc;
   z-index: 0;
 }
 
-/* サインアップは項目が多く縦に長いのでページスクロールを許可 */
+/* サインアップは項目が多く縦に長いのでページスクロールを許可。
+   横は中央寄せのまま(align-items:center)、縦だけ先頭揃え(justify-content)にする。 */
 .auth-signup {
   height: auto;
   min-height: 100vh;
   overflow: visible;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 /* 旧 .member_top > * { margin-bottom:50px; font-size:25px } を打ち消す */
