@@ -416,6 +416,11 @@ input[type="submit"].hero-search__btn {
   text-shadow: none;
 }
 
+/* 説明文の下に独立配置するログアウトはコンパクトに中央寄せ */
+.hero-logout {
+  padding: 9px 28px;
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }

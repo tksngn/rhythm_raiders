@@ -19,12 +19,13 @@
       <%= link_to "Log In", member_session_path, class: "neon-btn" %>
       <%= link_to "About", "/homes/about", class: "neon-btn" %>
       <%= link_to "♪ Music Index", member_created_tracks_path, class: "neon-btn neon-btn--primary" %>
-      <%= link_to "Log Out", destroy_member_session_path, method: :delete, class: "neon-btn neon-btn--ghost" %>
     </nav>
 
     <p class="hero-desc">
       「Rhythm RAIDERS」はゲーム音楽制作者とファンをつなぐ投稿コミュニティサイトです。<br>
       A platform bridging game music composers and enthusiasts.
     </p>
+
+    <%= link_to "Log Out", destroy_member_session_path, method: :delete, class: "neon-btn neon-btn--ghost hero-logout" %>
   </div>
 </div>
