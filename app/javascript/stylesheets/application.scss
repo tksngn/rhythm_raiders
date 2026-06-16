@@ -284,13 +284,19 @@ $neon: #00ffcc;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
+.hero-logo {
+  display: flex;
+  justify-content: center;
+}
+
+/* ロゴ全体が見えるように円形クロップはせず、contain で表示してグローを付ける */
 .hero-logo img {
-  width: 112px;
-  height: 112px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 255, 204, 0.6);
-  box-shadow: 0 0 22px rgba(0, 255, 204, 0.35);
+  width: auto;
+  max-width: 220px;
+  max-height: 130px;
+  object-fit: contain;
+  border-radius: 14px;
+  filter: drop-shadow(0 0 16px rgba(0, 255, 204, 0.45));
 }
 
 .hero-tagline {
