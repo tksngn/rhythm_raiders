@@ -1,47 +1,30 @@
 <div class="member_top">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="mb-2">
-          <div class="text-center mt-3 mb-3">
-            <%= image_tag("rhythm_raiders_logo2.jpg") %>
-          </div>
-          <div class="text-center mt-3 mb-2">
-            <%= form_with(url: search_index_path, method: "get", local: true) do |form| %>
-              <%= form.text_field :keyword, placeholder: "Enter keyword" %>
-              <%= form.submit "検索" %>
-            <% end %>
-          </div>
-          <div class="text-center mt-3 mb-3">
-            <p>
-              <%= link_to "-Guest SignIn-", member_customers_guest_sign_in_path, method: :post %>
-              <br><br>
-              <%= link_to "-Sign Up-", new_member_registration_path %>
-              <br><br>
-              <%= link_to "-Log In-", member_session_path %>
-              <br><br>
-              <%= link_to "-Log Out-", destroy_member_session_path, method: :delete %>
-              <br><br>
-              <%= link_to "-Music Index-", member_created_tracks_path %>
-              <br><br>
-              <%= link_to "-About-", "/homes/about" %>
-            </p>
-          </div>
-          <div class="text-center mt-3 mb-3">
-            <p>
-              「Rhythm RAIDERS」はゲーム音楽制作者とファンをつなぐゲーム音楽投稿コミュニティサイトです。<br>
-              “Rhythm RAIDERS” is a platform that bridges game music composers and enthusiasts, serving as a hub for game music submissions and discussions.
-            </p>
-          </div>
-          <div class="text-center mt-3 mb-3">
-            <h4 class="m-1">
-              <strong style="color: #f23f23; text-shadow: -2px 0 black, 0 2px black, 2px 0 black, 0 -2px black;">
-                "Common throughout the world...It's Music"
-              </strong>
-            </h4>
-          </div>
-        </div>
-      </div>
+  <div class="hero-card">
+    <div class="hero-logo">
+      <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders") %>
     </div>
+
+    <p class="hero-tagline">
+      Common throughout the world&hellip; <span>It's Music</span>
+    </p>
+
+    <%= form_with(url: search_index_path, method: "get", local: true, class: "hero-search") do |form| %>
+      <%= form.text_field :keyword, placeholder: "Search tracks…", class: "hero-search__input" %>
+      <%= form.submit "Search", class: "hero-search__btn" %>
+    <% end %>
+
+    <nav class="hero-nav">
+      <%= link_to "Guest Sign In", member_customers_guest_sign_in_path, method: :post, class: "neon-btn" %>
+      <%= link_to "Sign Up", new_member_registration_path, class: "neon-btn" %>
+      <%= link_to "Log In", member_session_path, class: "neon-btn" %>
+      <%= link_to "About", "/homes/about", class: "neon-btn" %>
+      <%= link_to "♪ Music Index", member_created_tracks_path, class: "neon-btn neon-btn--primary" %>
+      <%= link_to "Log Out", destroy_member_session_path, method: :delete, class: "neon-btn neon-btn--ghost" %>
+    </nav>
+
+    <p class="hero-desc">
+      「Rhythm RAIDERS」はゲーム音楽制作者とファンをつなぐ投稿コミュニティサイトです。<br>
+      A platform bridging game music composers and enthusiasts.
+    </p>
   </div>
 </div>

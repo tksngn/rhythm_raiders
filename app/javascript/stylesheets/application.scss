@@ -242,9 +242,177 @@ a {
   background-size: cover;
 }
 
+/* ===== Top page (member_top) — dark + neon redesign ===== */
+$neon: #00ffcc;
+
+.member_top {
+  position: relative;
+  overflow: hidden;
+  padding: 40px 16px;
+}
+
+/* 背景画像の上に暗いグラデーションを重ねてガラスカードを引き立てる */
+.member_top::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 28%, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.88));
+  z-index: 0;
+}
+
+/* 旧 .member_top > * { margin-bottom:50px; font-size:25px } を打ち消す */
 .member_top > * {
-  margin-bottom: 50px;
-  font-size: 25px;
+  margin-bottom: 0;
+  font-size: inherit;
+}
+
+.hero-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 460px;
+  padding: 38px 30px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  border-radius: 22px;
+  background: rgba(18, 20, 24, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 255, 204, 0.25);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+}
+
+.hero-logo img {
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 204, 0.6);
+  box-shadow: 0 0 22px rgba(0, 255, 204, 0.35);
+}
+
+.hero-tagline {
+  margin: 0;
+  text-align: center;
+  font-size: 1.15rem;
+  letter-spacing: 0.04em;
+  color: #e8fffb;
+  text-shadow: none;
+
+  span {
+    color: $neon;
+    text-shadow: 0 0 12px rgba(0, 255, 204, 0.7);
+  }
+}
+
+.hero-search {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+}
+
+.hero-search__input {
+  flex: 1;
+  min-width: 0;
+  padding: 11px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-style: normal;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &::placeholder { color: rgba(255, 255, 255, 0.5); }
+
+  &:focus {
+    border-color: $neon;
+    box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.18);
+  }
+}
+
+.hero-search__btn,
+input[type="submit"].hero-search__btn {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+  color: #04201b;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 18px rgba(0, 255, 204, 0.6);
+  }
+}
+
+.hero-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.neon-btn {
+  display: block;
+  padding: 12px 10px;
+  text-align: center;
+  border-radius: 12px;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.03em;
+  color: #d7fff8;
+  text-shadow: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 204, 0.35);
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s, color 0.2s;
+
+  &:hover {
+    color: #04201b;
+    background: linear-gradient(135deg, #00ffcc, #00bfa5);
+    box-shadow: 0 0 20px rgba(0, 255, 204, 0.55);
+    transform: translateY(-2px);
+  }
+}
+
+.neon-btn--primary {
+  grid-column: 1 / -1;
+  color: #04201b;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+  box-shadow: 0 0 16px rgba(0, 255, 204, 0.4);
+
+  &:hover { box-shadow: 0 0 26px rgba(0, 255, 204, 0.75); }
+}
+
+.neon-btn--ghost {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.7);
+
+  &:hover {
+    background: linear-gradient(135deg, #ff5e62, #ff2d2d);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 0 18px rgba(255, 60, 60, 0.5);
+  }
+}
+
+.hero-desc {
+  margin: 4px 0 0;
+  text-align: center;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.72);
+  text-shadow: none;
+}
+
+@media (max-width: 480px) {
+  .hero-card { padding: 28px 18px; gap: 18px; }
+  .hero-nav { grid-template-columns: 1fr; }
 }
 
 input[type="submit"] {
