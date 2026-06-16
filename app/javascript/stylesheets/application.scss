@@ -586,6 +586,145 @@ input[type="submit"].auth-submit {
   }
 }
 
+/* ===== 楽曲一覧 (member-index) — dark + neon ===== */
+.member-index {
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding: 24px 12px 60px;
+  text-align: left;
+}
+
+/* 背景の上に暗いオーバーレイ */
+.member-index::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.93));
+  z-index: 0;
+}
+
+/* 中身を中央寄せ・幅制限し、オーバーレイより前面に */
+.member-index > .container-fluid {
+  position: relative;
+  z-index: 1;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+/* ナビをネオンのピルボタンに */
+.member-index .navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.member-index .navbar .button {
+  margin: 0;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 204, 0.35);
+  color: #d7fff8;
+  font-style: normal;
+  font-weight: 700;
+  transition: transform 0.15s, box-shadow 0.2s, background 0.2s, color 0.2s;
+
+  &:hover {
+    color: #04201b;
+    background: linear-gradient(135deg, #00ffcc, #00bfa5);
+    box-shadow: 0 0 16px rgba(0, 255, 204, 0.5);
+    transform: translateY(-2px);
+  }
+}
+
+/* 検索フォーム */
+.member-index form input[type="text"] {
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.07);
+  color: #fff;
+  font-style: normal;
+  outline: none;
+
+  &:focus { border-color: $neon; box-shadow: 0 0 0 3px rgba(0, 255, 204, 0.18); }
+}
+
+.member-index form input[type="submit"] {
+  margin-left: 8px;
+  padding: 10px 22px;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+  color: #04201b;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 並び替えリンク */
+.member-index .text-right a {
+  color: #9be7dd;
+  font-style: normal;
+
+  &:hover { color: $neon; }
+}
+
+/* 楽曲カードをガラス化（旧オレンジ/黒グラデを上書き） */
+.member-index .card {
+  background: transparent !important;
+  border: none;
+}
+
+.member-index .track-card {
+  padding: 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.58);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.member-index .track-info {
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  width: auto;
+
+  h3 a {
+    color: $neon;
+    text-shadow: 0 0 10px rgba(0, 255, 204, 0.45);
+  }
+
+  .card-text {
+    color: rgba(255, 255, 255, 0.82);
+  }
+}
+
+/* いいねボタンをネオン基調に */
+.member-index .like-button {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 255, 204, 0.4);
+  color: #d7fff8;
+  border-radius: 999px;
+
+  &:hover {
+    background: linear-gradient(135deg, #00ffcc, #00bfa5);
+    color: #04201b;
+    box-shadow: 0 0 16px rgba(0, 255, 204, 0.5);
+  }
+}
+
+/* ページネーション */
+.member-index .pagination {
+  position: relative;
+  z-index: 1;
+
+  a, span { color: #cdeee8; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }
