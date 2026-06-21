@@ -42,9 +42,14 @@
     <main class="flex-grow-1">
       <%= yield %>
     </main>
-    <footer class="">
-      <div class="text-center">
-        <p class="m-0">©20231225 Rhythm RAIDERS</p>
+    <footer class="site-footer">
+      <div class="site-footer__inner">
+        <span class="site-footer__brand">Rhythm RAIDERS</span>
+        <nav class="site-footer__links">
+          <%= link_to "Home", root_path %>
+          <%= link_to "About", about_path %>
+        </nav>
+        <small class="site-footer__copy">© 2023 Rhythm RAIDERS</small>
       </div>
     </footer>
   </body>
