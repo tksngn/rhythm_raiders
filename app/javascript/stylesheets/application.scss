@@ -264,7 +264,10 @@ $neon: #00ffcc;
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at 50% 28%, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.62));
+  /* 中央は抜き気味→周辺を締めるビネット＋ティールの淡いティントで奥行きと一体感 */
+  background:
+    radial-gradient(120% 90% at 50% 16%, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.5) 55%, rgba(0, 0, 0, 0.8)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.10), rgba(0, 0, 0, 0) 50%);
   z-index: 0;
 }
 
@@ -601,12 +604,14 @@ input[type="submit"].auth-submit {
   text-align: left;
 }
 
-/* 背景の上に暗いオーバーレイ（背景画像が透ける程度に薄め） */
+/* 背景の上にビネット＋ティールティント（フラットな帯掛けを避け奥行きを出す） */
 .tracks-page::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.72));
+  background:
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.66) 55%, rgba(0, 0, 0, 0.82)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(0, 0, 0, 0) 45%);
   z-index: 0;
 }
 
@@ -855,7 +860,9 @@ input[type="submit"].auth-submit {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.72));
+  background:
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.64) 55%, rgba(0, 0, 0, 0.82)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(0, 0, 0, 0) 45%);
   z-index: 0;
 }
 
@@ -942,7 +949,10 @@ $violet: #b06cff;
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.74));
+  /* 詳細はテーマに合わせバイオレットのティント */
+  background:
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.66) 55%, rgba(0, 0, 0, 0.82)),
+    linear-gradient(135deg, rgba(176, 108, 255, 0.12), rgba(0, 0, 0, 0) 45%);
   z-index: 0;
 }
 
@@ -1212,7 +1222,8 @@ input[type="submit"].ts-btn--primary {
   min-height: 100vh;
   padding: 36px 16px 60px;
   background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.78)),
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.66) 55%, rgba(0, 0, 0, 0.84)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(0, 0, 0, 0) 45%),
     url('../images/dragoon.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -1476,7 +1487,8 @@ input[type="submit"].ts-btn--primary {
   min-height: 100vh;
   padding: 36px 16px 60px;
   background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.46), rgba(0, 0, 0, 0.68) 55%, rgba(0, 0, 0, 0.85)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(0, 0, 0, 0) 45%),
     url('../images/28350918_m.jpg');
   background-repeat: no-repeat;
   background-position: center;
@@ -1772,7 +1784,9 @@ input[type="submit"].ts-btn--primary {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.74));
+  background:
+    radial-gradient(125% 85% at 50% 0%, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.66) 55%, rgba(0, 0, 0, 0.82)),
+    linear-gradient(135deg, rgba(0, 255, 204, 0.08), rgba(0, 0, 0, 0) 45%);
   z-index: 0;
 }
 
