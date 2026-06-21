@@ -3,23 +3,38 @@
     <h1 class="ml-title">Profile <span>Edit</span></h1>
 
     <section class="form-card">
-      <%= form_with model: @created_track do |f| %>
-        <div class="auth-form">
-          <div class="auth-field">
-            <%= f.label :creater_name, "Creator Name" %>
-            <%= f.text_field :creater_name, autofocus: true, id: "inputName", placeholder: "Creator Name", class: "auth-input" %>
-          </div>
-          <div class="auth-field">
-            <%= f.label :profile_image, "Profile Image" %>
-            <%= attachment_image_tag @member, :profile_image, size: '70x70', fallback: "no_image.jpg", class: "profile-img mb-2" %>
-            <%= f.attachment_field :profile_image, class: "auth-input auth-input--file" %>
-          </div>
-          <div class="auth-field">
-            <%= f.label :profile, "Member Information" %>
-            <%= f.text_field :profile, class: "auth-input" %>
-          </div>
-          <%= f.submit 'Save Changes / 変更を保存', class: "neon-btn neon-btn--primary auth-submit" %>
+      <%= form_with model: @member, url: member_customer_path(@member), method: :patch, html: { class: "auth-form" } do |f| %>
+        <%= render 'layouts/errors', model: @member %>
+        <div class="auth-field">
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, class: "auth-input" %>
         </div>
+        <div class="auth-field">
+          <%= f.label :creater_name, "Creator Name" %>
+          <%= f.text_field :creater_name, autofocus: true, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :profile_image, "Profile Image" %>
+          <%= image_tag @member.get_profile_image(80, 80), class: "profile-img mb-2" %>
+          <%= f.file_field :profile_image, class: "auth-input auth-input--file" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :email, "Email" %>
+          <%= f.email_field :email, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :phone_number, "Phone Number" %>
+          <%= f.telephone_field :phone_number, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :gender, "Gender" %>
+          <%= f.select :gender, ['Male', 'Female', 'Non_binary'], {}, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :profile, "Member Information" %>
+          <%= f.text_area :profile, rows: 3, class: "auth-input", placeholder: "自己紹介・ひとこと" %>
+        </div>
+        <%= f.submit 'Save Changes / 変更を保存', class: "neon-btn neon-btn--primary auth-submit" %>
       <% end %>
     </section>
 
