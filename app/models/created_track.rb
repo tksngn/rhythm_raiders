@@ -17,7 +17,13 @@ class CreatedTrack < ApplicationRecord
   mount_uploader :music_file, AudiofileUploader
 
   def liked_by?(member)
-    member && likes.where(member_id: member.id).exists?
+    return false unless member
+    # likes が preload 済みなら追加クエリなしで判定（一覧のN+1回避）
+    if likes.loaded?
+      likes.any? { |like| like.member_id == member.id }
+    else
+      likes.where(member_id: member.id).exists?
+    end
   end
 
   # def member_tracks(member)

@@ -57,13 +57,13 @@
                         <% if created_track.liked_by?(current_member) %>
                           <div>
                             <%= link_to member_created_track_likes_path(created_track), method: :delete, class: "like-button" do %>
-                              ♥<%= created_track.likes.count %> いいね
+                              ♥<%= created_track.likes.size %> いいね
                             <% end %>
                           </div>
                         <% else %>
                           <div>
                             <%= link_to member_created_track_likes_path(created_track), method: :post, class: "like-button" do %>
-                              ♡<%= created_track.likes.count %> いいね
+                              ♡<%= created_track.likes.size %> いいね
                             <% end %>
                           </div>
                         <% end %>
