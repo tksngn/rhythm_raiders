@@ -26,8 +26,12 @@
       <% if @member.post_comments.any? %>
         <% @member.post_comments.each do |comment| %>
           <div class="admin-detail" style="border-bottom:1px solid rgba(20,40,50,0.12); padding:8px 0;">
-            <p><%= comment.comment_content %></p>
-            <%= link_to "削除", admin_post_comment_path(comment.created_track, comment), method: :delete, data: { confirm: "削除しても良いですか？" }, class: "admin-btn-ghost" %>
+            <% if comment.removed_by_admin? %>
+              <p style="opacity:0.6; font-style:italic;">（運営により削除済み）<%= comment.comment_content %></p>
+            <% else %>
+              <p><%= comment.comment_content %></p>
+              <%= link_to "削除", admin_post_comment_path(comment.created_track, comment), method: :delete, data: { confirm: "このコメントを運営として削除しますか？" }, class: "admin-btn-ghost" %>
+            <% end %>
           </div>
         <% end %>
       <% else %>

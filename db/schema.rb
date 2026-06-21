@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_12_04_162732) do
+ActiveRecord::Schema.define(version: 2026_06_21_030000) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 2023_12_04_162732) do
     t.string "comment_content", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "removed_by_admin", default: false, null: false
   end
 
   create_table "relationships", force: :cascade do |t|

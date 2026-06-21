@@ -79,7 +79,11 @@
                 <span class="ts-comment__name"><%= post_comment.member.creater_name %></span>
                 <span class="ts-comment__date"><%= post_comment.created_at.strftime('%Y/%m/%d') %></span>
               </div>
-              <div class="ts-comment__body"><%= simple_format(post_comment.comment_content) %></div>
+              <% if post_comment.removed_by_admin? %>
+                <div class="ts-comment__body ts-comment__removed">このコメントはコミュニティガイドラインに基づき運営により削除されました。</div>
+              <% else %>
+                <div class="ts-comment__body"><%= simple_format(post_comment.comment_content) %></div>
+              <% end %>
               <%= link_to "削除",
                           member_created_track_post_comment_path(post_comment.created_track, post_comment),
                           method: :delete,
