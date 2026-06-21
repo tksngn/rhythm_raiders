@@ -1408,6 +1408,46 @@ input[type="submit"].ts-btn--primary {
   .mypage__grid { grid-template-columns: 1fr; }
 }
 
+/* ===== 楽曲投稿/会員編集フォーム (member-track-show) — dark + neon glass ===== */
+.member-track-show {
+  position: relative;
+  overflow-x: hidden;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+}
+
+.member-track-show::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.74));
+  z-index: 0;
+}
+
+.form-page__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+}
+
+.form-card {
+  width: 100%;
+  padding: 26px 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  .about-heading { text-align: center; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }

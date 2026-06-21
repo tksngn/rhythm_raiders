@@ -1,90 +1,67 @@
 <div class="member-track-show">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2">
-        <div class="mb-2">
-          <div class="text-left">
-            <%= image_tag("rhythm_raiders_logo1.jpg", class: "img-fluid") %>
-          </div>
-        </div>
-        <div class="text-center">
-          <div class="mt-5">
-            <%= link_to '退会する<br>Unsubscribe'.html_safe, unsubscribe_member_customers_path, class: "button2" %>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-10">
-        <div class="mt-2 mb-2">
-          <h3 style="color: #f23f23;">ーEdit Member Informationー</h3>
-          <%= form_with model: @member, url: member_customer_path(@member), method: :patch do |f| %>
-          <%= render 'layouts/errors', model: @member %>
-            <p class="word-wrap: break-word;">
-              <strong style="color: orange;">Name:</strong> <%= f.text_field :name %>
-            </p>
-            <p class="word-wrap: break-word;">
-              <strong style="color: orange;">CreaterName:</strong> <%= f.text_field :creater_name %>
-            </p>
-            <p><strong style="color: orange;">ProfileImage:</strong> <%= f.file_field :profile_image %></p>
-            <p class="word-wrap: break-word;">
-              <strong style="color: orange;">Email:</strong> <%= f.email_field :email %>
-            </p>
-            <p><strong style="color: orange;">PhoneNumber:</strong> <%= f.telephone_field :phone_number %></p>
-            <p><strong style="color: orange;">Gender:</strong> <%= f.select :gender, ['Male', 'Female', 'Non_binary'] %></p>
-            <div class="col-md-6 offset-md-6 mt-auto">
-              <div class="mb-2">
-                <div class="text-right">
-                  <%= f.submit "Member情報変更保存【Save Changes】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
+  <div class="form-page__inner">
+    <div class="hero-logo">
+      <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders") %>
     </div>
-    <div class="row">
-      <div class="col-md-10 offset-md-2">
-        <h3 style="color: #f23f23;">ーPost Music Informationー</h3>
-        <%= form_with model: [:member, @created_track] do |f| %>
-          <%= render 'layouts/errors', model: @created_track %>
-          <div class="m-1">
-            <strong style="color: orange">Music Title :</strong>
-            <%= f.text_field :music_title %>
-          </div>
-          <div class="m-1">
-            <strong style="color: orange">Music File :</strong>
-            <%= f.file_field :music_file %>
-          </div>
-          <div class="m-1">
-            <strong style="color: orange">Music Genre :</strong>
-            <%= f.text_field :music_genre %>
-          </div>
-          <div class="m-1">
-            <strong style="color: orange">Creater Word :</strong>
-            <%= f.text_area :creater_word %>
-          </div>
-          <div class="col-md-6 offset-md-6 mt-auto">
-            <div class="mb-2">
-              <div class="text-right">
-                <%= f.submit "楽曲を投稿する【Post Music】", class: "btn btn-primary", style: "width: 100%; white-space: normal; padding: 10px;" %>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+
+    <!-- 会員情報の編集 -->
+    <section class="form-card">
+      <h2 class="about-heading">§ Edit Member Information §</h2>
+      <%= form_with model: @member, url: member_customer_path(@member), method: :patch, html: { class: "auth-form" } do |f| %>
+        <%= render 'layouts/errors', model: @member %>
+        <div class="auth-field">
+          <%= f.label :name, "Name" %>
+          <%= f.text_field :name, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :creater_name, "Creator Name" %>
+          <%= f.text_field :creater_name, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :profile_image, "Profile Image" %>
+          <%= f.file_field :profile_image, class: "auth-input auth-input--file" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :email, "Email" %>
+          <%= f.email_field :email, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :phone_number, "Phone Number" %>
+          <%= f.telephone_field :phone_number, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :gender, "Gender" %>
+          <%= f.select :gender, ['Male', 'Female', 'Non_binary'], {}, class: "auth-input" %>
+        </div>
+        <%= f.submit "Save Changes / 変更を保存", class: "neon-btn neon-btn--primary auth-submit" %>
+      <% end %>
+    </section>
+
+    <!-- 楽曲投稿 -->
+    <section class="form-card">
+      <h2 class="about-heading">§ Post Music §</h2>
+      <%= form_with model: [:member, @created_track], html: { class: "auth-form" } do |f| %>
+        <%= render 'layouts/errors', model: @created_track %>
+        <div class="auth-field">
+          <%= f.label :music_title, "Music Title" %>
+          <%= f.text_field :music_title, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :music_file, "Music File" %>
+          <%= f.file_field :music_file, class: "auth-input auth-input--file" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :music_genre, "Music Genre" %>
+          <%= f.text_field :music_genre, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :creater_word, "Creator Word" %>
+          <%= f.text_area :creater_word, rows: 4, class: "auth-input" %>
+        </div>
+        <%= f.submit "Post Music / 楽曲を投稿", class: "neon-btn neon-btn--primary auth-submit" %>
+      <% end %>
+    </section>
+
+    <%= link_to "退会する / Unsubscribe", unsubscribe_member_customers_path, class: "neon-btn neon-btn--ghost hero-logout" %>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
