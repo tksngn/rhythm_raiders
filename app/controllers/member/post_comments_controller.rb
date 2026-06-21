@@ -14,10 +14,11 @@ class Member::PostCommentsController < ApplicationController
   end
 
   def destroy
+    # current_member のコメントだけを対象にしているので所有者チェックは不要
     comment = current_member.post_comments.find(params[:id])
-    redirect_to root_path and return unless comment.member = current_member
+    track_id = comment.created_track_id
     comment.destroy!
-    redirect_to member_created_track_path(comment.created_track_id)
+    redirect_to member_created_track_path(track_id)
   end
 
   private

@@ -41,8 +41,8 @@ class Admin::MembersController < ApplicationController
 
   def unban
     @member = Member.find(params[:id])
-    @member.update(active: true)
-    redirect_to admin_member_path(@member)
+    @member.update(is_active: true)
+    redirect_to admin_member_path(@member), notice: "利用停止を解除しました。"
   end
 
   private

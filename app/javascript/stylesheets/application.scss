@@ -1899,10 +1899,21 @@ input[type="submit"].ts-btn--primary {
   color: #16202a;
 }
 
+/* 横は中央、縦は上揃え（長文でも上が見切れずスクロールできるように） */
 .admin-page--center {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+}
+
+/* 管理画面のボタン行（複数ボタンを等間隔で中央寄せ） */
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
 }
 
 .admin-page__inner {

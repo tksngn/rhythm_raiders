@@ -2,15 +2,16 @@ class Member::LikesController < ApplicationController
 
   def create
     created_track = CreatedTrack.find(params[:created_track_id])
-    created_track.likes.create(member_id: current_member.id)
-    redirect_to request.referer
+    # 二重いいね防止（既にあれば作らない）
+    current_member.likes.find_or_create_by(created_track_id: created_track.id)
+    redirect_back fallback_location: root_path
   end
 
   def destroy
     created_track = CreatedTrack.find(params[:created_track_id])
-    redirect_to root_path and return unless created_track.member = current_member
-    current_member.likes.find_by(member_id: current_member.id, created_track_id: created_track.id).destroy
-    redirect_to request.referer
+    # いいねが見つからない場合(二重クリック等)でも nil.destroy で落ちないようにする
+    current_member.likes.find_by(created_track_id: created_track.id)&.destroy
+    redirect_back fallback_location: root_path
   end
 end
 
