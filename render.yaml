@@ -29,3 +29,14 @@ services:
         fromDatabase:
           name: rhythm-raiders-db
           property: connectionString
+      # Cloudflare R2（アップロード永続化）— 値はダッシュボードで設定
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: R2_ENDPOINT
+        sync: false
+      - key: R2_BUCKET
+        sync: false
+      - key: R2_PUBLIC_URL
+        sync: false

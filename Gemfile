@@ -69,6 +69,7 @@ end
 group :production do
   gem 'pg'
   gem 'aws-sdk-s3'
+  gem 'fog-aws' # CarrierWave(音源)をS3互換ストレージ(Cloudflare R2)に保存するため(carrierwave 3 + storage :fog)
 end
 
 group :development do

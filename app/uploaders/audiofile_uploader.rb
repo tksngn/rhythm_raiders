@@ -3,9 +3,12 @@ class AudiofileUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick
 
-  # Choose what kind of storage to use for this uploader:
-  storage :file
-  # storage :fog
+  # 本番かつ R2 設定がある時は S3互換(R2)へ(fog)、無ければローカルDiskへ保存
+  if Rails.env.production? && ENV['R2_ACCESS_KEY_ID'].present?
+    storage :fog
+  else
+    storage :file
+  end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:

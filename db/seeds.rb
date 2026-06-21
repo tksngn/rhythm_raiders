@@ -39,12 +39,19 @@ Test03 = Member.find_or_create_by!(email: "test3@example.com") do |member|
   member.is_privacy_policy_accepted = true
 end
 
-# NOTE: ActiveStorage の profile_image も同じ罠にかかる。
-#       Member#get_profile_image は未添付時に no_image.jpg を添付するが、
-#       blob記録は Postgres に永続し実ファイル(storage/)は再起動で消えるため、
-#       古い添付が残ると 404 になる。起動毎に purge して作り直させる。
+# プロフィール画像(ActiveStorage)の扱い:
+#  - R2(永続)使用時: 基本は purge しない（ユーザーがアップした画像を消さない）。
+#    ただし旧localストレージ時代の添付(service不一致)は実体が無く404になるので一度だけ掃除。
+#  - 非R2(ローカル/非永続)時: 実体が再起動で消えるため従来どおり毎回 purge して作り直す。
+using_r2 = Rails.env.production? && ENV['R2_ACCESS_KEY_ID'].present?
+current_service = ActiveStorage::Blob.service.name.to_s
 Member.find_each do |m|
-  m.profile_image.purge if m.profile_image.attached?
+  next unless m.profile_image.attached?
+  if !using_r2
+    m.profile_image.purge
+  elsif m.profile_image.blob.service_name.to_s != current_service
+    m.profile_image.purge
+  end
 end
 
 # NOTE: 本番(Render)では CarrierWave のアップロードファイル(public/uploads)が
