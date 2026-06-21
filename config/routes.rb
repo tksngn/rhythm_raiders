@@ -59,6 +59,7 @@ end
   post '/member/customers/guest_sign_in', to: 'member/customers#guest_sign_in'
   get 'member_top', to: 'homes#member_top'
   get 'homes/about', to: 'homes#about', as: 'about'
+  get 'homes/guidelines', to: 'homes#guidelines', as: 'guidelines'
   get 'search', to: 'search#index', as: 'search_index'
 
 end

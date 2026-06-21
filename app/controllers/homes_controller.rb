@@ -7,4 +7,8 @@ class HomesController < ApplicationController
   def about
 
   end
+
+  def guidelines
+
+  end
 end
