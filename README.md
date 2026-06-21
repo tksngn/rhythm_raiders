@@ -80,6 +80,25 @@ docker compose -f docker-compose.demo.yml down
 ※ 管理者アカウントは `.env` の `ADMIN_EMAIL` / `ADMIN_PASSWORD` で設定します（値は各自の環境で管理）。
 
 ​
+## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 公開サイト（本番）
+
+Render で公開中。無料枠のため初回アクセスは起動に30〜60秒かかることがあります。
+
+| 区分 | URL |
+|---|---|
+| トップ | https://rhythm-raiders.onrender.com |
+| 会員ログイン | https://rhythm-raiders.onrender.com/members/sign_in |
+| 管理ログイン | https://rhythm-raiders.onrender.com/admin/sign_in |
+
+#### ログイン情報
+| 区分 | メールアドレス | パスワード |
+|---|---|---|
+| 会員（デモ） | test1@example.com | password01 |
+| 管理者 | 環境変数 `ADMIN_EMAIL` | 環境変数 `ADMIN_PASSWORD`（非公開・Render側で管理） |
+
+> セキュリティのため、管理者の実パスワードは公開リポジトリには記載していません。値は Render のダッシュボード（Environment）で管理しています。
+
+​
 ## <img src="https://github.com/tksngn/rhythm_raiders/raw/main/app/assets/images/rhythm_raiders_logo1.jpg" alt="Rhythm Raiders Logo" width="30" height="30"> 使用素材
 フリー素材として以下を使用
 - pixabay (https://pixabay.com)
