@@ -1652,6 +1652,52 @@ input[type="submit"].ts-btn--primary {
   .member-list__grid { grid-template-columns: 1fr; }
 }
 
+/* ===== フラッシュメッセージ（右上トースト・自動フェード） ===== */
+.flash-stack {
+  position: fixed;
+  top: 70px;
+  right: 16px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: min(360px, 90vw);
+}
+
+.flash-message,
+.flash-message.flash-notice,
+.flash-message.flash-alert {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  width: auto;
+  padding: 14px 18px;
+  border-radius: 12px;
+  font-style: normal;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: none;
+  background: rgba(18, 20, 24, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+  border-left: 4px solid #00ffcc;
+  animation: toast-in 0.3s ease both, toast-out 0.5s ease 4s forwards;
+}
+
+.flash-message.flash-notice { border-left-color: #00ffcc; }
+.flash-message.flash-alert  { border-left-color: #ff5e62; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes toast-out {
+  to { opacity: 0; transform: translateX(24px); visibility: hidden; }
+}
+
 /* ===== 検索結果 (search_top) — 他ページと統一 ===== */
 .search_top {
   position: relative;
