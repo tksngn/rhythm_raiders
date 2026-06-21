@@ -1,63 +1,44 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="text-center">
-        <div class="mt-5">
-          <h1 class="m-1">
-            <strong style="color: #f23f23;">ーメンバー・楽曲情報詳細画面ー</strong>
-          </h1>
-        </div>
+<div class="member-list">
+  <div class="member-list__inner">
+    <h1 class="ml-title">Member <span>Profile</span></h1>
+
+    <section class="mp-card mp-card--profile" style="width:100%; max-width:520px;">
+      <div class="mp-avatar">
+        <%= image_tag @member.get_profile_image(120, 120) %>
       </div>
-      <div class="mb-3">
-        <div class="text-center">
-          <% if current_member != @member %>
-            <% if current_member.following?(@member) %>
-              <%= link_to 'フォロー外す', member_customer_relationships_path(@member), method: :delete, class: "btn-sm btn-danger" %>
-            <% else %>
-              <%= link_to 'フォローする', member_customer_relationships_path(@member), method: :post, class:"btn-sm btn-success" %>
-            <% end %>
+      <p class="mp-name"><%= @member.creater_name %></p>
+
+      <% if current_member != @member %>
+        <div class="ts-actions" style="justify-content:center; margin-top:12px;">
+          <% if current_member.following?(@member) %>
+            <%= link_to 'フォロー外す', member_customer_relationships_path(@member), method: :delete, class: "ts-btn ts-btn--danger" %>
+          <% else %>
+            <%= link_to 'フォローする', member_customer_relationships_path(@member), method: :post, class: "ts-btn ts-btn--primary" %>
           <% end %>
         </div>
-      </div>
-      <!-- メンバーの詳細 -->
-      <div class="mb-1">
-        <div class="text-center">
-          <h3 class="m-1">
-            <strong style="color: orange;">
-              <%= @member.creater_name %>
-            </strong>
-          </h3>
-        </div>
-      </div>
-      <div class="mb-1">
-        <div class="text-center">
-          <%= image_tag @member.get_profile_image(100,100) %>
-          <% if @created_track %>
-            <p class="m-0"><%= link_to "プロフィール編集", member_created_track_path(@created_track) %></p>
-          <% end %>
-        </div>
-      </div>
-      <!-- メンバーの投稿一覧 -->
-      <div class="mb-1">
-        <div class="text-center d-block">
-          <% @member.created_tracks.each do |created_track| %>
-            <div class="border mb-2">
-              <%= link_to member_created_track_path(created_track.id) do %>
-                <%= created_track.music_title %>
-              <% end %>
-              <p>Music Title：<%= created_track.music_title %></p>
-              <p>Music Genre : <%= created_track.music_genre %></p>
-              <p>A word from the creater：<%= created_track.creater_word %></p>
-              <p><%= link_to "#{created_track.post_comments.count} Comment", member_created_tracks_path(created_track.id) %></p>
+      <% end %>
+    </section>
+
+    <section class="mp-card" style="width:100%;">
+      <h3 class="mp-heading">Posted <span>Tracks</span></h3>
+      <% if @member.created_tracks.any? %>
+        <% @member.created_tracks.each do |created_track| %>
+          <div class="mp-track">
+            <h4 class="mp-track__title">
+              <%= link_to created_track.music_title, member_created_track_path(created_track.id) %>
+            </h4>
+            <p class="mp-track__meta">Genre : <%= created_track.music_genre %></p>
+            <p class="mp-track__word"><%= created_track.creater_word %></p>
+            <div class="mp-track__actions">
+              <%= link_to "#{created_track.post_comments.count} Comments", member_created_track_path(created_track.id), class: "mp-link" %>
             </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="mt-5">
-        <div class="text-center">
-          <%= link_to "Music Index", member_created_tracks_path, class:"btn-sm btn-success" %>
-        </div>
-      </div>
-    </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="mp-empty">まだ投稿がありません。</p>
+      <% end %>
+    </section>
+
+    <%= link_to "♪ Music Index", member_created_tracks_path, class: "neon-btn neon-btn--primary hero-logout" %>
   </div>
 </div>

@@ -1448,6 +1448,198 @@ input[type="submit"].ts-btn--primary {
   .about-heading { text-align: center; }
 }
 
+/* ===== メンバー一覧/プロフィール (member-list) — dark + neon ===== */
+.member-list {
+  position: relative;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)),
+    url('../images/28350918_m.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.member-list__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.ml-title {
+  margin: 0;
+  text-align: center;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-shadow: none;
+
+  span { color: $neon; text-shadow: 0 0 12px rgba(0, 255, 204, 0.6); }
+}
+
+.member-list__grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ml-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  text-shadow: none;
+  transition: transform 0.15s, box-shadow 0.2s, border-color 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    border-color: rgba(0, 255, 204, 0.55);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5), 0 0 18px rgba(0, 255, 204, 0.22);
+  }
+}
+
+.ml-card__avatar {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 255, 204, 0.55);
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.35);
+  flex-shrink: 0;
+}
+
+.ml-card__meta { min-width: 0; }
+
+.ml-card__name {
+  margin: 0 0 2px;
+  font-style: normal;
+  font-weight: 700;
+  color: $neon;
+}
+
+.ml-card__bio,
+.ml-card__count {
+  margin: 0;
+  font-style: normal;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== 通知一覧 (notif-page) ===== */
+.notif-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+  background: radial-gradient(circle at 50% 0%, rgba(0, 255, 204, 0.07), transparent 55%), #0a0c0e;
+}
+
+.notif-page__inner {
+  max-width: 680px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.notif-item {
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  text-align: left;
+
+  a { color: $neon; }
+  p { margin: 0; }
+}
+
+/* ===== 退会確認/完了 (unsubscribe / withdraw) ===== */
+.unsubscribe,
+.withdraw {
+  position: relative;
+}
+
+.unsubscribe::before,
+.withdraw::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.78));
+  z-index: 0;
+}
+
+.unsubscribe .content,
+.withdraw .content {
+  position: relative;
+  z-index: 1;
+  width: min(560px, 92%);
+  margin: 0;
+  padding: 30px 28px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 255, 204, 0.22);
+  background: rgba(20, 22, 26, 0.62);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+
+  img { max-width: 160px; height: auto; margin-bottom: 14px; filter: drop-shadow(0 0 14px rgba(0, 255, 204, 0.4)); }
+
+  h1 { color: #fff; text-shadow: none; }
+
+  p {
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.82);
+    text-shadow: none;
+  }
+}
+
+/* 退会系のボタン（Stay / Unsubscribe / Back） */
+.unsubscribe .button,
+.withdraw .button {
+  display: inline-block;
+  margin: 10px 6px 0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+  color: #04201b;
+  font-weight: 700;
+  border: none;
+}
+
+.unsubscribe .button2,
+.withdraw .button2 {
+  display: inline-block;
+  margin: 10px 6px 0;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff5e62, #ff2d2d);
+  color: #fff;
+  font-weight: 700;
+  border: none;
+}
+
+@media (max-width: 600px) {
+  .member-list__grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }

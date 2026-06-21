@@ -1,29 +1,26 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-      <div class="text-center">
-        <div class="mt-5">
-          <h1 class="m-1">
-            <strong style="color: #f23f23;">ーフォロー一覧ー</strong>
-          </h1>
-        </div>
-      </div>
-      <div class="mb-1">
-        <div class="text-center">
-          <% @members.each do |member| %>
-            <%= link_to member_customer_path(member) do %>
-              <p class="caption h4"><%= member.creater_name %></p>
-              <p class="m-1">
-                <%= image_tag member.get_profile_image(100, 100)%>
-                <h4 class="ml-5"><%= member.profile %></h4>
-              </p>
-              <div class="m-1">
-                <p class="caption"><%= "#{member.created_tracks.count} 投稿" %></p>
-              </div>
-            <% end %>
+<div class="member-list">
+  <div class="member-list__inner">
+    <h1 class="ml-title">Follow <span>List</span></h1>
+
+    <% if @members.any? %>
+      <div class="member-list__grid">
+        <% @members.each do |member| %>
+          <%= link_to member_customer_path(member), class: "ml-card" do %>
+            <%= image_tag member.get_profile_image(100, 100), class: "ml-card__avatar" %>
+            <div class="ml-card__meta">
+              <p class="ml-card__name"><%= member.creater_name %></p>
+              <% if member.profile.present? %>
+                <p class="ml-card__bio"><%= member.profile %></p>
+              <% end %>
+              <p class="ml-card__count"><%= member.created_tracks.count %> 投稿</p>
+            </div>
           <% end %>
-        </div>
+        <% end %>
       </div>
-    </div>
+    <% else %>
+      <p class="mp-empty">まだフォローしていません。</p>
+    <% end %>
+
+    <%= link_to "← Back to Mypage", mypage_member_customers_path, class: "neon-btn neon-btn--ghost hero-logout" %>
   </div>
 </div>
