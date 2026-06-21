@@ -35,6 +35,9 @@ RUN yarn install --frozen-lockfile
 # アプリ本体
 COPY . .
 
+# COPY . . で古い Gemfile.lock が上書きされるため、ここで再整合（gemは導入済みなので高速）
+RUN bundle install
+
 # アセットを事前コンパイル（Sprockets + Webpacker）。SECRET_KEY_BASE はビルド時のダミーでよい。
 RUN SECRET_KEY_BASE=dummy bundle exec rails assets:precompile
 
