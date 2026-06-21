@@ -1,10 +1,26 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Rhythm RAIDERS</title>
+    <% page_title = content_for?(:title) ? "#{yield(:title)} | Rhythm RAIDERS" : "Rhythm RAIDERS" %>
+    <% page_desc  = content_for?(:description) ? yield(:description) : "ゲーム音楽制作者とファンをつなぐ音楽投稿コミュニティ。オリジナルBGMを投稿・再生・共有しよう。" %>
+    <% ogp_image  = "#{request.base_url}#{image_path('rhythm_raiders_logo2.jpg')}" %>
+    <title><%= page_title %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="<%= page_desc %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+
+    <!-- OGP / Twitter Card（リンク共有時のプレビュー用） -->
+    <meta property="og:site_name" content="Rhythm RAIDERS">
+    <meta property="og:title" content="<%= page_title %>">
+    <meta property="og:description" content="<%= page_desc %>">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:image" content="<%= ogp_image %>">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="<%= page_title %>">
+    <meta name="twitter:description" content="<%= page_desc %>">
+    <meta name="twitter:image" content="<%= ogp_image %>">
     <script src="https://kit.fontawesome.com/d336be3f33.js" crossorigin="anonymous"></script>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
