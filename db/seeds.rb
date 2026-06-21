@@ -76,10 +76,21 @@ seed_tracks.each do |t|
     created_track.music_genre  = t[:genre]
     created_track.creater_word = t[:word]
     created_track.member       = t[:member]
-    # save! までファイルを開いたままにする（ブロックで閉じるとアップロードに失敗しうる）
-    created_track.music_file = File.open("#{Rails.root}/db/fixtures/#{t[:file]}")
+
+    # 永続ストレージ(S3/Supabase)使用時は既存添付を活かす。非永続(ローカル)は実体が
+    # 消えるので毎回貼り直す。未添付なら添付する。
+    if created_track.music_file.attached? && !using_r2
+      created_track.music_file.purge
+    end
+    unless created_track.music_file.attached?
+      created_track.music_file.attach(
+        io: File.open("#{Rails.root}/db/fixtures/#{t[:file]}"),
+        filename: t[:file],
+        content_type: "audio/mpeg"
+      )
+    end
     created_track.save!
-    puts "  track seeded: #{created_track.music_title} -> #{created_track.music_file.url}"
+    puts "  track seeded: #{created_track.music_title}"
   rescue => e
     # ストレージ設定ミス等で1曲の登録に失敗しても、起動全体は止めない
     puts "  [warn] track seed をスキップ (#{t[:title]}): #{e.class}: #{e.message}"

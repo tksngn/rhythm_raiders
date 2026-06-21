@@ -68,8 +68,7 @@ group :test do
 end
 group :production do
   gem 'pg'
-  gem 'aws-sdk-s3'
-  gem 'fog-aws' # CarrierWave(音源)をS3互換ストレージ(Cloudflare R2)に保存するため(carrierwave 3 + storage :fog)
+  gem 'aws-sdk-s3' # ActiveStorage の S3/Supabase 保存用
 end
 
 group :development do

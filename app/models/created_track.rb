@@ -4,17 +4,17 @@ class CreatedTrack < ApplicationRecord
   # validates :creater_name, presence: true
   validates :music_genre, presence: true
   validates :creater_word, presence: true
-  # validates :playback_duration, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :music_file, presence: true
-
-  # 他の属性（:music_title, :creater_name, :music_genre, :creater_word, :playback_duration, :music_file, :is_guest, :is_public）は既に存在すると仮定
-  # 30秒の試聴用音楽ファイル
-  # attribute :sample_music_file
 
   has_many :likes, dependent: :destroy
   has_many :post_comments, dependent: :destroy
 
-  mount_uploader :music_file, AudiofileUploader
+  # 音源は ActiveStorage(S3/Supabase or ローカル) で保存
+  has_one_attached :music_file
+  validate :music_file_required
+
+  def music_file_required
+    errors.add(:music_file, "を選択してください") unless music_file.attached?
+  end
 
   def liked_by?(member)
     return false unless member

@@ -35,7 +35,7 @@
       waveColor: "#00ffcc",
       cursorColor: "#ffffff",
       progressColor: "#b06cff",
-      url: "<%= j created_track.music_file.to_s %>",
+      url: "<%= j(created_track.music_file.attached? ? rails_storage_proxy_path(created_track.music_file) : '') %>",
       normalize: true,
       barHeight: 0.6,
       height: 64
