@@ -48,7 +48,7 @@
             <% if current_member.following?(@created_track.member) %>
               <%= link_to 'フォロー外す', member_customer_relationships_path(@created_track.member), method: :delete, class: "ts-btn ts-btn--danger" %>
             <% else %>
-              <%= link_to 'フォローする', member_customer_relationships_path(@created_track.member), method: :POST, class: "ts-btn ts-btn--primary" %>
+              <%= link_to 'フォローする', member_customer_relationships_path(@created_track.member), method: :post, class: "ts-btn ts-btn--primary" %>
             <% end %>
           <% end %>
         </div>
