@@ -1,0 +1,29 @@
+<header class="site-header">
+  <div class="site-header__inner">
+    <%= link_to root_path, class: "site-header__brand" do %>
+      <%= image_tag "rhythm_raiders_logo1.jpg", alt: "Rhythm Raiders", class: "site-header__logo" %>
+      <span>Rhythm RAIDERS</span>
+    <% end %>
+
+    <nav class="site-header__nav">
+      <% if member_signed_in? %>
+        <%= link_to "Tracks", member_created_tracks_path, class: "site-nav__link" %>
+        <%= link_to "Post", new_member_created_track_path, class: "site-nav__link" %>
+        <%= link_to "Mypage", mypage_member_customers_path, class: "site-nav__link" %>
+        <%= link_to "About", about_path, class: "site-nav__link" %>
+        <%= link_to notifications_path, class: "site-nav__bell", title: "通知" do %>
+          <% if current_member.notifications.where(checked: false).exists? %>
+            <i class="fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
+          <% else %>
+            <i class="fa-solid fa-bell"></i>
+          <% end %>
+        <% end %>
+        <%= link_to "Logout", destroy_member_session_path, method: :delete, class: "site-nav__link site-nav__link--ghost" %>
+      <% else %>
+        <%= link_to "About", about_path, class: "site-nav__link" %>
+        <%= link_to "Login", new_member_session_path, class: "site-nav__link" %>
+        <%= link_to "Sign Up", new_member_registration_path, class: "site-nav__link site-nav__link--accent" %>
+      <% end %>
+    </nav>
+  </div>
+</header>
