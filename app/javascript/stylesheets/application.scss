@@ -1879,6 +1879,151 @@ input[type="submit"].ts-btn--primary {
   .site-nav__link { padding: 6px 10px; font-size: 0.78rem; }
 }
 
+.site-nav__badge {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  color: #04201b;
+  background: linear-gradient(135deg, #00ffcc, #00bfa5);
+}
+
+/* ===== 管理画面 (admin-page) — ライト基調 + ティール（会員ダークの正反対） ===== */
+.admin-page {
+  position: relative;
+  min-height: 100vh;
+  padding: 36px 16px 60px;
+  background: linear-gradient(180deg, #eef4f5, #dde7ea);
+  color: #16202a;
+}
+
+.admin-page--center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-page__inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-title {
+  margin: 0;
+  text-align: center;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #16202a;
+  text-shadow: none;
+
+  span { color: #00a892; }
+}
+
+.admin-card {
+  padding: 22px 24px;
+  border-radius: 18px;
+  border: 1px solid rgba(0, 191, 165, 0.35);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 10px 30px rgba(20, 40, 50, 0.12);
+  color: #16202a;
+
+  h2, h3 { color: #16202a; text-shadow: none; }
+}
+
+.admin-auth {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.admin-logo { display: flex; justify-content: center; }
+.admin-logo img { max-width: 180px; height: auto; border-radius: 12px; }
+
+.admin-heading {
+  margin: 0 0 14px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #009e8e;
+  text-shadow: none;
+}
+
+/* admin内はライト用に auth-* を上書き */
+.admin-page .auth-title { color: #16202a; text-shadow: none; }
+.admin-page .auth-title span { color: #00a892; text-shadow: none; }
+.admin-page .auth-field label { color: rgba(20, 32, 42, 0.65); }
+.admin-page .auth-input {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  color: #16202a;
+
+  &::placeholder { color: rgba(20, 32, 42, 0.4); }
+  &:focus { border-color: #00bfa5; box-shadow: 0 0 0 3px rgba(0, 191, 165, 0.18); }
+}
+
+/* ライト用ゴーストボタン */
+.admin-btn-ghost {
+  display: inline-block;
+  padding: 9px 22px;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 700;
+  text-shadow: none;
+  color: #16202a;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+
+  &:hover { border-color: #00bfa5; color: #00a892; }
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(20, 40, 50, 0.12);
+    font-style: normal;
+    color: #28333d;
+    text-shadow: none;
+  }
+
+  th {
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: #009e8e;
+  }
+
+  a { color: #0b8f80; &:hover { color: #00a892; } }
+}
+
+.admin-detail p { margin: 0 0 6px; font-style: normal; color: #28333d; text-shadow: none; }
+.admin-detail strong { color: #0b8f80; }
+
+.admin-badge {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.78rem;
+}
+.admin-badge--active { color: #04201b; background: linear-gradient(135deg, #00ffcc, #00bfa5); }
+.admin-badge--banned { color: #fff; background: linear-gradient(135deg, #ff5e62, #ff2d2d); }
+
 /* ===== 波形プレーヤー (player partial) ===== */
 .wave-canvas {
   width: 100%;

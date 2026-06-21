@@ -1,58 +1,44 @@
-<div class="container">
-  <div class="row align-items-center">
-    <div class="col-sm-12 col-md-6 text-center">
-      <%= image_tag("rhythm_raiders_logo2.jpg", class: "img-fluid") %>
-    </div>
-    <div class="col-sm-12 col-md-6">
-      <h2 class="display-5 text-center" style="color: red; -webkit-text-stroke: 1px grey;">メンバー管理</h2>
-      <div class="d-flex justify-content-center mt-3">
-        <%= link_to "LOGOUT", destroy_admin_session_path, method: :delete, class: "btn btn-primary" %>
+<div class="admin-page">
+  <div class="admin-page__inner">
+    <h1 class="admin-title">Member <span>管理</span></h1>
+
+    <div class="admin-card">
+      <div class="table-responsive">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>UserName</th>
+              <th>Status</th>
+              <th>Tracks</th>
+              <th>Comments</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @members.each do |member| %>
+              <tr>
+                <td><%= link_to member.name, admin_member_path(member) %></td>
+                <td>
+                  <% if member.is_active %>
+                    <span class="admin-badge admin-badge--active">有効</span>
+                  <% else %>
+                    <span class="admin-badge admin-badge--banned">停止</span>
+                  <% end %>
+                </td>
+                <td><%= link_to (member.created_tracks.count > 0 ? member.created_tracks.count : 'No track'), admin_member_path(member) %></td>
+                <td><%= link_to (member.post_comments.count > 0 ? member.post_comments.count : 'No comment'), admin_member_path(member) %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
       </div>
     </div>
-  </div>
 
-</div>
-<div class="row">
-  <div class="col-12">
-    <div class="table-responsive">
-      <table class="table">
-        <thead>
-          <tr>
-            <th class="col-2 white-text">UserName</th>
-            <th class="col-1 white-text">Status</th>
-            <th class="col-3 white-text">MusicCounts</th>
-            <th class="col-6 white-text">CommentCounts</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @members.each do |member| %>
-            <tr>
-              <td class="col-2 white-text"><%= link_to member.name, admin_member_path(member) %></td>
-              <td class="col-1 white-text">
-                <% if member.is_active %>
-                  <%= link_to '有効', '#', class: 'btn btn-primary' %>
-                <% else %>
-                  <%= link_to '退会', '#', class: 'btn btn-danger' %>
-                <% end %>
-              </td>
-              <td class="col-3 white-text"><%= link_to (member.created_tracks.count > 0 ? member.created_tracks.count : 'No track created'), admin_member_path(member) %></td>
-              <td class="col-6 white-text"><%= link_to (member.post_comments.count > 0 ? member.post_comments.count : 'No comment'), admin_member_path(member) %></td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+    <div class="text-center">
+      <% if @members.empty? %>
+        <p>メンバーが見つかりません。</p>
+      <% else %>
+        <%= paginate @members %>
+      <% end %>
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12 text-center">
-    <% if @members.empty? %>
-      <p class="text-danger">メンバーが見つかりません。</p>
-    <% else %>
-      <p class="text-success">メンバーが見つかりました。</p>
-      <%= paginate @members %>
-    <% end %>
-  </div>
-</div>
-
-

@@ -1,4 +1,17 @@
-<h1>投稿一覧画面</h1>
-<% @posts.each do |post| %>
-  <!-- 投稿情報をここに表示 -->
-<% end %>
+<div class="admin-page">
+  <div class="admin-page__inner">
+    <h1 class="admin-title">Post <span>管理</span></h1>
+
+    <div class="admin-card">
+      <% if @posts.present? %>
+        <% @posts.each do |post| %>
+          <div class="admin-detail" style="border-bottom:1px solid rgba(20,40,50,0.12); padding:8px 0;">
+            <%= post.try(:title) || post.try(:content) %>
+          </div>
+        <% end %>
+      <% else %>
+        <p>投稿はありません。</p>
+      <% end %>
+    </div>
+  </div>
+</div>

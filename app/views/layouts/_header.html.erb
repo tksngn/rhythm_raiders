@@ -6,7 +6,13 @@
     <% end %>
 
     <nav class="site-header__nav">
-      <% if member_signed_in? %>
+      <% if admin_signed_in? %>
+        <span class="site-nav__badge">ADMIN</span>
+        <%= link_to "Members", admin_members_path, class: "site-nav__link" %>
+        <%= link_to "Logout", destroy_admin_session_path, method: :delete, class: "site-nav__link site-nav__link--ghost" %>
+      <% elsif request.path.start_with?('/admin') %>
+        <span class="site-nav__badge">ADMIN</span>
+      <% elsif member_signed_in? %>
         <%= link_to "Tracks", member_created_tracks_path, class: "site-nav__link" %>
         <%= link_to "Post", new_member_created_track_path, class: "site-nav__link" %>
         <%= link_to "Mypage", mypage_member_customers_path, class: "site-nav__link" %>

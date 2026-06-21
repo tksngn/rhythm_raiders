@@ -1,109 +1,59 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-10">
-      <div class="mt-2 mb-2">
-        <div class="text-center">
-          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
-            <h2 class="m-0">
-              <strong style="color: #f23f23;">メンバー詳細</strong>
-            </h2>
-            <p class="m-1" style="word-wrap: break-word;">
-              <strong style="color: orange;">Name:</strong>
-              <%= @member.name %>
-            </p>
-            <p class="m-1" style="word-wrap: break-word;">
-              <strong style="color: orange;">CreaterName:</strong>
-              <%= @member.creater_name %>
-            </p>
-            <p class="m-1">
-              <strong style="color: orange;">ProfileImage:</strong>
-              <%= @member.profile_image.present? ? (image_tag @member.profile_image, style: "height: 100px; width: 100px;") : (image_tag "no_image.jpg", style: "height: 100px; width: 100px;") %>
-            </p >
-            <p class="m-1" style="word-wrap: break-word;">
-              <strong style="color: orange;">Email:</strong>
-              <%= @member.email %>
-            </p>
-            <p class="m-1">
-              <strong style="color: orange;">PhoneNumber:</strong>
-              <%= @member.phone_number %>
-            </p>
-            <p class="m-1">
-              <strong style="color: orange;">Gender:</strong>
-              <%= @member.gender %>
-            </p>
+<div class="admin-page">
+  <div class="admin-page__inner">
+    <h1 class="admin-title">Member <span>詳細</span></h1>
+
+    <section class="admin-card admin-detail">
+      <h2 class="admin-heading">メンバー情報</h2>
+      <div class="text-center" style="margin-bottom:12px;">
+        <%= image_tag (@member.profile_image.present? ? @member.profile_image : "no_image.jpg"), class: "profile-img" %>
+      </div>
+      <p><strong>Name:</strong> <%= @member.name %></p>
+      <p><strong>Creator Name:</strong> <%= @member.creater_name %></p>
+      <p><strong>Email:</strong> <%= @member.email %></p>
+      <p><strong>Phone:</strong> <%= @member.phone_number %></p>
+      <p><strong>Gender:</strong> <%= @member.gender %></p>
+      <p><strong>Status:</strong>
+        <% if @member.is_active %>
+          <span class="admin-badge admin-badge--active">有効</span>
+        <% else %>
+          <span class="admin-badge admin-badge--banned">停止</span>
+        <% end %>
+      </p>
+    </section>
+
+    <section class="admin-card">
+      <h2 class="admin-heading">投稿コメント</h2>
+      <% if @member.post_comments.any? %>
+        <% @member.post_comments.each do |comment| %>
+          <div class="admin-detail" style="border-bottom:1px solid rgba(20,40,50,0.12); padding:8px 0;">
+            <p><%= comment.comment_content %></p>
+            <%= link_to "削除", admin_post_comment_path(comment.created_track, comment), method: :delete, data: { confirm: "削除しても良いですか？" }, class: "admin-btn-ghost" %>
           </div>
-        </div>
-      </div>
-      <div class="mb-1">
-        <div class="text-center">
-          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
-            <h2 class="m-0">
-              <strong style="color: #f23f23;">投稿コメント詳細</strong>
-            </h2>
-            <p class="word-wrap: break-word;">
-              <strong style="color: orange;">PostComment:</strong>
-            </p>
-            <% @member.post_comments.each do |comment| %>
-              <div class="border p-2" style="word-wrap: break-word;">
-                <%= comment.comment_content %>
-                <%= link_to "Delete",
-                    admin_post_comment_path(comment.created_track, comment),
-                    method: :delete,
-                    data: {confirm: "削除しても良いですか？"}
-                %>
-              </div>
-            <% end %>
+        <% end %>
+      <% else %>
+        <p>コメントはありません。</p>
+      <% end %>
+    </section>
+
+    <section class="admin-card">
+      <h2 class="admin-heading">投稿楽曲</h2>
+      <% if @member.created_tracks.any? %>
+        <% @member.created_tracks.each do |created_track| %>
+          <div class="admin-detail" style="border-bottom:1px solid rgba(20,40,50,0.12); padding:8px 0;">
+            <p><strong>Title:</strong> <%= created_track.music_title %></p>
+            <p><strong>Genre:</strong> <%= created_track.music_genre %></p>
+            <p><strong>Word:</strong> <%= created_track.creater_word %></p>
+            <%= link_to "Track Delete", admin_created_track_path(created_track.id), method: :delete, data: { confirm: "削除してもよろしいですか？" }, class: "admin-btn-ghost" %>
           </div>
-        </div>
-      </div>
-      <div class="mb-1">
-        <div class="text-center">
-          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
-            <h2 class="m-0">
-              <strong style="color: #f23f23;">投稿楽曲詳細</strong>
-            </h2>
-            <% if @track.present? %>
-              <% @member.created_tracks.each do |created_track| %>
-                <div class="border p-2">
-                  <p class="m-0" style="word-wrap: break-word;">
-                    <strong style="color: orange;">Music Title:</strong>
-                    <%= created_track.music_title %>
-                  </p>
-                  <p class="m-0" style="word-wrap: break-word;">
-                    <strong style="color: orange;">Music Genre:</strong>
-                    <%= created_track.music_genre %>
-                  </p>
-                  <p class="m-0" style="word-wrap: break-word;">
-                    <strong style="color: orange;">A word from the creater:</strong>
-                    <%= created_track.creater_word %>
-                  </p>
-                  <%= link_to "Track Delete",
-                    admin_created_track_path(created_track.id),
-                    method: :delete,
-                    data: {confirm: "削除してもよろしいですか？"}
-                  %>
-                </div>
-              <% end %>
-            <% else %>
-              <p>トラックが存在しません。</p>
-            <% end %>
-          </div>
-        </div>
-      </div>
-      <div class="mt-2 mb-2">
-        <div class="text-center">
-          <%= link_to edit_admin_member_path(@member), class: 'btn btn-primary' do %>
-            To Edit
-          <% end %>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-2">
-      <div class="mt-2 mb-1">
-        <div class="text-center">
-          <%= image_tag("rhythm_raiders_logo1.jpg") %>
-        </div>
-      </div>
+        <% end %>
+      <% else %>
+        <p>トラックが存在しません。</p>
+      <% end %>
+    </section>
+
+    <div class="text-center">
+      <%= link_to "メンバー情報を編集", edit_admin_member_path(@member), class: "neon-btn neon-btn--primary" %>
+      <%= link_to "← 一覧へ", admin_members_path, class: "admin-btn-ghost" %>
     </div>
   </div>
 </div>

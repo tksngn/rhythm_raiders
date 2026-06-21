@@ -1,57 +1,31 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-2">
-      <div class="mt-2 mb-1">
-        <div class="text-center">
-          <%= image_tag("rhythm_raiders_logo1.jpg") %>
-        </div>
+<div class="admin-page">
+  <div class="admin-page__inner">
+    <h1 class="admin-title">Member <span>情報編集</span></h1>
+
+    <section class="admin-card admin-detail">
+      <div class="text-center" style="margin-bottom:12px;">
+        <%= image_tag (@member.profile_image.present? ? @member.profile_image : "no_image.jpg"), class: "profile-img" %>
       </div>
-    </div>
-    <div class="col-md-10">
-      <div class="mt-2 mb-2">
-        <div class="text-center">
-          <div class="m-1" style="border: 1px solid #ff00ff; border-radius: 10px; padding: 10px;">
-            <h2 class="m-0">
-              <strong style="color: #f23f23;">メンバー情報編集</strong>
-            </h2>
-            <%= form_with(model: @member, url: admin_member_path(@member), local: true) do |form| %>
-              <!-- メンバー情報の編集フォーム -->
-              <p class="m-1" style="word-wrap: break-word;">
-                <strong style="color: orange;">Name:</strong>
-                <%= @member.name %>
-              </p>
-              <p class="m-1"><strong style="word-wrap: break-word;">
-                <strong style="color: orange;">Creater Name:</strong>
-                <%= @member.creater_name %>
-              </p>
-              <p class="m-1" style="word-wrap: break-word;">
-                <strong style="color: orange;">Profile image:</strong>
-                <%= @member.profile_image.present? ? (image_tag @member.profile_image, style: "height: 100px; width: 100px;") : (image_tag "no_image.jpg", style: "height: 100px; width: 100px;") %>
-              </p>
-              <p class="m-1" style="word-wrap: break-word;">
-                <strong style="color: orange;">Email:</strong>
-                <%= @member.email %>
-              </p>
-              <p class="m-1" style="word-wrap: break-word;">
-                <strong style="color: orange;">Phone Number:</strong>
-                <%= @member.phone_number %>
-              </p>
-              <p class="m-1" style="word-wrap: break-word;">
-                <strong style="color: orange;">Gender:</strong>
-                <%= @member.gender %>
-              </p>
-                <!-- 利用停止のラジオボタン -->
-                <%= form.radio_button :is_active, false, style: "width: 20px; height: 20px;" %> <span style="color: red;">利用停止</span>
-                <!-- 利用停止解除のラジオボタン -->
-                <br><br>
-                <%= form.radio_button :is_active, true, style: "width: 20px; height: 20px;" %> <span style="color: green;">利用停止解除</span>
-              <div style="position: fixed; bottom: 50px; left: 50%; transform: translateX(-50%);">
-                <%= form.submit "変更保存", class: "btn btn-success", style: "width: 300px; font-size: 20px; padding: 10px 24px;" %>
-              </div>
-            <% end %>
-          </div>
+      <p><strong>Name:</strong> <%= @member.name %></p>
+      <p><strong>Creator Name:</strong> <%= @member.creater_name %></p>
+      <p><strong>Email:</strong> <%= @member.email %></p>
+      <p><strong>Phone:</strong> <%= @member.phone_number %></p>
+      <p><strong>Gender:</strong> <%= @member.gender %></p>
+
+      <%= form_with(model: @member, url: admin_member_path(@member), method: :patch, local: true) do |form| %>
+        <h2 class="admin-heading" style="margin-top:18px;">アカウント状態</h2>
+        <label class="auth-radio" style="color:#16202a;">
+          <%= form.radio_button :is_active, true %> <span style="color:#0b8f80;">利用中（有効）</span>
+        </label>
+        <label class="auth-radio" style="color:#16202a;">
+          <%= form.radio_button :is_active, false %> <span style="color:#c0392b;">利用停止</span>
+        </label>
+
+        <div class="text-center" style="margin-top:18px;">
+          <%= form.submit "変更を保存", class: "neon-btn neon-btn--primary" %>
+          <%= link_to "← 戻る", admin_member_path(@member), class: "admin-btn-ghost" %>
         </div>
-      </div>
-    </div>
+      <% end %>
+    </section>
   </div>
 </div>
