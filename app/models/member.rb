@@ -51,12 +51,15 @@ class Member < ApplicationRecord
     email == 'guest@example.com'
   end
 
-  def get_profile_image(width, height)
+  # 引数(width/height)は後方互換のため残すが使用しない。
+  # variant(リサイズ)は本番の画像processor依存でInvariableErrorになり得るため使わず、
+  # 添付をそのまま返し表示サイズはCSS(.profile-img / .mp-avatar img など)で制御する。
+  def get_profile_image(width = nil, height = nil)
     unless profile_image.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')
       profile_image.attach(io: File.open(file_path), filename: 'no_image.jpg', content_type: 'image/jpeg')
     end
-    profile_image.variant(resize_to_limit: [width, height]).processed
+    profile_image
   end
 
   def active_for_authentication?

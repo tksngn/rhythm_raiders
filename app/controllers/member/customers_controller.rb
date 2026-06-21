@@ -29,7 +29,7 @@ class Member::CustomersController < ApplicationController
     @member = Member.find(params[:id])
     redirect_to root_path and return unless @member = current_member
     if @member.update(member_params)
-      redirect_to mypage_member_customers_path(@member.id)
+      redirect_to mypage_member_customers_path, notice: "プロフィールを更新しました。"
     else
       @created_track = CreatedTrack.new()
       render 'member/created_tracks/new'
