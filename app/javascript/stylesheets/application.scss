@@ -1748,6 +1748,77 @@ input[type="submit"].ts-btn--primary {
   .site-nav__link { padding: 6px 10px; font-size: 0.78rem; }
 }
 
+/* ===== 波形プレーヤー (player partial) ===== */
+.wave-canvas {
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.wave-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wave-controls__btns {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wave-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-shadow: none;
+  border: 1px solid rgba(0, 255, 204, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  color: #d7fff8;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    color: #04201b;
+    background: linear-gradient(135deg, #00ffcc, #00bfa5);
+    box-shadow: 0 0 14px rgba(0, 255, 204, 0.45);
+  }
+}
+
+.wave-btn--restart {
+  border-color: rgba(176, 108, 255, 0.4);
+
+  &:hover { background: linear-gradient(135deg, #00ffcc, #b06cff); }
+}
+
+.wave-time {
+  font-style: normal;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+.wave-volume {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  label {
+    margin: 0;
+    font-style: normal;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  input[type="range"] { flex: 1; accent-color: #00ffcc; }
+}
+
 @media (max-width: 480px) {
   .hero-card { padding: 28px 18px; gap: 18px; }
   .hero-nav { grid-template-columns: 1fr; }

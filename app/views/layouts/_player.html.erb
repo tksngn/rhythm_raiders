@@ -1,51 +1,70 @@
-<div id="waveform_<%= created_track.id %>"></div>
+<div id="waveform_<%= created_track.id %>" class="wave-canvas"></div>
 
-<div class="mt-1" style="display: flex; justify-content: space-between;">
-  <div class="">
-    <a class="btn btn-warning" onclick="wavesurfer_<%= created_track.id %>.playPause();">PLAY/STOP</a>
-    <a class="btn btn-danger" onclick="wavesurfer_<%= created_track.id %>.stop(); wavesurfer_<%= created_track.id %>.play();">Start Over</a>
+<div class="wave-controls mt-1">
+  <div class="wave-controls__btns">
+    <a class="wave-btn wave-btn--play" onclick="wavesurfer_<%= created_track.id %> && wavesurfer_<%= created_track.id %>.playPause();">▶ PLAY / STOP</a>
+    <a class="wave-btn wave-btn--restart" onclick="wavesurfer_<%= created_track.id %> && (wavesurfer_<%= created_track.id %>.stop(), wavesurfer_<%= created_track.id %>.play());">⟲ Start Over</a>
   </div>
-  <div class="text-right">
-    <a id="time_<%= created_track.id %>"></a>
-  </div>
+  <a id="time_<%= created_track.id %>" class="wave-time"></a>
 </div>
-<div class="text-center mt-1" style="color: black; text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;">
+
+<div class="wave-volume mt-1">
   <label for="volume_<%= created_track.id %>">Volume</label>
-  <input type="range" class="custom-range" id="volume_<%= created_track.id %>" value="50"></input>
+  <input type="range" class="custom-range" id="volume_<%= created_track.id %>" value="50">
 </div>
 
 <script>
-var  wavesurfer_<%= created_track.id %> = "";
-$(document).on('turbolinks:load', function() {
-  $("#waveform_<%= created_track.id %>").empty();
-    wavesurfer_<%= created_track.id %> = WaveSurfer.create({
-    container: '#waveform_<%= created_track.id %>',
-    barWidth: 5,
-    barGap: 1,
-    waveColor: '#00ffcc',
-    cursorColor: '#000000',
-    progressColor: '#DB0F00',
-    url: '<%= created_track.music_file %>',
-    backend: 'MediaElement',
-    normalize: true,
-    barHeight: 0.2,
-  })
+(function () {
+  var cid = "<%= created_track.id %>";
 
-  wavesurfer_<%= created_track.id %>.setVolume(0.5)
+  function initWave_<%= created_track.id %>() {
+    if (typeof WaveSurfer === "undefined") return;
+    var container = document.getElementById("waveform_" + cid);
+    if (!container) return;
 
-  wavesurfer_<%= created_track.id %>.on('timeupdate', (currentTime) => {
-    <% if is_guest %>
-      if (currentTime >= 30) {
-        wavesurfer_<%= created_track.id %>.stop();
-      }
-    <% end %>
-    $("#time_<%= created_track.id %>").html(`${parseInt(currentTime)}sec.`)
-  })
+    // 既存インスタンスがあれば破棄してから作り直す（turbolinks再訪やキャッシュ対策）
+    if (window.wavesurfer_<%= created_track.id %> && window.wavesurfer_<%= created_track.id %>.destroy) {
+      try { window.wavesurfer_<%= created_track.id %>.destroy(); } catch (e) {}
+    }
+    container.innerHTML = "";
 
+    var ws = WaveSurfer.create({
+      container: container,
+      barWidth: 5,
+      barGap: 1,
+      waveColor: "#00ffcc",
+      cursorColor: "#ffffff",
+      progressColor: "#b06cff",
+      url: "<%= j created_track.music_file.to_s %>",
+      normalize: true,
+      barHeight: 0.6,
+      height: 64
+    });
+    window.wavesurfer_<%= created_track.id %> = ws;
 
-  $("#volume_<%= created_track.id %>").change(function() {
-    wavesurfer_<%= created_track.id %>.setVolume($(this).val() / 100);
-  })
+    ws.setVolume(0.5);
 
-});
+    ws.on("timeupdate", function (currentTime) {
+      <% if is_guest %>
+      if (currentTime >= 30) { ws.stop(); }
+      <% end %>
+      var t = document.getElementById("time_" + cid);
+      if (t) t.textContent = parseInt(currentTime) + " sec.";
+    });
+
+    var vol = document.getElementById("volume_" + cid);
+    if (vol) {
+      vol.addEventListener("input", function () { ws.setVolume(this.value / 100); });
+    }
+  }
+
+  // WaveSurfer はヘッダーのpackで読込済みのはずなので即時初期化。
+  // 万一未読込でも turbolinks:load / DOMContentLoaded で一度だけ初期化する。
+  if (typeof WaveSurfer !== "undefined") {
+    initWave_<%= created_track.id %>();
+  } else {
+    document.addEventListener("turbolinks:load", initWave_<%= created_track.id %>, { once: true });
+    document.addEventListener("DOMContentLoaded", initWave_<%= created_track.id %>, { once: true });
+  }
+})();
 </script>
