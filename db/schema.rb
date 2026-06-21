@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_06_21_030000) do
+ActiveRecord::Schema.define(version: 2026_06_21_140000) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(version: 2026_06_21_030000) do
     t.string "music_title", null: false
     t.string "music_genre", null: false
     t.string "creater_word", limit: 100
-    t.string "music_file", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
