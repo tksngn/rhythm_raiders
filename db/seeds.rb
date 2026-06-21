@@ -44,14 +44,19 @@ end
 #    ただし旧localストレージ時代の添付(service不一致)は実体が無く404になるので一度だけ掃除。
 #  - 非R2(ローカル/非永続)時: 実体が再起動で消えるため従来どおり毎回 purge して作り直す。
 using_r2 = Rails.env.production? && ENV['R2_ACCESS_KEY_ID'].present?
-current_service = ActiveStorage::Blob.service.name.to_s
-Member.find_each do |m|
-  next unless m.profile_image.attached?
-  if !using_r2
-    m.profile_image.purge
-  elsif m.profile_image.blob.service_name.to_s != current_service
-    m.profile_image.purge
+begin
+  current_service = ActiveStorage::Blob.service.name.to_s
+  Member.find_each do |m|
+    next unless m.profile_image.attached?
+    if !using_r2
+      m.profile_image.purge
+    elsif m.profile_image.blob.service_name.to_s != current_service
+      m.profile_image.purge
+    end
   end
+rescue => e
+  # ストレージ設定ミス等でもサイト全体が落ちないようにする
+  puts "  [warn] profile_image の整理をスキップ: #{e.class}: #{e.message}"
 end
 
 # NOTE: 本番(Render)では CarrierWave のアップロードファイル(public/uploads)が
@@ -66,14 +71,19 @@ seed_tracks = [
 ]
 
 seed_tracks.each do |t|
-  created_track = CreatedTrack.find_or_initialize_by(music_title: t[:title])
-  created_track.music_genre  = t[:genre]
-  created_track.creater_word = t[:word]
-  created_track.member       = t[:member]
-  # save! までファイルを開いたままにする（ブロックで閉じるとアップロードに失敗しうる）
-  created_track.music_file = File.open("#{Rails.root}/db/fixtures/#{t[:file]}")
-  created_track.save!
-  puts "  track seeded: #{created_track.music_title} -> #{created_track.music_file.url}"
+  begin
+    created_track = CreatedTrack.find_or_initialize_by(music_title: t[:title])
+    created_track.music_genre  = t[:genre]
+    created_track.creater_word = t[:word]
+    created_track.member       = t[:member]
+    # save! までファイルを開いたままにする（ブロックで閉じるとアップロードに失敗しうる）
+    created_track.music_file = File.open("#{Rails.root}/db/fixtures/#{t[:file]}")
+    created_track.save!
+    puts "  track seeded: #{created_track.music_title} -> #{created_track.music_file.url}"
+  rescue => e
+    # ストレージ設定ミス等で1曲の登録に失敗しても、起動全体は止めない
+    puts "  [warn] track seed をスキップ (#{t[:title]}): #{e.class}: #{e.message}"
+  end
 end
 
 puts "seedの実行が完了しました"
