@@ -305,6 +305,68 @@ $neon: #00ffcc;
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
+/* ===== トップのシネマティック演出（写真主役のまま“掴む”） ===== */
+.hero-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ゆっくり流れる光のレイ */
+.hero-fx__ray {
+  position: absolute;
+  top: -60%;
+  left: -40%;
+  width: 55%;
+  height: 220%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 204, 0.12), transparent);
+  filter: blur(10px);
+  transform: rotate(18deg) translateX(-30%);
+  animation: hero-ray 9s ease-in-out infinite;
+}
+
+@keyframes hero-ray {
+  0%   { transform: rotate(18deg) translateX(-30%); opacity: 0; }
+  45%  { opacity: 1; }
+  100% { transform: rotate(18deg) translateX(360%); opacity: 0; }
+}
+
+/* 立ち上るティールの粒子（エンバー） */
+.hero-fx__p {
+  position: absolute;
+  bottom: -12px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 255, 204, 0.85);
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.85);
+  opacity: 0;
+  animation: hero-float linear infinite;
+}
+
+@keyframes hero-float {
+  0%   { transform: translateY(0) scale(1); opacity: 0; }
+  10%  { opacity: 0.9; }
+  90%  { opacity: 0.9; }
+  100% { transform: translateY(-92vh) scale(0.4); opacity: 0; }
+}
+
+.hero-fx__p:nth-child(2) { left: 12%; animation-duration: 11s; animation-delay: 0s; }
+.hero-fx__p:nth-child(3) { left: 24%; animation-duration: 14s; animation-delay: 3s; width: 3px; height: 3px; }
+.hero-fx__p:nth-child(4) { left: 38%; animation-duration: 10s; animation-delay: 1.5s; }
+.hero-fx__p:nth-child(5) { left: 52%; animation-duration: 13s; animation-delay: 4.5s; width: 5px; height: 5px; }
+.hero-fx__p:nth-child(6) { left: 66%; animation-duration: 12s; animation-delay: 2s; }
+.hero-fx__p:nth-child(7) { left: 78%; animation-duration: 15s; animation-delay: 5.5s; width: 3px; height: 3px; }
+.hero-fx__p:nth-child(8) { left: 88%; animation-duration: 11s; animation-delay: 1s; }
+.hero-fx__p:nth-child(9) { left: 6%;  animation-duration: 16s; animation-delay: 6s; width: 5px; height: 5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fx__ray, .hero-fx__p { animation: none; }
+  .hero-fx { display: none; }
+}
+
 .hero-logo {
   display: flex;
   justify-content: center;
@@ -331,7 +393,17 @@ $neon: #00ffcc;
   span {
     color: $neon;
     text-shadow: 0 0 12px rgba(0, 255, 204, 0.7);
+    animation: neon-pulse 2.8s ease-in-out infinite;
   }
+}
+
+@keyframes neon-pulse {
+  0%, 100% { text-shadow: 0 0 12px rgba(0, 255, 204, 0.55); }
+  50%      { text-shadow: 0 0 22px rgba(0, 255, 204, 0.95), 0 0 4px rgba(255, 255, 255, 0.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-tagline span { animation: none; }
 }
 
 .hero-search {
