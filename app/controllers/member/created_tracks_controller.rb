@@ -64,12 +64,12 @@ class Member::CreatedTracksController < ApplicationController
     case params[:sort]
     when "good"
       Kaminari.paginate_array(
-        CreatedTrack.left_outer_joins(:likes).group(:id)
+        CreatedTrack.left_outer_joins(:likes).group("created_tracks.id")
           .order(Arel.sql("count(likes.created_track_id) desc")).preload(eager)
       ).page(params[:page]).per(5)
     when "comment"
       Kaminari.paginate_array(
-        CreatedTrack.left_outer_joins(:post_comments).group(:id)
+        CreatedTrack.left_outer_joins(:post_comments).group("created_tracks.id")
           .order(Arel.sql("count(post_comments.created_track_id) desc")).preload(eager)
       ).page(params[:page]).per(5)
     when "random"
@@ -77,7 +77,9 @@ class Member::CreatedTracksController < ApplicationController
         CreatedTrack.order(Arel.sql("RANDOM()")).preload(eager)
       ).page(params[:page]).per(5)
     else
-      CreatedTrack.includes(eager).page(params[:page]).per(5)
+      # NOTE: .page/.per はモデル直で呼ぶ必要がある（relation経由だとperが付かない）。
+      #       eager load は後段の preload で付与する。
+      CreatedTrack.page(params[:page]).per(5).preload(eager)
     end
   end
 
