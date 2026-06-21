@@ -1404,6 +1404,18 @@ input[type="submit"].ts-btn--primary {
   text-shadow: none;
 }
 
+.mp-profile-actions {
+  margin-top: 14px;
+
+  .mp-navlink { display: inline-block; }
+}
+
+.mp-card--cta {
+  text-align: center;
+
+  .mp-navlink { display: inline-block; padding: 12px 24px; }
+}
+
 @media (max-width: 768px) {
   .mypage__grid { grid-template-columns: 1fr; }
 }

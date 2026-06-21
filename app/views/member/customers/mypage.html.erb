@@ -14,6 +14,9 @@
           </div>
           <p class="mp-name"><%= @member.name %></p>
           <p class="mp-creator">( <%= @member.creater_name %> )</p>
+          <div class="mp-profile-actions">
+            <%= link_to "Edit Profile", edit_member_customer_path(current_member), class: "mp-navlink" %>
+          </div>
         </section>
 
         <!-- My Tracks -->
@@ -71,23 +74,9 @@
           <% end %>
         </section>
 
-        <!-- Information -->
-        <section class="mp-card">
-          <h3 class="mp-heading"><span>Information</span></h3>
-          <nav class="mp-nav">
-            <%= link_to "♪ Music Index", member_created_tracks_path, class: "mp-navlink" %>
-            <%= link_to "Home", member_top_path, class: "mp-navlink" %>
-            <%= link_to "About", "/homes/about", class: "mp-navlink" %>
-            <%= link_to "Edit & Post music", new_member_created_track_path, class: "mp-navlink mp-navlink--accent" %>
-            <%= link_to notifications_path, class: "mp-navlink" do %>
-              <% if current_member.notifications.where(checked: false).exists? %>
-                <i class="fa-sharp fa-solid fa-bell fa-beat" style="color: #f2ee7d;"></i>
-              <% else %>
-                <i class="fa-sharp fa-solid fa-bell"></i>
-              <% end %>
-              通知一覧
-            <% end %>
-          </nav>
+        <!-- Post music CTA（ヘッダーに無い主要アクションのみ残す） -->
+        <section class="mp-card mp-card--cta">
+          <%= link_to "♪ Edit & Post Music", new_member_created_track_path, class: "mp-navlink mp-navlink--accent" %>
         </section>
       </div>
     </div>
