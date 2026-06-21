@@ -25,8 +25,7 @@ ENV RAILS_ENV=production \
 
 # gem を先に入れてレイヤキャッシュを効かせる
 COPY Gemfile Gemfile.lock ./
-# Gemfile変更時に Gemfile.lock を再解決できるよう frozen を無効化
-RUN bundle config set frozen false && bundle install
+RUN bundle install
 
 # JS 依存
 COPY package.json yarn.lock ./

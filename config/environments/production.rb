@@ -37,8 +37,8 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
-  # R2 設定があれば Cloudflare R2、無ければローカル(従来どおり)
-  config.active_storage.service = ENV['R2_ACCESS_KEY_ID'].present? ? :cloudflare : :local
+  # Store uploaded files on the local file system (see config/storage.yml for options).
+  config.active_storage.service = :local
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
