@@ -44,6 +44,10 @@
           <% if member_signed_in? && @member == current_member %>
             <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "ts-btn" %>
           <% end %>
+          <% if @created_track.member == current_member %>
+            <%= link_to (@created_track.music_video_url.present? ? "AI動画を編集" : "AI動画を追加"),
+                        edit_member_created_track_path(@created_track), class: "ts-btn" %>
+          <% end %>
           <% unless @created_track.member == current_member %>
             <% if current_member.following?(@created_track.member) %>
               <%= link_to 'フォロー外す', member_customer_relationships_path(@created_track.member), method: :delete, class: "ts-btn ts-btn--danger" %>
@@ -56,6 +60,20 @@
         <div class="ts-player">
           <%= render "layouts/player", created_track: @created_track, is_guest: false %>
         </div>
+
+        <% if (embed_url = @created_track.music_video_embed_url) %>
+          <div class="ts-mv">
+            <h3 class="ts-mv__label">AI Music Video</h3>
+            <div class="ts-mv__frame">
+              <iframe src="<%= embed_url %>"
+                      title="<%= @created_track.music_title %> のミュージックビデオ"
+                      loading="lazy"
+                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+        <% end %>
 
         <div class="ts-comment-form">
           <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>

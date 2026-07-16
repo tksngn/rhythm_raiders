@@ -1,0 +1,42 @@
+<div class="member-track-show">
+  <div class="form-page__inner">
+    <div class="hero-logo">
+      <%= image_tag("rhythm_raiders_logo2.jpg", alt: "Rhythm Raiders") %>
+    </div>
+
+    <section class="form-card">
+      <h2 class="about-heading">§ AI Music Video §</h2>
+
+      <p class="auth-hint mb-3">
+        「<%= @created_track.music_title %>」にAI動画を紐づけます。
+        Neural Frames などで作った動画をYouTube／VimeoにアップロードしてURLを貼ってください。
+      </p>
+
+      <%= form_with model: [:member, @created_track], html: { class: "auth-form" } do |f| %>
+        <%= render 'layouts/errors', model: @created_track %>
+        <div class="auth-field">
+          <%= f.label :music_video_url, "AI Music Video URL" %>
+          <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
+          <p class="auth-hint">空欄にして保存すると、動画の紐づけを解除できます。</p>
+        </div>
+        <%= f.submit "Save / 保存", class: "neon-btn neon-btn--primary auth-submit" %>
+      <% end %>
+
+      <% if (embed_url = @created_track.music_video_embed_url) %>
+        <div class="ts-mv mt-4">
+          <h3 class="ts-mv__label">現在のAI動画</h3>
+          <div class="ts-mv__frame">
+            <iframe src="<%= embed_url %>"
+                    title="<%= @created_track.music_title %> のミュージックビデオ"
+                    loading="lazy"
+                    allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allowfullscreen></iframe>
+          </div>
+        </div>
+      <% end %>
+    </section>
+
+    <%= link_to "← 楽曲ページに戻る", member_created_track_path(@created_track), class: "neon-btn neon-btn--ghost hero-logout" %>
+  </div>
+</div>

@@ -51,6 +51,14 @@
           <%= f.file_field :music_file, class: "auth-input auth-input--file" %>
         </div>
         <div class="auth-field">
+          <%= f.label :music_video_url, "AI Music Video URL（任意）" %>
+          <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
+          <p class="auth-hint">
+            Neural Frames などで作ったAI動画をYouTube／VimeoにアップロードしてURLを貼ると、詳細ページで再生できます。
+          </p>
+        </div>
+
+        <div class="auth-field">
           <%= f.label :music_genre, "Music Genre" %>
           <%= f.text_field :music_genre, class: "auth-input" %>
         </div>

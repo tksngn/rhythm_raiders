@@ -1,5 +1,6 @@
 class Member::CreatedTracksController < ApplicationController
   before_action :authenticate_member!
+  before_action :set_own_created_track, only: %i[edit update]
 
   def show
     @created_track = CreatedTrack.find(params[:id])
@@ -34,10 +35,13 @@ class Member::CreatedTracksController < ApplicationController
     end
   end
 
+  # 投稿後にAI動画URLだけを後付け・差し替え・解除する画面
+  def edit
+  end
+
   def update
-    @created_track = CreatedTrack.find(params[:id])
-    if @created_track.update(created_track_params)
-      redirect_to @created_track, notice: 'Track was successfully updated.'
+    if @created_track.update(music_video_params)
+      redirect_to member_created_track_path(@created_track), notice: 'AI動画URLを更新しました。'
     else
       render :edit
     end
@@ -56,6 +60,14 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   private
+
+  # 他人の楽曲を編集できないよう、必ず current_member の投稿から引く
+  def set_own_created_track
+    @created_track = current_member.created_tracks.find_by(id: params[:id])
+    return if @created_track
+
+    redirect_to member_created_tracks_path, alert: 'その楽曲を編集する権限がありません。'
+  end
 
   # 一覧/ゲスト一覧の並び替え + N+1回避の eager load をまとめる。
   # 本番(PostgreSQL)・開発(SQLite)とも RANDOM() で動作する（MySQLのRAND()は使わない）。
@@ -84,6 +96,11 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def created_track_params
-    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file)
+    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file, :music_video_url)
+  end
+
+  # 編集画面はAI動画URLのみ扱うため、更新できる項目もそれだけに絞る
+  def music_video_params
+    params.require(:created_track).permit(:music_video_url)
   end
 end
