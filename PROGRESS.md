@@ -27,6 +27,8 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **プロフィール画像(ActiveStorage)**: 古い添付blobが実ファイル欠落で404になるため、seed で **purge して起動毎に再生成**。
 
 > 既知の制約: 無料Webは15分無アクセスでスリープ（次アクセスにコールドスタート）、無料Postgresは作成から約30日で削除、訪問者の新規アップロードは再起動で消える（デモ用途として許容）。
+>
+> ※ このうち「アップロードが消える」は §4.5 で、「無料Postgresが削除される」は **§4.6 で解消済み**（実際に 2026-07-15 に削除され本番停止したため Supabase Postgres へ移行）。
 
 ---
 
@@ -104,6 +106,17 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 
 ---
 
+## 4.6 本番DBの消滅と Supabase Postgres への移行（2026-07-15 障害）
+
+**Render 無料 Postgres が期限切れで削除され、本番が全面停止した。** 4.5 でファイルの永続化は解決していたが、DB そのものが消えるケースが残っていた（§5 に「約30日で削除」と記載していた既知リスクが顕在化した形）。
+
+- **事象**: `db:prepare` が `PG::ConnectionBad: could not translate host name "dpg-d8nvkd3bc2fs73feqtd0-a" to address` で失敗し続け、`bin/render-start.sh` が `set -e` で停止 → puma に到達せず「No open ports detected」でデプロイ失敗。
+- **原因**: 接続拒否ではなく **DNS が引けない**＝DBインスタンスの消滅。Postgres 側ログに `2026-07-15T14:24:30Z database system is shut down` が記録されていた。Render 無料DBは**作成から30日で期限切れ → 14日の猶予後にデータごと削除**（無料枠はバックアップ非対応）。
+- **切り分け**: 直前の push（AI動画機能, 07-16 12:05 UTC）とは無関係。DB消滅はその**約22時間前**。本番 `Dockerfile` をローカルでビルドし、実 Postgres に対して `db:prepare`→`db:seed`→ヘルスチェック200 まで完走することを確認済み。
+- **対応**: DBを **Supabase Postgres** へ移行。`render.yaml` の `databases:` ブロックを削除し、`DATABASE_URL` を `sync: false`（ダッシュボード設定）に変更。Supabase 無料は7日無アクセスで **pause するが削除されない**ため、消滅リスクが無くなる。
+- **接続方式の注意（重要）**: 必ず **Session pooler**（`aws-0-<region>.pooler.supabase.com:5432`）を使う。Supabase の Direct connection は 2024-01-15 以降 **IPv6 専用**で Render（IPv4）から到達できない。Transaction pooler(6543) は prepared statements の無効化が必要。
+- **データ**: 本番の投稿データは復旧不可（バックアップ無し・インスタンスごと削除）。新DB接続後は `db:prepare` + `db:seed` でデモデータが再生成される。Supabase Storage 側の音源blobは残るが参照レコードが無く孤児化する。
+
 ## 5. 既知の制約・今後の候補
 
 - アップロードは Supabase Storage で永続化済み。ただし **Supabase 無料プロジェクトは約1週間アクセスが無いと一時停止**（次アクセスで復帰）。R2_* 環境変数を外せばローカル保存(非永続)に戻る。
@@ -117,5 +130,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 ## デプロイ運用メモ（Render）
 
 - `main` への push で自動再デプロイ。
-- 環境変数: `RAILS_ENV=production` / `RAILS_LOG_TO_STDOUT` / `RAILS_SERVE_STATIC_FILES` / `SECRET_KEY_BASE`(自動生成) / `DATABASE_URL`(Postgres連携) / `ADMIN_EMAIL` / `ADMIN_PASSWORD`(ダッシュボードで設定)。
+- 環境変数: `RAILS_ENV=production` / `RAILS_LOG_TO_STDOUT` / `RAILS_SERVE_STATIC_FILES` / `SECRET_KEY_BASE`(自動生成) / `DATABASE_URL`(Supabase・ダッシュボードで設定) / `ADMIN_EMAIL` / `ADMIN_PASSWORD`(ダッシュボードで設定)。
 - seed のデモ会員: `test1@example.com` / `password01`。
+- **DB は Supabase Postgres**（§4.6）。`DATABASE_URL` には必ず **Session pooler** の文字列を使う（Direct connection はIPv6専用でRenderから繋がらない）。
+- DB を新規に用意し直した場合、起動時の `db:prepare` + `db:seed` でスキーマとデモデータが自動で入る（手動マイグレーション不要）。

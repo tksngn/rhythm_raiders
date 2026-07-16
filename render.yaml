@@ -1,9 +1,10 @@
-# Render Blueprint — 無料 Web(Docker) + 無料 Postgres を一括作成する。
+# Render Blueprint — 無料 Web(Docker)。DBは Supabase Postgres を外部利用する。
 # Render ダッシュボードの New → Blueprint からこのリポジトリを選ぶと読み込まれる。
-databases:
-  - name: rhythm-raiders-db
-    plan: free
-
+#
+# NOTE: 以前は Render の無料 Postgres(databases ブロック)を使っていたが、
+#       無料DBは作成から30日で期限切れ→14日の猶予後にデータごと削除される仕様のため
+#       2026-07-15 に消滅しデプロイが全面停止した。恒久対策として Supabase へ移した。
+#       Supabase 無料は7日無アクセスで pause するが、削除はされず再開できる。
 services:
   - type: web
     name: rhythm-raiders
@@ -25,10 +26,13 @@ services:
         value: raiders@masters.com
       - key: ADMIN_PASSWORD
         sync: false          # 値はダッシュボードで各自設定
+      # Supabase Postgres の接続文字列。値はダッシュボードで設定する。
+      # 必ず「Session pooler」の文字列を使うこと（ダッシュボードの Connect → Session pooler）:
+      #   postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+      # Direct connection (db.<project-ref>.supabase.co:5432) はIPv6専用でRenderから到達できず、
+      # Transaction pooler (6543) は prepared statements の無効化が別途必要になる。
       - key: DATABASE_URL
-        fromDatabase:
-          name: rhythm-raiders-db
-          property: connectionString
+        sync: false
       # S3互換ストレージ(R2/Supabase)でアップロード永続化 — 値はダッシュボードで設定
       - key: R2_ACCESS_KEY_ID
         sync: false
