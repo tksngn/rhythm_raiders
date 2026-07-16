@@ -30,7 +30,7 @@
               <p style="opacity:0.6; font-style:italic;">（運営により削除済み）<%= comment.comment_content %></p>
             <% else %>
               <p><%= comment.comment_content %></p>
-              <%= link_to "削除", admin_post_comment_path(comment.created_track, comment), method: :delete, data: { confirm: "このコメントを運営として削除しますか？" }, class: "admin-btn-ghost" %>
+              <%= link_to "削除", admin_created_track_comment_path(comment.created_track, comment), method: :delete, data: { confirm: "このコメントを運営として削除しますか？" }, class: "admin-btn-ghost" %>
             <% end %>
           </div>
         <% end %>

@@ -13,13 +13,10 @@ Rails.application.routes.draw do
       end
     end
     resources :created_tracks, only: [:destroy] do
-    end
-    resources :posts, only: [:index, :show, :destroy] do
+      # コメントのモデレーション（removed_by_admin を立てる）。
+      # 以前は実体の無い posts 配下にネストされ、post_id に created_track を
+      # 渡して流用していたため、正しい親である created_tracks へ移設した。
       resources :comments, only: [:destroy]
-      member do
-        get :suspend
-        patch :suspend
-      end
     end
   end
 

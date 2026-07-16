@@ -82,10 +82,8 @@ db/
 - **Webpacker 5 / webpack 4 は Node 16 で動かす**。`Dockerfile.demo` は Node 16 を入れている。**`NODE_OPTIONS=--openssl-legacy-provider` は付けない**（Node 16 には当該フラグが無く、付けると node が起動失敗する。フラグが要るのは Node 17+）。
 - **master.key / credentials**: 元の master.key は失われている（AWS/旧開発機のみ）。ローカルデモでは `bin/docker-demo.sh` が新規生成する。`config/master.key`・`.env` は gitignore 済み＝コミットしない。再生成された `config/credentials.yml.enc` もローカル専用（コミットしない）。
 - `git add .` は使わず、関係ファイルを個別に add する。
-- **未使用の残骸に注意**（触る前に schema.rb で実在を確認すること）:
-  - `app/models/post.rb` があるが **`posts` テーブルは存在しない**（旧スキャフォールドの残骸。使うと落ちる）。
-  - `app/models/notification.rb` の `enum action_type` も **該当カラムが無い**（参照箇所が無いため現状は無害）。
-  - `Gemfile.lock` の DEPENDENCIES に `carrierwave` が残っているが Gemfile からは削除済み（`bundle install` は frozen 無効で通るため実害は出ていない）。
+- **モデルを使う前に `db/schema.rb` で実在を確認する**。過去に「テーブルの無いモデル(`Post`)」「カラムの無い `enum`」が残っていた実績がある（2026-07-16 に一掃済み）。
+- 管理画面のコメントモデレーション（`removed_by_admin` を立てる論理削除）は `DELETE /admin/created_tracks/:created_track_id/comments/:id`（`admin/comments#destroy`）。以前は実体の無い `posts` 配下にネストされていた。
 
 ## 本番デプロイ（Render + Supabase・稼働中）
 

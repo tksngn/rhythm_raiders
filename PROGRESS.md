@@ -126,12 +126,22 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
    `docker run --rm postgres:13 psql '<接続文字列>' -c 'select version();'`
 4. エラーの読み分け: `Tenant or user not found` = ホスト名/ユーザー名の形式ミス（`aws-0` と `aws-1` の取り違えなど） / `password authentication failed` = ユーザーは特定できておりパスワードのみ誤り。
 
+## 4.7 死んだコードの一掃（2026-07-16）
+
+ドキュメントと実態の突き合わせ中に見つかった「実体の無いもの」を整理した。
+
+- **`Post` モデル一式を削除**。`app/models/post.rb`（作者コメントに `# future: delete`）があるのに `posts` テーブルが存在せず、使えば落ちる状態だった。model / admin・member の各 controller / helper / views / scss をまとめて削除。
+  - **ただし単純な削除ではなかった**: 管理画面のコメントモデレーションが `DELETE /admin/posts/:post_id/comments/:id` というルートを流用しており（`post_id` の位置に `created_track` を渡していた）、`posts` を消すと**生きている機能が道連れ**になる。そのため `comments` を正しい親である `created_tracks` 配下へ移設し（`admin_created_track_comment_path`）、`admin/members/show.html.erb` のリンクを差し替えてから削除した。
+  - 検証: 管理者ログイン→メンバー詳細に新パスのリンクが出る→削除で `removed_by_admin` が立つ→会員側の楽曲詳細に「運営により削除されました」と表示、までを実際に通して確認。
+- **`Notification` の `enum action_type` を削除**。`action_type` カラムが存在せず参照箇所も無かった（呼べば落ちる地雷）。通知の種類は実際には subject の実クラス（Like / PostComment / Relationship）でパーシャルを出し分けている。3種類の通知を発生させ通知一覧が200で描画されることを確認済み。
+- **`Gemfile.lock` を Gemfile と同期**。`carrierwave` が Gemfile から撤去済みなのに lock の DEPENDENCIES に残っていた（`--frozen`/`--deployment` では失敗する状態）。`bundle install` で再解決し、差分は `carrierwave` と専用依存 `ssrf_filter` の除去のみ。
+
 ## 5. 既知の制約・今後の候補
 
 - アップロードは Supabase Storage で永続化済み。ただし **Supabase 無料プロジェクトは約1週間アクセスが無いと一時停止**（次アクセスで復帰）。R2_* 環境変数を外せばローカル保存(非永続)に戻る。
 - **画像のWebP化は見送り（2026-06-21 判断）**。理由: 既に mozjpeg 品質85 で -76% 済みで追加効果が小さい一方、全画像のwebp生成＋CSS `url()`/`image_tag` 多数の差し替えが必要でROIが低いため。やるなら「背景のみWebP化（SCSSの url() のみ変更でリスク限定）」が候補。
-- 通知の `_comment` パーシャルは中身が空（コメント通知は表示が簡素）。`member_tracks`/`member/posts` 等の未到達スキャフォールドが一部残存（ルート未定義・UI未リンクのため実害なし）。
-- 旧CarrierWave関連（`carrierwave` gem / `AudiofileUploader`）は未使用のまま残置（実害なし。整理は任意）。
+- 通知の `_comment` パーシャルは中身が空（コメント通知は表示が簡素）。`member_tracks` 等の未到達スキャフォールドが一部残存。
+- ~~旧CarrierWave関連の残置~~ / ~~`Post` モデルの残置~~ → **§4.7 で一掃済み**。
 - ローカル開発は Docker デモ構成（`docker-compose.demo.yml`、http://localhost:3100）。`config/master.key`・`.env` は未コミット（各自生成）。
 
 ---
