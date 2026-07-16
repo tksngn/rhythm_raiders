@@ -116,6 +116,15 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **対応**: DBを **Supabase Postgres** へ移行。`render.yaml` の `databases:` ブロックを削除し、`DATABASE_URL` を `sync: false`（ダッシュボード設定）に変更。Supabase 無料は7日無アクセスで **pause するが削除されない**ため、消滅リスクが無くなる。
 - **接続方式の注意（重要）**: 必ず **Session pooler**（`aws-<n>-<region>.pooler.supabase.com:5432`。本プロジェクトは `aws-1-ap-northeast-1`）を使う。Supabase の Direct connection は 2024-01-15 以降 **IPv6 専用**で Render（IPv4）から到達できない。Session pooler は IPv4 プロキシ経由で無料。Transaction pooler(6543) は prepared statements の無効化が必要。取得場所は Connect → Direct(Connection string) → Connection Method: Session pooler → Type: URI。
 - **データ**: 本番の投稿データは復旧不可（バックアップ無し・インスタンスごと削除）。新DB接続後は `db:prepare` + `db:seed` でデモデータが再生成される。Supabase Storage 側の音源blobは残るが参照レコードが無く孤児化する。
+- **結果**: 2026-07-16 復旧完了。Supabase は **PostgreSQL 17**。Rails 6.1 との組み合わせをローカル（本番Dockerfile + postgres:17）で検証し、`db:prepare`→`db:seed`→ヘルスチェック200 まで完走を確認済み。
+
+### 復旧時にハマった点（次回のために）
+
+1. **接続文字列のプレースホルダを置換し忘れる**。`[YOUR-PASSWORD]` を残したまま設定すると `URI::InvalidURIError: bad URI` でRailsが起動前に落ちる。角括弧ごと消してパスワードを書く。パスワードに記号があればパーセントエンコードが必要なので、**英数字のみのパスワードにしておくと事故らない**。
+2. **Supavisor のサーキットブレーカー**。認証失敗が続くと `FATAL: (ECIRCUITBREAKER) too many authentication failures` で新規接続が**発信元IP単位で最大2分ブロック**される。`render-start.sh` は `set -e` で落ちるとコンテナが再起動→再試行するため、**間違ったパスワードのままだとブレーカーが再適用され続けて永久に解けない**。まず Render の **Suspend Service** で接続試行を止めること。
+3. **ブレーカーはIP単位なので、ローカルから検証できる**。Renderがロックされていても自宅PCからは試せる。Renderを触る前にこれで確定させると速い:
+   `docker run --rm postgres:13 psql '<接続文字列>' -c 'select version();'`
+4. エラーの読み分け: `Tenant or user not found` = ホスト名/ユーザー名の形式ミス（`aws-0` と `aws-1` の取り違えなど） / `password authentication failed` = ユーザーは特定できておりパスワードのみ誤り。
 
 ## 5. 既知の制約・今後の候補
 
