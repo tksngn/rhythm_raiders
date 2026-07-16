@@ -4,12 +4,13 @@
 
 ## プロジェクト概要
 
-**Rhythm Raiders** は、ユーザー（Member）が制作した楽曲（BGM）を投稿・共有し、再生・コメント・フォロー・いいねで交流する**音楽SNS型 Web アプリ**。Ruby on Rails のモノリス構成で、画面・API・DB を Rails 単体で持つ。元々は **AWS** 上で稼働していたものを移植中。
+**Rhythm Raiders** は、ユーザー（Member）が制作した楽曲（BGM）を投稿・共有し、再生・コメント・フォロー・いいねで交流する**音楽SNS型 Web アプリ**。Ruby on Rails のモノリス構成で、画面・API・DB を Rails 単体で持つ。元は **AWS** 上で稼働していたものを **Render + Supabase へ移植済み**（稼働中: https://rhythm-raiders.onrender.com ）。移植の経緯は `PROGRESS.md` に詳しい。
 
 主な機能:
 - 会員登録・ログイン（Devise）／管理者(Admin)＋ ActiveAdmin 管理画面
 - 楽曲（CreatedTrack）の投稿・一覧・再生（wavesurfer.js / audiojs）・ActiveStorage で音源保存
-- 投稿(Post)・コメント(PostComment / commontator)・いいね(Like / acts_as_votable)・フォロー(Relationship / acts_as_follower)
+- 楽曲へのAI動画紐づけ（YouTube/Vimeo のURLを埋め込み。投稿者本人のみ設定可）
+- コメント(PostComment / commontator)・いいね(Like / acts_as_votable)・フォロー(Relationship / acts_as_follower)
 - 通知(Notification / public_activity)・検索(ransack)・ページネーション(kaminari)
 
 ## 技術スタック
@@ -18,12 +19,12 @@
 |---------|------|
 | 言語 | Ruby 3.1.2 |
 | フレームワーク | Rails 6.1.7 |
-| DB | **開発: SQLite3** ／ 本番: MySQL（mysql2・元AWS RDS想定） |
+| DB | **開発: SQLite3** ／ **本番: PostgreSQL 17（Supabase・`pg` gem）**。旧AWSのMySQL(mysql2)からは移行済みで、`mysql2` は依存に無い |
 | 認証 | Devise（`Member` と `Admin` の2モデル）＋ ActiveAdmin |
 | フロント | Webpacker 5 + webpack 4（Bootstrap / jQuery / wavesurfer.js / turbolinks）＋ Sprockets(sass-rails) |
-| ファイル保存 | ActiveStorage（開発: ローカルDisk ／ 本番: S3・aws-sdk-s3） |
+| ファイル保存 | ActiveStorage（開発: ローカルDisk ／ **本番: Supabase Storage（S3互換・aws-sdk-s3）**）。`R2_ACCESS_KEY_ID` の有無で `:cloudflare` / `:local` を切替（`config/environments/production.rb`） |
 | アプリサーバ | Puma 3 |
-| その他 gem | ransack / kaminari / acts_as_votable / acts_as_follower / commontator / public_activity / enum_help / carrierwave / dotenv-rails |
+| その他 gem | ransack / kaminari / acts_as_votable / acts_as_follower / commontator / public_activity / enum_help / dotenv-rails |
 
 ## ローカルでの起動（Docker・推奨）
 
@@ -66,10 +67,10 @@ app/
 └── javascript/packs/              # Webpacker エントリ（application.js, homes）
 config/
 ├── routes.rb                      # root→homes#member_top, devise_for :admin/:member, namespace admin/member
-├── database.yml                   # dev=sqlite3 / prod=mysql2
-└── storage.yml                    # local(Disk) / amazon(S3)
+├── database.yml                   # dev=sqlite3 / prod=postgresql（DATABASE_URL を参照）
+└── storage.yml                    # local(Disk) / cloudflare(S3互換=Supabase Storage)
 db/
-├── migrate/                       # 8マイグレーション（devise/created_tracks/likes/relationships/notifications 等）
+├── migrate/                       # 11マイグレーション（devise/created_tracks/likes/relationships/notifications 等）
 ├── schema.rb
 ├── seeds.rb
 └── fixtures/                      # seed 用 mp3
@@ -81,18 +82,23 @@ db/
 - **Webpacker 5 / webpack 4 は Node 16 で動かす**。`Dockerfile.demo` は Node 16 を入れている。**`NODE_OPTIONS=--openssl-legacy-provider` は付けない**（Node 16 には当該フラグが無く、付けると node が起動失敗する。フラグが要るのは Node 17+）。
 - **master.key / credentials**: 元の master.key は失われている（AWS/旧開発機のみ）。ローカルデモでは `bin/docker-demo.sh` が新規生成する。`config/master.key`・`.env` は gitignore 済み＝コミットしない。再生成された `config/credentials.yml.enc` もローカル専用（コミットしない）。
 - `git add .` は使わず、関係ファイルを個別に add する。
+- **未使用の残骸に注意**（触る前に schema.rb で実在を確認すること）:
+  - `app/models/post.rb` があるが **`posts` テーブルは存在しない**（旧スキャフォールドの残骸。使うと落ちる）。
+  - `app/models/notification.rb` の `enum action_type` も **該当カラムが無い**（参照箇所が無いため現状は無害）。
+  - `Gemfile.lock` の DEPENDENCIES に `carrierwave` が残っているが Gemfile からは削除済み（`bundle install` は frozen 無効で通るため実害は出ていない）。
 
-## デプロイ方針（移植）
+## 本番デプロイ（Render + Supabase・稼働中）
 
-元は AWS。アーキテクチャがモノリスのため、Wave-Nexus（Next.js+NestJS+Supabase）とは対応が異なる。
-
-| サービス | 適用 | 備考 |
+| 役割 | サービス | 備考 |
 |---|---|---|
-| **Render** | ◎ アプリ本体のホスト先に最適 | Rails 常駐サーバをそのまま動かせる |
-| **Supabase** | ○ DB（Postgres）として利用可 | 本番DBが MySQL のため `mysql2`→`pg` 改修が必要 |
-| **Vercel** | ✗ 不適 | Rails モノリスは載らない。別フロントが存在しない |
+| アプリ | **Render**（無料 Web Service・Docker） | 本番用 `Dockerfile` + `bin/render-start.sh`（db:prepare→seed→puma）。`render.yaml` は Blueprint |
+| DB | **Supabase Postgres 17** | `DATABASE_URL` はダッシュボードで設定（`render.yaml` では `sync: false`） |
+| ファイル | **Supabase Storage**（S3互換） | `R2_*` 環境変数で設定 |
 
-- 無料枠の注意: Render 無料 Web Service は15分でスリープ（次アクセスでコールドスタート30〜60秒）、Supabase 無料は7日でpause。常時公開したい場合は keep-alive ping か有料枠を検討。
+- **`main` への push で自動再デプロイ。**
+- **`DATABASE_URL` は必ず Supabase の「Session pooler」**（`aws-<n>-<region>.pooler.supabase.com:5432`）を使う。Direct connection はIPv6専用で Render（IPv4）から到達できない。詳細と障害時の対処は `PROGRESS.md` §4.6。
+- 以前は Render の無料 Postgres を使っていたが、**30日で期限切れ→削除される**仕様で 2026-07-15 に消滅し本番停止した（→ Supabase へ移行済み）。Vercel は Rails モノリスが載らないため不適。
+- 無料枠の注意: Render 無料 Web は15分でスリープ（次アクセスでコールドスタート30〜60秒）、Supabase 無料は7日でpause（削除はされない）。常時公開したいなら keep-alive ping か有料枠。
 - 一時的に見せるだけなら ngrok/cloudflared でローカル(3100)を公開する手もある。
 
 ## 開発スタンス
