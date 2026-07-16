@@ -1,6 +1,6 @@
 class Member::CreatedTracksController < ApplicationController
   before_action :authenticate_member!
-  before_action :set_own_created_track, only: %i[edit update]
+  before_action :set_own_created_track, only: %i[edit update destroy]
 
   def show
     @created_track = CreatedTrack.find(params[:id])
@@ -48,10 +48,8 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def destroy
-    @created_track = CreatedTrack.find(params[:id])
-    redirect_to root_path and return unless @created_track.member = current_member
     @created_track.destroy!
-    redirect_to mypage_member_customers_path(current_member.id)
+    redirect_to mypage_member_customers_path, notice: '楽曲を削除しました。'
   end
 
   def guest_index
@@ -61,12 +59,12 @@ class Member::CreatedTracksController < ApplicationController
 
   private
 
-  # 他人の楽曲を編集できないよう、必ず current_member の投稿から引く
+  # 他人の楽曲を編集・削除できないよう、必ず current_member の投稿から引く
   def set_own_created_track
     @created_track = current_member.created_tracks.find_by(id: params[:id])
     return if @created_track
 
-    redirect_to member_created_tracks_path, alert: 'その楽曲を編集する権限がありません。'
+    redirect_to member_created_tracks_path, alert: 'その楽曲を操作する権限がありません。'
   end
 
   # 一覧/ゲスト一覧の並び替え + N+1回避の eager load をまとめる。
