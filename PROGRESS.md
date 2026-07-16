@@ -114,7 +114,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **原因**: 接続拒否ではなく **DNS が引けない**＝DBインスタンスの消滅。Postgres 側ログに `2026-07-15T14:24:30Z database system is shut down` が記録されていた。Render 無料DBは**作成から30日で期限切れ → 14日の猶予後にデータごと削除**（無料枠はバックアップ非対応）。
 - **切り分け**: 直前の push（AI動画機能, 07-16 12:05 UTC）とは無関係。DB消滅はその**約22時間前**。本番 `Dockerfile` をローカルでビルドし、実 Postgres に対して `db:prepare`→`db:seed`→ヘルスチェック200 まで完走することを確認済み。
 - **対応**: DBを **Supabase Postgres** へ移行。`render.yaml` の `databases:` ブロックを削除し、`DATABASE_URL` を `sync: false`（ダッシュボード設定）に変更。Supabase 無料は7日無アクセスで **pause するが削除されない**ため、消滅リスクが無くなる。
-- **接続方式の注意（重要）**: 必ず **Session pooler**（`aws-0-<region>.pooler.supabase.com:5432`）を使う。Supabase の Direct connection は 2024-01-15 以降 **IPv6 専用**で Render（IPv4）から到達できない。Transaction pooler(6543) は prepared statements の無効化が必要。
+- **接続方式の注意（重要）**: 必ず **Session pooler**（`aws-<n>-<region>.pooler.supabase.com:5432`。本プロジェクトは `aws-1-ap-northeast-1`）を使う。Supabase の Direct connection は 2024-01-15 以降 **IPv6 専用**で Render（IPv4）から到達できない。Session pooler は IPv4 プロキシ経由で無料。Transaction pooler(6543) は prepared statements の無効化が必要。取得場所は Connect → Direct(Connection string) → Connection Method: Session pooler → Type: URI。
 - **データ**: 本番の投稿データは復旧不可（バックアップ無し・インスタンスごと削除）。新DB接続後は `db:prepare` + `db:seed` でデモデータが再生成される。Supabase Storage 側の音源blobは残るが参照レコードが無く孤児化する。
 
 ## 5. 既知の制約・今後の候補

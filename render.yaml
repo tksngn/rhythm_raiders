@@ -27,10 +27,13 @@ services:
       - key: ADMIN_PASSWORD
         sync: false          # 値はダッシュボードで各自設定
       # Supabase Postgres の接続文字列。値はダッシュボードで設定する。
-      # 必ず「Session pooler」の文字列を使うこと（ダッシュボードの Connect → Session pooler）:
-      #   postgresql://postgres.<project-ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres
+      # 必ず「Session pooler」の文字列を使うこと
+      # （Supabase の Connect → Direct(Connection string) → Connection Method: Session pooler → Type: URI）:
+      #   postgresql://postgres.<project-ref>:<password>@aws-<n>-<region>.pooler.supabase.com:5432/postgres
+      # 見分け方: ホストが pooler.supabase.com かつ port 5432 なら Session pooler。
       # Direct connection (db.<project-ref>.supabase.co:5432) はIPv6専用でRenderから到達できず、
       # Transaction pooler (6543) は prepared statements の無効化が別途必要になる。
+      # パスワードに記号が含まれる場合はパーセントエンコードすること。
       - key: DATABASE_URL
         sync: false
       # S3互換ストレージ(R2/Supabase)でアップロード永続化 — 値はダッシュボードで設定
