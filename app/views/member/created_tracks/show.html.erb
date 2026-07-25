@@ -57,7 +57,7 @@
         </div>
 
         <div class="ts-player">
-          <%= render "layouts/player", created_track: @created_track, is_guest: false %>
+          <%= render "layouts/player", created_track: @created_track, is_guest: false, show_loop: true %>
         </div>
 
         <div class="ts-comment-form">
@@ -135,7 +135,12 @@
               if (!ws || !ws.on) return false;
               ws.on("play", function () { v.play().catch(function () {}); });
               ws.on("pause", function () { v.pause(); });
-              ws.on("finish", function () { v.pause(); v.currentTime = 0; });
+              ws.on("finish", function () {
+                v.currentTime = 0;
+                // ループONのときは音が続くので映像も止めない。
+                // ハンドラの実行順に依存しないよう、ここで判定する。
+                if (!window.wsLoop_<%= @created_track.id %>) v.pause();
+              });
               return true;
             }
 

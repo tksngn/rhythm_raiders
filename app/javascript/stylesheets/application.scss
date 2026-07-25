@@ -2349,6 +2349,20 @@ input[type="submit"].ts-btn--primary {
   &:hover { background: linear-gradient(135deg, #00ffcc, #b06cff); }
 }
 
+// ループ切替。ON のときは押しっぱなしに見えるよう塗りを反転させる
+.wave-btn--loop {
+  border-color: rgba(255, 214, 102, 0.45);
+
+  &:hover { background: linear-gradient(135deg, #00ffcc, #ffd666); }
+
+  &.is-active {
+    color: #2a1f00;
+    background: linear-gradient(135deg, #ffd666, #ffb300);
+    border-color: rgba(255, 214, 102, 0.9);
+    box-shadow: 0 0 14px rgba(255, 200, 80, 0.45);
+  }
+}
+
 .wave-time {
   font-style: normal;
   font-size: 0.8rem;

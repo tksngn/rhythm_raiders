@@ -4,6 +4,12 @@
   <div class="wave-controls__btns">
     <a class="wave-btn wave-btn--play" onclick="wavesurfer_<%= created_track.id %> && wavesurfer_<%= created_track.id %>.playPause();">▶ PLAY / STOP</a>
     <a class="wave-btn wave-btn--restart" onclick="wavesurfer_<%= created_track.id %> && (wavesurfer_<%= created_track.id %>.stop(), wavesurfer_<%= created_track.id %>.play());">⟲ Start Over</a>
+    <%# ループ切替は楽曲詳細だけに出す（一覧では複数曲が並ぶため） %>
+    <% if local_assigns[:show_loop] %>
+      <a id="loop_<%= created_track.id %>" class="wave-btn wave-btn--loop"
+         role="button" aria-pressed="false"
+         onclick="toggleLoop_<%= created_track.id %>();">🔁 LOOP OFF</a>
+    <% end %>
   </div>
   <a id="time_<%= created_track.id %>" class="wave-time"></a>
 </div>
@@ -16,6 +22,25 @@
 <script>
 (function () {
   var cid = "<%= created_track.id %>";
+
+<% if local_assigns[:show_loop] %>
+  // ループ状態はグローバルに持つ。動画の同期スクリプト（楽曲詳細）からも
+  // 「ループ中は映像を止めない」判定のために参照される。
+  if (typeof window.wsLoop_<%= created_track.id %> === "undefined") {
+    window.wsLoop_<%= created_track.id %> = false;
+  }
+
+  window.toggleLoop_<%= created_track.id %> = function () {
+    var on = !window.wsLoop_<%= created_track.id %>;
+    window.wsLoop_<%= created_track.id %> = on;
+    var btn = document.getElementById("loop_" + cid);
+    if (btn) {
+      btn.classList.toggle("is-active", on);
+      btn.setAttribute("aria-pressed", String(on));
+      btn.textContent = on ? "🔁 LOOP ON" : "🔁 LOOP OFF";
+    }
+  };
+<% end %>
 
   function initWave_<%= created_track.id %>() {
     if (typeof WaveSurfer === "undefined") return;
@@ -51,6 +76,16 @@
       var t = document.getElementById("time_" + cid);
       if (t) t.textContent = parseInt(currentTime) + " sec.";
     });
+
+<% if local_assigns[:show_loop] %>
+    // 末尾まで再生したら、ループONのときだけ頭から流し直す
+    ws.on("finish", function () {
+      if (window.wsLoop_<%= created_track.id %>) {
+        ws.stop();
+        ws.play();
+      }
+    });
+<% end %>
 
     var vol = document.getElementById("volume_" + cid);
     if (vol) {
