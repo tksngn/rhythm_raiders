@@ -179,6 +179,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 3. `purge` → 添付解除を確認
 4. `ActionDispatch::Integration::Session` で会員ログイン（303）→ 楽曲詳細 **200**・"AI Artwork" 見出しと ActiveStorage の `<img>` を確認 → 編集画面 **200**・削除チェックボックスと `multipart/form-data` を確認
 5. SCSS 変更を含む **webpack 再コンパイルが通る**ことを確認（`public/packs/manifest.json` が更新された）
+6. 本番（Render）でも、編集画面に「AI Artwork（任意）」欄が出ること・動画欄の文言が新しくなっていることをユーザーが確認済み
 
 ---
 
