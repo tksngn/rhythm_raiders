@@ -59,7 +59,8 @@
       <section class="mp-card mypage__full">
         <h3 class="mp-heading">My <span>Tracks</span></h3>
         <% if @created_tracks.any? %>
-          <div class="mp-track-list">
+          <%# 1曲しかないと2列グリッドの右半分が空いてしまうので、少ないときは1列にする %>
+          <div class="mp-track-list <%= 'mp-track-list--few' if @created_tracks.size < 2 %>">
             <% @created_tracks.each do |created_track| %>
               <div class="mp-track">
                 <%= render "layouts/track_thumb", created_track: created_track %>

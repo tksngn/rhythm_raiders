@@ -1507,6 +1507,9 @@ input[type="submit"].ts-btn--primary {
   gap: 10px;
 }
 
+// ただし曲が少ないと2列の片側が空くだけなので、そのときは1列に戻す
+.mp-track-list--few { grid-template-columns: 1fr; }
+
 .mp-track {
   padding: 12px 14px;
   border-radius: 12px;
