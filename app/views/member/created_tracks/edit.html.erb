@@ -8,12 +8,20 @@
       <h2 class="about-heading">§ Edit Track §</h2>
 
       <p class="auth-hint mb-3">
-        「<%= @created_track.music_title %>」の Creator Word とAI動画URLを編集できます。
-        タイトル・ジャンル・音源ファイルは変更できません。
+        「<%= @created_track.music_title %>」の情報を編集できます。
+        音源ファイルは差し替えできません（別の曲として投稿してください）。
       </p>
 
       <%= form_with model: [:member, @created_track], html: { class: "auth-form" } do |f| %>
         <%= render 'layouts/errors', model: @created_track %>
+        <div class="auth-field">
+          <%= f.label :music_title, "Music Title" %>
+          <%= f.text_field :music_title, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
+          <%= f.label :music_genre, "Music Genre" %>
+          <%= f.text_field :music_genre, class: "auth-input" %>
+        </div>
         <div class="auth-field">
           <%= f.label :creater_word, "Creator Word" %>
           <%= f.text_area :creater_word, rows: 4, class: "auth-input" %>

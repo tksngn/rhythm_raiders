@@ -10,7 +10,7 @@
 - 会員登録・ログイン（Devise）／管理者(Admin)＋ ActiveAdmin 管理画面
 - 楽曲（CreatedTrack）の投稿・一覧・再生（wavesurfer.js / audiojs）・ActiveStorage で音源保存
 - 楽曲へのAI動画紐づけ（YouTube/Vimeo のURLを埋め込み。投稿者本人のみ設定可）
-- 投稿済み楽曲の編集（`member/created_tracks#edit`）。編集できるのは **Creator Word と AI動画URL のみ**で、タイトル・ジャンル・音源ファイルは変更不可
+- 投稿済み楽曲の編集（`member/created_tracks#edit`）。タイトル・ジャンル・Creator Word・AI動画URL を変更できる。**音源ファイル(`music_file`)の差し替えのみ不可**（いいね・コメントを保ったまま中身がすり替わるため）
 - コメント(PostComment / commontator)・いいね(Like / acts_as_votable)・フォロー(Relationship / acts_as_follower)
 - 通知(Notification / public_activity)・検索(ransack)・ページネーション(kaminari)
 

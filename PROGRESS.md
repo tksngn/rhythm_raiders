@@ -145,8 +145,9 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **対応**: edit 画面を「§ Edit Track §」に広げ、**Creator Word（textarea 4行）＋ AI Music Video URL** の2項目にした。strong parameters は `music_video_params` → `track_edit_params` に改名し `:creater_word, :music_video_url` のみ許可。**タイトル・ジャンル・音源ファイルは投稿時のまま変更不可**（音源の差し替えは実質「別の曲」になるため意図的に塞いでいる）。
 - **導線のラベル**: 実態と合わなくなったため、楽曲詳細の「AI動画を追加/編集」→ **「楽曲を編集」**、マイページの同ボタン → **「Edit」** に変更。
 - **権限**: 既存の `set_own_created_track` がそのまま効くので他人の楽曲は編集画面に入れない。`creater_word` は `presence: true` のため空欄保存はエラーになり編集画面へ戻る。
-- **残件**: `music_title` / `music_genre` は依然として投稿後に変更できない（同じフォームに2項目足すだけで対応可能）。
 - **検証**: 2026-07-25、本番（Render）で楽曲詳細に「楽曲を編集」ボタンが出ること、そこから Word を書き換えて保存できることをユーザーが確認済み。
+- **追加対応（同日）**: 続けて `music_title` / `music_genre` も編集可能にした。編集画面は Title / Genre / Creator Word / AI動画URL の4項目になり、`track_edit_params` もその4つを許可する。両カラムとも `presence: true` があるため空欄保存はエラーで戻る。
+- **`music_file` だけは意図的に編集不可のまま**。音源を差し替えると実質「別の曲」になるのに、いいね・コメントは元の曲に紐づいたまま残り、中身だけすり替わるため。差し替えたい場合は新規投稿してもらう。
 
 ### 確認時にハマった点
 
@@ -163,7 +164,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - アップロードは Supabase Storage で永続化済み。ただし **Supabase 無料プロジェクトは約1週間アクセスが無いと一時停止**（次アクセスで復帰）。R2_* 環境変数を外せばローカル保存(非永続)に戻る。
 - **画像のWebP化は見送り（2026-06-21 判断）**。理由: 既に mozjpeg 品質85 で -76% 済みで追加効果が小さい一方、全画像のwebp生成＋CSS `url()`/`image_tag` 多数の差し替えが必要でROIが低いため。やるなら「背景のみWebP化（SCSSの url() のみ変更でリスク限定）」が候補。
 - 通知の `_comment` パーシャルは中身が空（コメント通知は表示が簡素）。`member_tracks` 等の未到達スキャフォールドが一部残存。
-- **楽曲の編集は Creator Word と AI動画URL のみ**（§4.8）。`music_title` / `music_genre` は投稿後に変更できない。音源ファイルの差し替えは意図的に塞いでいる。
+- **楽曲の編集は Title / Genre / Creator Word / AI動画URL の4項目**（§4.8）。音源ファイル(`music_file`)の差し替えだけは意図的に塞いでいる（いいね・コメントを保ったまま中身がすり替わるのを防ぐため）。
 - ~~旧CarrierWave関連の残置~~ / ~~`Post` モデルの残置~~ → **§4.7 で一掃済み**。
 - ローカル開発は Docker デモ構成（`docker-compose.demo.yml`、http://localhost:3100）。`config/master.key`・`.env` は未コミット（各自生成）。
 

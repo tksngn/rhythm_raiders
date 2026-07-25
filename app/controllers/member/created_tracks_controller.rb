@@ -35,7 +35,7 @@ class Member::CreatedTracksController < ApplicationController
     end
   end
 
-  # 投稿後に Creator Word と AI動画URL を編集する画面
+  # 投稿後にタイトル/ジャンル/Creator Word/AI動画URL を編集する画面
   def edit
   end
 
@@ -97,9 +97,10 @@ class Member::CreatedTracksController < ApplicationController
     params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file, :music_video_url)
   end
 
-  # 編集画面で扱うのは Creator Word と AI動画URL のみ。
-  # タイトル・ジャンル・音源ファイルは投稿時のまま（差し替えさせない）。
+  # 編集画面で扱うのはテキスト項目とAI動画URLのみ。
+  # music_file は差し替えを許さない（音源が変わると実質「別の曲」になり、
+  # いいね・コメントが元の曲に紐づいたまま中身だけすり替わるため）。
   def track_edit_params
-    params.require(:created_track).permit(:creater_word, :music_video_url)
+    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_video_url)
   end
 end
