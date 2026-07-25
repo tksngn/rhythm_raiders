@@ -25,7 +25,10 @@
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <link rel="icon" href="data:,"> <!-- 追加したコード -->
+    <%# タブのアイコン。300x300 の正方形ロゴを使う（logo1は208x200、logo2は横長バナー）。
+        以前は favicon の404を消すために href="data:," で無効化していた。 %>
+    <%= favicon_link_tag 'rhythm_raiders_logo.jpg', type: 'image/jpeg' %>
+    <%= favicon_link_tag 'rhythm_raiders_logo.jpg', rel: 'apple-touch-icon', type: 'image/jpeg' %>
   </head>
 
   <body class="d-flex flex-column min-vh-100">
