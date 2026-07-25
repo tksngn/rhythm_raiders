@@ -238,7 +238,8 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **原因**: ブラウザタブに既定の地球儀アイコンが出ていたのは、レイアウトに `<link rel="icon" href="data:,">` という**favicon を明示的に無効化する記述**が残っていたため（favicon の404を消す目的で入れられたもの）。
 - **対応**: これを削除し、`favicon_link_tag` でロゴを指定。あわせて `apple-touch-icon` も設定した。
 - **画像の選定**: `rhythm_raiders_logo.jpg` は **300x300 の正方形**でfaviconに最適。`logo1.jpg`(208x200) はヘッダー用、`logo2.jpg`(419x150) は横長バナーでOGP/ヒーロー用なので使わない。
-- **検証**: `<link rel="shortcut icon" type="image/jpeg" href="/assets/rhythm_raiders_logo-<digest>.jpg">` が出力され、そのアセットが **200 / image/jpeg / 8115 bytes** で配信されることを確認。`data:,` が残っていないことも確認済み。
+- **検証**: `<link rel="shortcut icon" type="image/jpeg" href="/assets/rhythm_raiders_logo-<digest>.jpg">` が出力され、そのアセットが **200 / image/jpeg / 8115 bytes** で配信されることを確認。`data:,` が残っていないことも確認済み。2026-07-26、本番のタブにロゴが出ることをユーザーが確認。
+- **注意**: favicon はブラウザキャッシュが強く残る。変わらないときはスーパーリロード（Ctrl+Shift+R）か、アセットURLを直接開く。
 
 ---
 
