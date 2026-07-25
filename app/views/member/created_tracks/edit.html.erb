@@ -53,7 +53,7 @@
           </p>
 
           <% if @created_track.music_video_file.attached? %>
-            <div class="ts-mv__frame mt-2">
+            <div class="ts-mv__frame ts-mv__frame--file mt-2">
               <video src="<%= rails_storage_redirect_path(@created_track.music_video_file) %>"
                      muted playsinline controls preload="metadata"></video>
             </div>

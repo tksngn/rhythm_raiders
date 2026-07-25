@@ -1315,6 +1315,20 @@ input[type="submit"].ts-btn--primary {
 // 編集画面のプレビューは本表示より小さく
 .ts-artwork__frame--preview img { max-height: 220px; }
 
+// アップロードされた動画は元の縦横比のまま表示する。
+// 16:9 に固定すると、正方形・縦長の動画（Suno等の出力）で左右に大きな黒帯が出るため。
+// YouTube/Vimeo の iframe は内在比を持たないので、そちらは 16:9 のまま。
+.ts-mv__frame--file {
+  aspect-ratio: auto;
+
+  video {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+  }
+}
+
 .ts-note {
   margin: 0 0 8px;
   text-align: center;
@@ -1483,9 +1497,18 @@ input[type="submit"].ts-btn--primary {
 }
 
 /* My Tracks */
+// 下段に全幅で置く My Tracks（曲数で伸びる唯一のカードなので列に入れない）
+.mypage__full { grid-column: 1 / -1; }
+
+// 全幅だと1列では横に間延びするため2列で並べる
+.mp-track-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
 .mp-track {
   padding: 12px 14px;
-  margin-bottom: 10px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
@@ -1632,6 +1655,7 @@ input[type="submit"].ts-btn--primary {
 
 @media (max-width: 768px) {
   .mypage__grid { grid-template-columns: 1fr; }
+  .mp-track-list { grid-template-columns: 1fr; }
 }
 
 /* ===== 楽曲投稿/会員編集フォーム (member-track-show) — dark + neon glass ===== */

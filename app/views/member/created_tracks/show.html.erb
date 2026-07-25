@@ -114,7 +114,7 @@
         <% if @created_track.music_video_file.attached? %>
           <div class="ts-mv mt-3">
             <h3 class="ts-mv__label">AI Music Video</h3>
-            <div class="ts-mv__frame">
+            <div class="ts-mv__frame ts-mv__frame--file">
               <%# 音は左のプレーヤー(wavesurfer)で鳴らすため既定はミュート。
                   controls を残してあるので、動画側の音を聴きたい人は解除できる。 %>
               <video id="mv_<%= @created_track.id %>"

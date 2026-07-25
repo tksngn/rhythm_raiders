@@ -18,38 +18,6 @@
             <%= link_to "Edit Profile", edit_member_customer_path(current_member), class: "mp-navlink" %>
           </div>
         </section>
-
-        <!-- My Tracks -->
-        <section class="mp-card">
-          <h3 class="mp-heading">My <span>Tracks</span></h3>
-          <% if @created_tracks.any? %>
-            <% @created_tracks.each do |created_track| %>
-              <div class="mp-track">
-                <%= render "layouts/track_thumb", created_track: created_track %>
-                <div class="mp-track__body">
-                  <h4 class="mp-track__title">
-                    <%= link_to created_track.music_title, member_created_track_path(created_track.id) %>
-                  </h4>
-                  <p class="mp-track__meta">Genre : <%= created_track.music_genre %></p>
-                  <p class="mp-track__word"><%= created_track.creater_word %></p>
-                  <div class="mp-track__actions">
-                    <%= link_to "#{created_track.post_comments.count} Comments", member_created_track_path(created_track.id), class: "mp-link" %>
-                    <%= link_to "Edit",
-                        edit_member_created_track_path(created_track.id),
-                        class: "mp-link" %>
-                    <%= link_to "Delete",
-                        member_created_track_path(created_track.id),
-                        method: :delete,
-                        data: { confirm: "削除してもよろしいですか？" },
-                        class: "mp-link mp-link--danger" %>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <p class="mp-empty">まだ投稿がありません。</p>
-          <% end %>
-        </section>
       </div>
 
       <div class="mypage__col">
@@ -85,6 +53,41 @@
           <%= link_to "♪ Edit & Post Music", new_member_created_track_path, class: "mp-navlink mp-navlink--accent" %>
         </section>
       </div>
+
+      <%# My Tracks は曲数に応じて伸びる唯一のカード。左右どちらかの列に置くと
+          その列だけが伸びて反対側に余白が残るため、下段に全幅で置く。 %>
+      <section class="mp-card mypage__full">
+        <h3 class="mp-heading">My <span>Tracks</span></h3>
+        <% if @created_tracks.any? %>
+          <div class="mp-track-list">
+            <% @created_tracks.each do |created_track| %>
+              <div class="mp-track">
+                <%= render "layouts/track_thumb", created_track: created_track %>
+                <div class="mp-track__body">
+                  <h4 class="mp-track__title">
+                    <%= link_to created_track.music_title, member_created_track_path(created_track.id) %>
+                  </h4>
+                  <p class="mp-track__meta">Genre : <%= created_track.music_genre %></p>
+                  <p class="mp-track__word"><%= created_track.creater_word %></p>
+                  <div class="mp-track__actions">
+                    <%= link_to "#{created_track.post_comments.count} Comments", member_created_track_path(created_track.id), class: "mp-link" %>
+                    <%= link_to "Edit",
+                        edit_member_created_track_path(created_track.id),
+                        class: "mp-link" %>
+                    <%= link_to "Delete",
+                        member_created_track_path(created_track.id),
+                        method: :delete,
+                        data: { confirm: "削除してもよろしいですか？" },
+                        class: "mp-link mp-link--danger" %>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="mp-empty">まだ投稿がありません。</p>
+        <% end %>
+      </section>
     </div>
   </div>
 </div>
