@@ -45,6 +45,25 @@
           <% end %>
         </div>
         <div class="auth-field">
+          <%= f.label :music_video_file, "AI Music Video ファイル（任意）" %>
+          <%= f.file_field :music_video_file, accept: "video/mp4,video/webm", class: "auth-input auth-input--file" %>
+          <p class="auth-hint">
+            手元の動画ファイル（MP4 / WebM、50MBまで）。詳細ページでは<strong>ミュートで表示</strong>され、
+            音は波形プレーヤーで鳴ります。選び直すと差し替わります。
+          </p>
+
+          <% if @created_track.music_video_file.attached? %>
+            <div class="ts-mv__frame mt-2">
+              <video src="<%= rails_storage_redirect_path(@created_track.music_video_file) %>"
+                     muted playsinline controls preload="metadata"></video>
+            </div>
+            <p class="auth-hint mt-2">
+              <%= check_box_tag "created_track[remove_music_video_file]", "1", false, id: "remove_music_video_file" %>
+              <%= label_tag "remove_music_video_file", "この動画を削除する" %>
+            </p>
+          <% end %>
+        </div>
+        <div class="auth-field">
           <%= f.label :music_video_url, "AI Music Video URL" %>
           <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
           <p class="auth-hint">

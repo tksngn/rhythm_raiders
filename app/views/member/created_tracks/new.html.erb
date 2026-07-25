@@ -58,6 +58,15 @@
           </p>
         </div>
         <div class="auth-field">
+          <%= f.label :music_video_file, "AI Music Video ファイル（任意）" %>
+          <%= f.file_field :music_video_file, accept: "video/mp4,video/webm", class: "auth-input auth-input--file" %>
+          <p class="auth-hint">
+            手元の動画ファイル（MP4 / WebM、50MBまで）をそのままアップロードできます。
+            詳細ページでは<strong>ミュートで表示</strong>され、音は波形プレーヤーで鳴ります。
+            50MBを超える動画は、下のURL欄をお使いください。
+          </p>
+        </div>
+        <div class="auth-field">
           <%= f.label :music_video_url, "AI Music Video URL（任意）" %>
           <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
           <p class="auth-hint">

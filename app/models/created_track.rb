@@ -11,6 +11,12 @@ class CreatedTrack < ApplicationRecord
   IMAGE_CONTENT_TYPES = %w[image/png image/jpeg image/gif image/webp].freeze
   IMAGE_MAX_SIZE = 5.megabytes
 
+  # AI動画を直接アップロードする場合の形式とサイズ上限。
+  # 50MB は Supabase 無料枠の1ファイル上限に合わせた値。これを超える動画は
+  # YouTube/Vimeo にアップして music_video_url を使ってもらう。
+  VIDEO_CONTENT_TYPES = %w[video/mp4 video/webm].freeze
+  VIDEO_MAX_SIZE = 50.megabytes
+
   belongs_to :member
   # 前後の空白を落とし、空欄は "" ではなく nil で保存する
   before_validation :normalize_music_video_url
@@ -33,6 +39,10 @@ class CreatedTrack < ApplicationRecord
   # 表示サイズは CSS(.ts-artwork__frame img) で制御する（profile_image と同方針）。
   has_one_attached :music_image
   validate :music_image_must_be_supported
+
+  # AI動画(任意)。YouTube/Vimeo の埋め込み(music_video_url)との併用可。
+  has_one_attached :music_video_file
+  validate :music_video_file_must_be_supported
 
   def music_file_required
     errors.add(:music_file, "を選択してください") unless music_file.attached?
@@ -125,6 +135,20 @@ class CreatedTrack < ApplicationRecord
     end
     if blob.byte_size > IMAGE_MAX_SIZE
       errors.add(:music_image, "は #{IMAGE_MAX_SIZE / 1.megabyte}MB 以下にしてください")
+    end
+  end
+
+  def music_video_file_must_be_supported
+    return unless music_video_file.attached?
+
+    blob = music_video_file.blob
+    unless VIDEO_CONTENT_TYPES.include?(blob.content_type)
+      errors.add(:music_video_file, "は MP4 または WebM を選んでください")
+    end
+    if blob.byte_size > VIDEO_MAX_SIZE
+      errors.add(:music_video_file,
+                 "は #{VIDEO_MAX_SIZE / 1.megabyte}MB 以下にしてください" \
+                 "（大きい動画はYouTube／Vimeoにアップして下のURL欄をお使いください）")
     end
   end
 end
