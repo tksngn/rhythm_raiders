@@ -117,6 +117,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **接続方式の注意（重要）**: 必ず **Session pooler**（`aws-<n>-<region>.pooler.supabase.com:5432`。本プロジェクトは `aws-1-ap-northeast-1`）を使う。Supabase の Direct connection は 2024-01-15 以降 **IPv6 専用**で Render（IPv4）から到達できない。Session pooler は IPv4 プロキシ経由で無料。Transaction pooler(6543) は prepared statements の無効化が必要。取得場所は Connect → Direct(Connection string) → Connection Method: Session pooler → Type: URI。
 - **データ**: 本番の投稿データは復旧不可（バックアップ無し・インスタンスごと削除）。新DB接続後は `db:prepare` + `db:seed` でデモデータが再生成される。Supabase Storage 側の音源blobは残るが参照レコードが無く孤児化する。
 - **結果**: 2026-07-16 復旧完了。Supabase は **PostgreSQL 17**。Rails 6.1 との組み合わせをローカル（本番Dockerfile + postgres:17）で検証し、`db:prepare`→`db:seed`→ヘルスチェック200 まで完走を確認済み。
+- **旧DBの後始末（2026-07-25 確認）**: Render ダッシュボードに残っていた `rhythm-raiders-db` が「Free database expired / 4日後に削除」を表示。Service ID `dpg-d8nvkd3bc2fs73feqtd0-a` が上記エラーのホスト名と一致することから、**移行前の旧DBの残骸**と確定。`render.yaml` に `databases:` ブロックは無く、Web サービスの `DATABASE_URL` も `sync: false` で Supabase を直接指すため（`fromDatabase` 参照なし）**アプリへの影響は無い**。Upgrade は不要で、放置すれば自動削除される。削除予定は 2026-07-29 頃（期限切れ 07-15 + 14日）。
 
 ### 復旧時にハマった点（次回のために）
 
@@ -136,11 +137,32 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 - **`Notification` の `enum action_type` を削除**。`action_type` カラムが存在せず参照箇所も無かった（呼べば落ちる地雷）。通知の種類は実際には subject の実クラス（Like / PostComment / Relationship）でパーシャルを出し分けている。3種類の通知を発生させ通知一覧が200で描画されることを確認済み。
 - **`Gemfile.lock` を Gemfile と同期**。`carrierwave` が Gemfile から撤去済みなのに lock の DEPENDENCIES に残っていた（`--frozen`/`--deployment` では失敗する状態）。`bundle install` で再解決し、差分は `carrierwave` と専用依存 `ssrf_filter` の除去のみ。
 
+## 4.8 投稿済み楽曲の Creator Word 編集（2026-07-25）
+
+投稿後に Word（`creater_word`）を直せないことにユーザーが気づいたため対応した。
+
+- **経緯**: `member/created_tracks#edit` は元々 **AI動画URL専用**の画面で、`creater_word` は投稿フォームにしか無く後から変更できなかった。
+- **対応**: edit 画面を「§ Edit Track §」に広げ、**Creator Word（textarea 4行）＋ AI Music Video URL** の2項目にした。strong parameters は `music_video_params` → `track_edit_params` に改名し `:creater_word, :music_video_url` のみ許可。**タイトル・ジャンル・音源ファイルは投稿時のまま変更不可**（音源の差し替えは実質「別の曲」になるため意図的に塞いでいる）。
+- **導線のラベル**: 実態と合わなくなったため、楽曲詳細の「AI動画を追加/編集」→ **「楽曲を編集」**、マイページの同ボタン → **「Edit」** に変更。
+- **権限**: 既存の `set_own_created_track` がそのまま効くので他人の楽曲は編集画面に入れない。`creater_word` は `presence: true` のため空欄保存はエラーになり編集画面へ戻る。
+- **残件**: `music_title` / `music_genre` は依然として投稿後に変更できない（同じフォームに2項目足すだけで対応可能）。
+
+### 確認時にハマった点
+
+**「変更が反映されない」の正体は、見ていたのが本番サイトだったこと。** ローカル Docker（localhost:3100）と本番（onrender.com）は別物で、変更はコミット・push するまで本番に出ない。切り分けに使った材料:
+
+- `docker exec <container> grep ... /app/app/views/...` で**コンテナ内のファイル**に変更が届いているか確認（bind mount なので届いていた）
+- `log/development.log` の `Started GET` の**最終時刻**を見る → 9日前で止まっており、localhost には誰もアクセスしていないと判明
+- 画面に出ていた曲名・ユーザー名がローカルの seed データ（Fantasy World 等 / `test1@example.com`）に無い＝本番データだった
+
+---
+
 ## 5. 既知の制約・今後の候補
 
 - アップロードは Supabase Storage で永続化済み。ただし **Supabase 無料プロジェクトは約1週間アクセスが無いと一時停止**（次アクセスで復帰）。R2_* 環境変数を外せばローカル保存(非永続)に戻る。
 - **画像のWebP化は見送り（2026-06-21 判断）**。理由: 既に mozjpeg 品質85 で -76% 済みで追加効果が小さい一方、全画像のwebp生成＋CSS `url()`/`image_tag` 多数の差し替えが必要でROIが低いため。やるなら「背景のみWebP化（SCSSの url() のみ変更でリスク限定）」が候補。
 - 通知の `_comment` パーシャルは中身が空（コメント通知は表示が簡素）。`member_tracks` 等の未到達スキャフォールドが一部残存。
+- **楽曲の編集は Creator Word と AI動画URL のみ**（§4.8）。`music_title` / `music_genre` は投稿後に変更できない。音源ファイルの差し替えは意図的に塞いでいる。
 - ~~旧CarrierWave関連の残置~~ / ~~`Post` モデルの残置~~ → **§4.7 で一掃済み**。
 - ローカル開発は Docker デモ構成（`docker-compose.demo.yml`、http://localhost:3100）。`config/master.key`・`.env` は未コミット（各自生成）。
 
@@ -149,6 +171,7 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 ## デプロイ運用メモ（Render）
 
 - `main` への push で自動再デプロイ。
+- **ローカル（http://localhost:3100 ）と本番（onrender.com）は完全に別物**。DBもデータも別で、コード変更は push するまで本番に出ない。「直したのに変わらない」ときは、まずどちらを見ているか確認する（§4.8 の確認時にハマった点）。
 - 環境変数: `RAILS_ENV=production` / `RAILS_LOG_TO_STDOUT` / `RAILS_SERVE_STATIC_FILES` / `SECRET_KEY_BASE`(自動生成) / `DATABASE_URL`(Supabase・ダッシュボードで設定) / `ADMIN_EMAIL` / `ADMIN_PASSWORD`(ダッシュボードで設定)。
 - seed のデモ会員: `test1@example.com` / `password01`。
 - **DB は Supabase Postgres**（§4.6）。`DATABASE_URL` には必ず **Session pooler** の文字列を使う（Direct connection はIPv6専用でRenderから繋がらない）。
