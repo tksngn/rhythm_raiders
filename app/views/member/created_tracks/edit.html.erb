@@ -27,6 +27,24 @@
           <%= f.text_area :creater_word, rows: 4, class: "auth-input" %>
         </div>
         <div class="auth-field">
+          <%= f.label :music_image, "AI Artwork（任意）" %>
+          <%= f.file_field :music_image, accept: "image/png,image/jpeg,image/gif,image/webp", class: "auth-input auth-input--file" %>
+          <p class="auth-hint">
+            AIで生成したジャケット画像。PNG / JPEG / GIF / WebP、5MBまで。
+            選び直すと差し替わります。
+          </p>
+
+          <% if @created_track.music_image.attached? %>
+            <div class="ts-artwork__frame mt-2">
+              <%= image_tag @created_track.music_image, alt: "#{@created_track.music_title} のAI静止画" %>
+            </div>
+            <p class="auth-hint mt-2">
+              <%= check_box_tag "created_track[remove_music_image]", "1", false, id: "remove_music_image" %>
+              <%= label_tag "remove_music_image", "この画像を削除する" %>
+            </p>
+          <% end %>
+        </div>
+        <div class="auth-field">
           <%= f.label :music_video_url, "AI Music Video URL" %>
           <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
           <p class="auth-hint">

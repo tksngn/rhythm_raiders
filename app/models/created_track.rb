@@ -7,6 +7,10 @@ class CreatedTrack < ApplicationRecord
   ].freeze
   VIMEO_HOSTS = %w[vimeo.com www.vimeo.com player.vimeo.com].freeze
 
+  # AI静止画(ジャケット)で受け付ける形式とサイズ上限
+  IMAGE_CONTENT_TYPES = %w[image/png image/jpeg image/gif image/webp].freeze
+  IMAGE_MAX_SIZE = 5.megabytes
+
   belongs_to :member
   # 前後の空白を落とし、空欄は "" ではなく nil で保存する
   before_validation :normalize_music_video_url
@@ -23,6 +27,12 @@ class CreatedTrack < ApplicationRecord
   # 音源は ActiveStorage(S3/Supabase or ローカル) で保存
   has_one_attached :music_file
   validate :music_file_required
+
+  # AI静止画(任意)。MVと違い外部URLではなく画像そのものを預かる。
+  # variant(リサイズ)は本番の画像processor依存で InvariableError になり得るため使わず、
+  # 表示サイズは CSS(.ts-artwork__frame img) で制御する（profile_image と同方針）。
+  has_one_attached :music_image
+  validate :music_image_must_be_supported
 
   def music_file_required
     errors.add(:music_file, "を選択してください") unless music_file.attached?
@@ -104,6 +114,18 @@ class CreatedTrack < ApplicationRecord
     return if music_video_embed_url.present?
 
     errors.add(:music_video_url, "はYouTubeまたはVimeoの動画URLを入力してください")
+  end
+
+  def music_image_must_be_supported
+    return unless music_image.attached?
+
+    blob = music_image.blob
+    unless IMAGE_CONTENT_TYPES.include?(blob.content_type)
+      errors.add(:music_image, "は PNG / JPEG / GIF / WebP のいずれかを選んでください")
+    end
+    if blob.byte_size > IMAGE_MAX_SIZE
+      errors.add(:music_image, "は #{IMAGE_MAX_SIZE / 1.megabyte}MB 以下にしてください")
+    end
   end
 end
 

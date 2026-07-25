@@ -51,6 +51,13 @@
           <%= f.file_field :music_file, class: "auth-input auth-input--file" %>
         </div>
         <div class="auth-field">
+          <%= f.label :music_image, "AI Artwork（任意）" %>
+          <%= f.file_field :music_image, accept: "image/png,image/jpeg,image/gif,image/webp", class: "auth-input auth-input--file" %>
+          <p class="auth-hint">
+            AIで生成したジャケット画像を添付すると、詳細ページに表示されます。PNG / JPEG / GIF / WebP、5MBまで。
+          </p>
+        </div>
+        <div class="auth-field">
           <%= f.label :music_video_url, "AI Music Video URL（任意）" %>
           <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
           <p class="auth-hint">

@@ -40,7 +40,12 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def update
+    remove_image = params.dig(:created_track, :remove_music_image) == "1"
+
     if @created_track.update(track_edit_params)
+      # 添付を外すのは更新が通ってから。先に purge すると、バリデーションで
+      # 弾かれた時に画像だけ消える。新しい画像が来ている時は削除指定より優先する。
+      @created_track.music_image.purge if remove_image && track_edit_params[:music_image].blank?
       redirect_to member_created_track_path(@created_track), notice: '楽曲情報を更新しました。'
     else
       render :edit
@@ -94,13 +99,13 @@ class Member::CreatedTracksController < ApplicationController
   end
 
   def created_track_params
-    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file, :music_video_url)
+    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file, :music_image, :music_video_url)
   end
 
   # 編集画面で扱うのはテキスト項目とAI動画URLのみ。
   # music_file は差し替えを許さない（音源が変わると実質「別の曲」になり、
   # いいね・コメントが元の曲に紐づいたまま中身だけすり替わるため）。
   def track_edit_params
-    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_video_url)
+    params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_image, :music_video_url)
   end
 end

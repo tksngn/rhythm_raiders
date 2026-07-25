@@ -159,12 +159,35 @@ seed が `find_or_create_by!` でレコード存在時にファイル登録を�
 
 ---
 
+## 4.9 AI静止画（ジャケット画像）対応（2026-07-25）
+
+- **背景**: AI動画(MV)機能は Neural Frames が課金の壁で動作確認が進まなかったため、手元の画像ファイルだけで完結する**静止画**も載せられるようにした。
+  - なお埋め込み判定は **YouTube / Vimeo のホストとID形式しか見ていない**（`music_video_embed_url`）ので、**MV機能自体は任意のYouTube動画URLで検証できる**。Neural Frames 製である必要はない。
+- **方式**: 外部URL貼り付けではなく **ActiveStorage の添付**（`has_one_attached :music_image`）を選択。`profile_image` / `music_file` と同じ仕組みで本番は Supabase Storage に入る。**マイグレーション不要**。ホットリンクやリンク切れの問題も持ち込まない。
+- **制約**: PNG / JPEG / GIF / WebP、5MB まで（`IMAGE_CONTENT_TYPES` / `IMAGE_MAX_SIZE`）。任意項目。
+- **variant(リサイズ)は使わない**。本番の画像processor依存で `InvariableError` になり得るため、元画像をそのまま `image_tag` に渡し、幅は CSS（`.ts-artwork__frame img`）で制御する。`Member#get_profile_image` と同方針。
+- **画面**: 投稿・編集フォームに「AI Artwork（任意）」のファイル欄、楽曲詳細ではプレーヤーの上に表示。編集画面には現在の画像プレビューと「この画像を削除する」チェックボックスを置いた。
+- **purge の順序に注意**: 添付を外すのは `update` が**成功してから**。先に purge すると、バリデーションで弾かれた時に画像だけ消える。新しい画像が来ている時は削除指定より差し替えを優先する。
+
+### 検証（ローカル Docker で実施・2026-07-25）
+
+ブラウザ目視ができないため、コンテナ内で実際に動かして確認した。
+
+1. JPEG を添付 → `valid?` = true、保存成功、blob の content_type / byte_size を確認
+2. `text/plain` を添付 → バリデーションエラー「PNG / JPEG / GIF / WebP のいずれかを選んでください」
+3. `purge` → 添付解除を確認
+4. `ActionDispatch::Integration::Session` で会員ログイン（303）→ 楽曲詳細 **200**・"AI Artwork" 見出しと ActiveStorage の `<img>` を確認 → 編集画面 **200**・削除チェックボックスと `multipart/form-data` を確認
+5. SCSS 変更を含む **webpack 再コンパイルが通る**ことを確認（`public/packs/manifest.json` が更新された）
+
+---
+
 ## 5. 既知の制約・今後の候補
 
 - アップロードは Supabase Storage で永続化済み。ただし **Supabase 無料プロジェクトは約1週間アクセスが無いと一時停止**（次アクセスで復帰）。R2_* 環境変数を外せばローカル保存(非永続)に戻る。
 - **画像のWebP化は見送り（2026-06-21 判断）**。理由: 既に mozjpeg 品質85 で -76% 済みで追加効果が小さい一方、全画像のwebp生成＋CSS `url()`/`image_tag` 多数の差し替えが必要でROIが低いため。やるなら「背景のみWebP化（SCSSの url() のみ変更でリスク限定）」が候補。
 - 通知の `_comment` パーシャルは中身が空（コメント通知は表示が簡素）。`member_tracks` 等の未到達スキャフォールドが一部残存。
-- **楽曲の編集は Title / Genre / Creator Word / AI動画URL の4項目**（§4.8）。音源ファイル(`music_file`)の差し替えだけは意図的に塞いでいる（いいね・コメントを保ったまま中身がすり替わるのを防ぐため）。
+- **楽曲の編集は Title / Genre / Creator Word / AI静止画 / AI動画URL**（§4.8・§4.9）。音源ファイル(`music_file`)の差し替えだけは意図的に塞いでいる（いいね・コメントを保ったまま中身がすり替わるのを防ぐため）。
+- AI静止画は**楽曲詳細ページのみ**に表示（§4.9）。一覧・マイページのサムネイル化は未対応（やるなら一覧CSSの調整と、画像なし楽曲との混在の見た目を要検討）。
 - ~~旧CarrierWave関連の残置~~ / ~~`Post` モデルの残置~~ → **§4.7 で一掃済み**。
 - ローカル開発は Docker デモ構成（`docker-compose.demo.yml`、http://localhost:3100）。`config/master.key`・`.env` は未コミット（各自生成）。
 
