@@ -21,7 +21,10 @@ class Member::CustomersController < ApplicationController
     @follower_members = @member.follower_member
     # My Tracks でサムネイル・コメント数を出すため、まとめて引く（N+1回避）。
     # music_file はマイページではプレーヤーを描画しないので引かない（引くと無駄に2クエリ増える）。
-    @created_tracks = @member.created_tracks.preload(:post_comments, music_image_attachment: :blob)
+    @created_tracks = @member.created_tracks
+                             .preload(:post_comments,
+                                      music_image_attachment: :blob,
+                                      music_video_file_attachment: :blob)
   end
 
   def edit

@@ -3,6 +3,13 @@
 <div class="track-thumb">
   <% if created_track.music_image.attached? %>
     <%= image_tag created_track.music_image, alt: "#{created_track.music_title} のAI静止画" %>
+  <% elsif created_track.music_video_file.attached? %>
+    <%# 静止画が無くても動画があれば、その先頭フレームをサムネイル代わりに出す。
+        preload="metadata" なので動画全体はダウンロードしない。
+        #t=0.1 を付けるのは、0秒ちょうどだと真っ黒のフレームになる動画があるため。 %>
+    <video src="<%= rails_storage_redirect_path(created_track.music_video_file) %>#t=0.1"
+           muted playsinline preload="metadata" tabindex="-1"
+           aria-label="<%= created_track.music_title %> のAI動画"></video>
   <% else %>
     <span class="track-thumb__placeholder" aria-hidden="true">♪</span>
   <% end %>

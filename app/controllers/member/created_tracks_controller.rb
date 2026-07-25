@@ -86,6 +86,7 @@ class Member::CreatedTracksController < ApplicationController
     # 添付とblobまで一緒に引く（引かないと1曲につき2クエリ増える）
     eager = [:member, :likes,
              { music_image_attachment: :blob },
+             { music_video_file_attachment: :blob },
              { music_file_attachment: :blob }]
     case params[:sort]
     when "good"
