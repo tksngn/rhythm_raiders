@@ -32,7 +32,7 @@
                 <p class="mp-track__word"><%= created_track.creater_word %></p>
                 <div class="mp-track__actions">
                   <%= link_to "#{created_track.post_comments.count} Comments", member_created_track_path(created_track.id), class: "mp-link" %>
-                  <%= link_to (created_track.music_video_url.present? ? "AI動画を編集" : "AI動画を追加"),
+                  <%= link_to "Edit",
                       edit_member_created_track_path(created_track.id),
                       class: "mp-link" %>
                   <%= link_to "Delete",

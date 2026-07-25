@@ -5,19 +5,26 @@
     </div>
 
     <section class="form-card">
-      <h2 class="about-heading">§ AI Music Video §</h2>
+      <h2 class="about-heading">§ Edit Track §</h2>
 
       <p class="auth-hint mb-3">
-        「<%= @created_track.music_title %>」にAI動画を紐づけます。
-        Neural Frames などで作った動画をYouTube／VimeoにアップロードしてURLを貼ってください。
+        「<%= @created_track.music_title %>」の Creator Word とAI動画URLを編集できます。
+        タイトル・ジャンル・音源ファイルは変更できません。
       </p>
 
       <%= form_with model: [:member, @created_track], html: { class: "auth-form" } do |f| %>
         <%= render 'layouts/errors', model: @created_track %>
         <div class="auth-field">
+          <%= f.label :creater_word, "Creator Word" %>
+          <%= f.text_area :creater_word, rows: 4, class: "auth-input" %>
+        </div>
+        <div class="auth-field">
           <%= f.label :music_video_url, "AI Music Video URL" %>
           <%= f.url_field :music_video_url, class: "auth-input", placeholder: "https://www.youtube.com/watch?v=..." %>
-          <p class="auth-hint">空欄にして保存すると、動画の紐づけを解除できます。</p>
+          <p class="auth-hint">
+            Neural Frames などで作った動画をYouTube／VimeoにアップロードしてURLを貼ってください。
+            空欄にして保存すると、動画の紐づけを解除できます。
+          </p>
         </div>
         <%= f.submit "Save / 保存", class: "neon-btn neon-btn--primary auth-submit" %>
       <% end %>

@@ -35,13 +35,13 @@ class Member::CreatedTracksController < ApplicationController
     end
   end
 
-  # 投稿後にAI動画URLだけを後付け・差し替え・解除する画面
+  # 投稿後に Creator Word と AI動画URL を編集する画面
   def edit
   end
 
   def update
-    if @created_track.update(music_video_params)
-      redirect_to member_created_track_path(@created_track), notice: 'AI動画URLを更新しました。'
+    if @created_track.update(track_edit_params)
+      redirect_to member_created_track_path(@created_track), notice: '楽曲情報を更新しました。'
     else
       render :edit
     end
@@ -97,8 +97,9 @@ class Member::CreatedTracksController < ApplicationController
     params.require(:created_track).permit(:music_title, :music_genre, :creater_word, :music_file, :music_video_url)
   end
 
-  # 編集画面はAI動画URLのみ扱うため、更新できる項目もそれだけに絞る
-  def music_video_params
-    params.require(:created_track).permit(:music_video_url)
+  # 編集画面で扱うのは Creator Word と AI動画URL のみ。
+  # タイトル・ジャンル・音源ファイルは投稿時のまま（差し替えさせない）。
+  def track_edit_params
+    params.require(:created_track).permit(:creater_word, :music_video_url)
   end
 end

@@ -45,8 +45,7 @@
             <%= link_to 'プロフィール編集', edit_member_customer_path(@member), class: "ts-btn" %>
           <% end %>
           <% if @created_track.member == current_member %>
-            <%= link_to (@created_track.music_video_url.present? ? "AI動画を編集" : "AI動画を追加"),
-                        edit_member_created_track_path(@created_track), class: "ts-btn" %>
+            <%= link_to "楽曲を編集", edit_member_created_track_path(@created_track), class: "ts-btn" %>
           <% end %>
           <% unless @created_track.member == current_member %>
             <% if current_member.following?(@created_track.member) %>
