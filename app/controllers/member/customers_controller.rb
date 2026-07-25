@@ -21,10 +21,15 @@ class Member::CustomersController < ApplicationController
     @follower_members = @member.follower_member
     # My Tracks でサムネイル・コメント数を出すため、まとめて引く（N+1回避）。
     # music_file はマイページではプレーヤーを描画しないので引かない（引くと無駄に2クエリ増える）。
-    @created_tracks = @member.created_tracks
-                             .preload(:post_comments,
-                                      music_image_attachment: :blob,
-                                      music_video_file_attachment: :blob)
+    # 5曲ずつのページ送り。6曲目からページネーションが出る
+    # （kaminari は総ページ数が1なら何も描画しない）。
+    # NOTE: .page/.per は必ずモデル直で呼ぶこと。@member.created_tracks.page(...) だと
+    #       AssociationRelation になり `undefined method 'per'` で落ちる。
+    @created_tracks = CreatedTrack.page(params[:page]).per(5)
+                                  .where(member_id: @member.id)
+                                  .preload(:post_comments,
+                                           music_image_attachment: :blob,
+                                           music_video_file_attachment: :blob)
   end
 
   def edit

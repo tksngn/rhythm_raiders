@@ -85,6 +85,9 @@
               </div>
             <% end %>
           </div>
+          <div class="mp-pagination">
+            <%= paginate @created_tracks %>
+          </div>
         <% else %>
           <p class="mp-empty">まだ投稿がありません。</p>
         <% end %>

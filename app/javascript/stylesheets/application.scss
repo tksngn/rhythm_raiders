@@ -1510,6 +1510,26 @@ input[type="submit"].ts-btn--primary {
 // ただし曲が少ないと2列の片側が空くだけなので、そのときは1列に戻す
 .mp-track-list--few { grid-template-columns: 1fr; }
 
+// 5曲を超えたときだけ出るページ送り（1ページに収まる間は kaminari が何も描画しない）
+.mp-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+
+  .pagination { margin: 0; }
+
+  a, span {
+    color: #cdeee8;
+    font-style: normal;
+  }
+
+  .page.current span,
+  .current {
+    color: $neon;
+    font-weight: 700;
+  }
+}
+
 .mp-track {
   padding: 12px 14px;
   border-radius: 12px;

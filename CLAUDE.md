@@ -84,6 +84,7 @@ db/
 - **Webpacker 5 / webpack 4 は Node 16 で動かす**。`Dockerfile.demo` は Node 16 を入れている。**`NODE_OPTIONS=--openssl-legacy-provider` は付けない**（Node 16 には当該フラグが無く、付けると node が起動失敗する。フラグが要るのは Node 17+）。
 - **master.key / credentials**: 元の master.key は失われている（AWS/旧開発機のみ）。ローカルデモでは `bin/docker-demo.sh` が新規生成する。`config/master.key`・`.env` は gitignore 済み＝コミットしない。再生成された `config/credentials.yml.enc` もローカル専用（コミットしない）。
 - `git add .` は使わず、関係ファイルを個別に add する。
+- **kaminari の `.page/.per` はモデル直で呼ぶ**。`@member.created_tracks.page(...)` のように関連経由だと `ActiveRecord::AssociationRelation` になり `undefined method 'per'` で 500 になる。`CreatedTrack.page(params[:page]).per(5).where(member_id: ...)` の順で書く（`member/customers#mypage`・`member/created_tracks#index` とも同じ形）。
 - **モデルを使う前に `db/schema.rb` で実在を確認する**。過去に「テーブルの無いモデル(`Post`)」「カラムの無い `enum`」が残っていた実績がある（2026-07-16 に一掃済み）。
 - 管理画面のコメントモデレーション（`removed_by_admin` を立てる論理削除）は `DELETE /admin/created_tracks/:created_track_id/comments/:id`（`admin/comments#destroy`）。以前は実体の無い `posts` 配下にネストされていた。
 
