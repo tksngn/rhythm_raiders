@@ -41,12 +41,15 @@
                 <div class="row">
                   <div class="col-md-8">
                     <div class="track-info">
-                      <h3 class="mb-0" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size: calc(20px + 1vw);">
-                        <%= created_track.music_title %>
-                      </h3>
-                      <div class="card-text" style="font-size: calc(10px + 1vw);">Music Genre: <%= created_track.music_genre %></div>
-                      <div class="card-text" style="font-size: calc(10px + 1vw);">Creater Name: <%= created_track.member.creater_name %></div>
-                      <div class="card-text" style="font-size: calc(10px + 1vw);">A word from the creater: <p><%= created_track.creater_word %></p></div>
+                      <%= render "layouts/track_thumb", created_track: created_track %>
+                      <div class="track-info__body">
+                        <h3 class="mb-0" style="text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; font-size: calc(20px + 1vw);">
+                          <%= created_track.music_title %>
+                        </h3>
+                        <div class="card-text" style="font-size: calc(10px + 1vw);">Music Genre: <%= created_track.music_genre %></div>
+                        <div class="card-text" style="font-size: calc(10px + 1vw);">Creater Name: <%= created_track.member.creater_name %></div>
+                        <div class="card-text" style="font-size: calc(10px + 1vw);">A word from the creater: <p><%= created_track.creater_word %></p></div>
+                      </div>
                     </div>
                   </div>
                   <div class="col-md-4">

@@ -780,11 +780,43 @@ input[type="submit"].auth-submit {
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
 }
 
+/* 楽曲サムネイル（一覧・マイページ共通）。
+   一覧では正方形タイルに揃えたいので、詳細ページの contain と違い cover で切り抜く。 */
+.track-thumb {
+  flex: 0 0 88px;
+  width: 88px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 255, 204, 0.25);
+  background: rgba(0, 0, 0, 0.45);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.track-thumb__placeholder {
+  font-size: 1.7rem;
+  font-style: normal;
+  line-height: 1;
+  color: rgba(0, 255, 204, 0.5);
+}
+
 .tracks-page .track-info {
   background: transparent;
   border-radius: 0;
   padding: 0;
   width: auto;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
 
   h3 a {
     color: $neon;
@@ -794,6 +826,12 @@ input[type="submit"].auth-submit {
   .card-text {
     color: rgba(255, 255, 255, 0.82);
   }
+}
+
+// flex の子は既定で縮まないため、長いタイトルで横あふれしないよう min-width を切る
+.tracks-page .track-info__body {
+  flex: 1;
+  min-width: 0;
 }
 
 /* いいねボタンをネオン基調に */
@@ -1250,8 +1288,9 @@ input[type="submit"].ts-btn--primary {
 
 .ts-artwork { margin-bottom: 18px; }
 
-// AI静止画。縦横比は画像に委ねる（variantを使わない方針のため元画像をそのまま表示し、
-// 幅だけカードに合わせる）。
+// AI静止画。variantを使わない方針のため元画像をそのまま表示する。
+// 幅はカードに合わせ、縦長画像でカードが間延びしないよう高さを頭打ちにする。
+// 生成画像は全体を見せたいので cover(切り抜き)ではなく contain(letterbox)。
 .ts-artwork__frame {
   overflow: hidden;
   border-radius: 12px;
@@ -1262,8 +1301,14 @@ input[type="submit"].ts-btn--primary {
     display: block;
     width: 100%;
     height: auto;
+    max-height: 420px;
+    object-fit: contain;
+    object-position: center;
   }
 }
+
+// 編集画面のプレビューは本表示より小さく
+.ts-artwork__frame--preview img { max-height: 220px; }
 
 .ts-note {
   margin: 0 0 8px;
@@ -1439,6 +1484,21 @@ input[type="submit"].ts-btn--primary {
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+
+  // マイページのカードは幅が狭いのでサムネイルも小さめに
+  .track-thumb {
+    flex-basis: 64px;
+    width: 64px;
+    height: 64px;
+  }
+}
+
+.mp-track__body {
+  flex: 1;
+  min-width: 0;
 }
 
 .mp-track__title {

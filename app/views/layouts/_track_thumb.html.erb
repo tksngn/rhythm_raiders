@@ -1,0 +1,9 @@
+<%# 楽曲一覧用のサムネイル。AI静止画は任意なので、未設定の楽曲でも行の高さが
+    崩れないようプレースホルダ(♪)を同じ枠で出す。 %>
+<div class="track-thumb">
+  <% if created_track.music_image.attached? %>
+    <%= image_tag created_track.music_image, alt: "#{created_track.music_title} のAI静止画" %>
+  <% else %>
+    <span class="track-thumb__placeholder" aria-hidden="true">♪</span>
+  <% end %>
+</div>

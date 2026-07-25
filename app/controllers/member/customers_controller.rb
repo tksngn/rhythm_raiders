@@ -19,6 +19,9 @@ class Member::CustomersController < ApplicationController
     # @member_track = @created_track.member_tracks(@member).first if @created_track
     @following_members = @member.following_member
     @follower_members = @member.follower_member
+    # My Tracks でサムネイル・コメント数を出すため、まとめて引く（N+1回避）。
+    # music_file はマイページではプレーヤーを描画しないので引かない（引くと無駄に2クエリ増える）。
+    @created_tracks = @member.created_tracks.preload(:post_comments, music_image_attachment: :blob)
   end
 
   def edit

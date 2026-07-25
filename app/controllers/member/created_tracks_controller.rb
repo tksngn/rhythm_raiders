@@ -75,7 +75,11 @@ class Member::CreatedTracksController < ApplicationController
   # 一覧/ゲスト一覧の並び替え + N+1回避の eager load をまとめる。
   # 本番(PostgreSQL)・開発(SQLite)とも RANDOM() で動作する（MySQLのRAND()は使わない）。
   def sorted_created_tracks
-    eager = [:member, :likes]
+    # サムネイル(music_image)とプレーヤー(music_file)は一覧で全件ぶん参照するため、
+    # 添付とblobまで一緒に引く（引かないと1曲につき2クエリ増える）
+    eager = [:member, :likes,
+             { music_image_attachment: :blob },
+             { music_file_attachment: :blob }]
     case params[:sort]
     when "good"
       Kaminari.paginate_array(

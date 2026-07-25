@@ -35,7 +35,7 @@
           </p>
 
           <% if @created_track.music_image.attached? %>
-            <div class="ts-artwork__frame mt-2">
+            <div class="ts-artwork__frame ts-artwork__frame--preview mt-2">
               <%= image_tag @created_track.music_image, alt: "#{@created_track.music_title} のAI静止画" %>
             </div>
             <p class="auth-hint mt-2">
