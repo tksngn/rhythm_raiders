@@ -56,70 +56,9 @@
           <% end %>
         </div>
 
-        <% if @created_track.music_image.attached? %>
-          <div class="ts-artwork">
-            <h3 class="ts-artwork__label">AI Artwork</h3>
-            <div class="ts-artwork__frame">
-              <%= image_tag @created_track.music_image, alt: "#{@created_track.music_title} のAI静止画" %>
-            </div>
-          </div>
-        <% end %>
-
         <div class="ts-player">
           <%= render "layouts/player", created_track: @created_track, is_guest: false %>
         </div>
-
-        <% if @created_track.music_video_file.attached? %>
-          <div class="ts-mv">
-            <h3 class="ts-mv__label">AI Music Video</h3>
-            <div class="ts-mv__frame">
-              <%# 音は下のプレーヤー(wavesurfer)で鳴らすため既定はミュート。
-                  controls を残してあるので、動画側の音を聴きたい人は解除できる。 %>
-              <video id="mv_<%= @created_track.id %>"
-                     src="<%= rails_storage_redirect_path(@created_track.music_video_file) %>"
-                     muted loop playsinline controls preload="metadata"></video>
-            </div>
-          </div>
-
-          <script>
-          (function () {
-            var v = document.getElementById("mv_<%= @created_track.id %>");
-            if (!v) return;
-
-            // 波形プレーヤーの再生／停止に映像を追従させる。
-            // プレーヤーの初期化がこのスクリプトより後になり得るので、繋がるまで少し待つ。
-            function bind() {
-              var ws = window.wavesurfer_<%= @created_track.id %>;
-              if (!ws || !ws.on) return false;
-              ws.on("play", function () { v.play().catch(function () {}); });
-              ws.on("pause", function () { v.pause(); });
-              ws.on("finish", function () { v.pause(); v.currentTime = 0; });
-              return true;
-            }
-
-            if (!bind()) {
-              var tries = 0;
-              var timer = setInterval(function () {
-                if (bind() || ++tries > 20) clearInterval(timer);
-              }, 200);
-            }
-          })();
-          </script>
-        <% end %>
-
-        <% if (embed_url = @created_track.music_video_embed_url) %>
-          <div class="ts-mv">
-            <h3 class="ts-mv__label">AI Music Video</h3>
-            <div class="ts-mv__frame">
-              <iframe src="<%= embed_url %>"
-                      title="<%= @created_track.music_title %> のミュージックビデオ"
-                      loading="lazy"
-                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
-                      referrerpolicy="strict-origin-when-cross-origin"
-                      allowfullscreen></iframe>
-            </div>
-          </div>
-        <% end %>
 
         <div class="ts-comment-form">
           <%= form_with model: [@created_track, @post_comment], url: member_created_track_post_comments_path(@created_track) do |f| %>
@@ -160,6 +99,69 @@
         <div class="text-center mt-3">
           <%= link_to "♪ Music Index", member_created_tracks_path, class: "ts-btn ts-btn--primary" %>
         </div>
+
+        <%# 静止画・動画はこちら側に置く。左カラム（情報＋プレーヤー＋コメント投稿）に
+            比べて右カラムが空きやすく、左右のバランスが取れるため。 %>
+        <% if @created_track.music_image.attached? %>
+          <div class="ts-artwork mt-3">
+            <h3 class="ts-artwork__label">AI Artwork</h3>
+            <div class="ts-artwork__frame">
+              <%= image_tag @created_track.music_image, alt: "#{@created_track.music_title} のAI静止画" %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @created_track.music_video_file.attached? %>
+          <div class="ts-mv mt-3">
+            <h3 class="ts-mv__label">AI Music Video</h3>
+            <div class="ts-mv__frame">
+              <%# 音は左のプレーヤー(wavesurfer)で鳴らすため既定はミュート。
+                  controls を残してあるので、動画側の音を聴きたい人は解除できる。 %>
+              <video id="mv_<%= @created_track.id %>"
+                     src="<%= rails_storage_redirect_path(@created_track.music_video_file) %>"
+                     muted loop playsinline controls preload="metadata"></video>
+            </div>
+          </div>
+
+          <script>
+          (function () {
+            var v = document.getElementById("mv_<%= @created_track.id %>");
+            if (!v) return;
+
+            // 波形プレーヤーの再生／停止に映像を追従させる。
+            // プレーヤーの初期化がこのスクリプトより後になり得るので、繋がるまで少し待つ。
+            function bind() {
+              var ws = window.wavesurfer_<%= @created_track.id %>;
+              if (!ws || !ws.on) return false;
+              ws.on("play", function () { v.play().catch(function () {}); });
+              ws.on("pause", function () { v.pause(); });
+              ws.on("finish", function () { v.pause(); v.currentTime = 0; });
+              return true;
+            }
+
+            if (!bind()) {
+              var tries = 0;
+              var timer = setInterval(function () {
+                if (bind() || ++tries > 20) clearInterval(timer);
+              }, 200);
+            }
+          })();
+          </script>
+        <% end %>
+
+        <% if (embed_url = @created_track.music_video_embed_url) %>
+          <div class="ts-mv mt-3">
+            <h3 class="ts-mv__label">AI Music Video</h3>
+            <div class="ts-mv__frame">
+              <iframe src="<%= embed_url %>"
+                      title="<%= @created_track.music_title %> のミュージックビデオ"
+                      loading="lazy"
+                      allow="accelerometer; encrypted-media; gyroscope; picture-in-picture"
+                      referrerpolicy="strict-origin-when-cross-origin"
+                      allowfullscreen></iframe>
+            </div>
+          </div>
+        <% end %>
       </section>
     </div>
   </div>
